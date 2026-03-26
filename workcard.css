@@ -438,11 +438,6 @@
         transition: .4s ease;
     }
 
-    .work-card:hover {
-        transform: translateY(-6px);
-        background: rgba(255, 255, 255, .08);
-    }
-
     .card-media {
         width: 100%;
         aspect-ratio: 1200 / 648;
@@ -465,51 +460,6 @@
         object-fit: cover;
 
         transition: opacity .35s ease;
-    }
-
-    .work-card:hover .card-logo {
-        opacity: 0;
-    }
-
-    .card-video {
-
-        position: absolute;
-        inset: 0;
-
-        width: 100%;
-        height: 100%;
-
-        object-fit: cover;
-
-        opacity: 0;
-        transition: opacity .35s ease, transform .6s ease;
-
-    }
-
-    /* hover 顯示 */
-
-    .work-card:hover .card-video {
-        opacity: 1;
-        transform: scale(1.03);
-    }
-
-    /* hover */
-    .work-card:hover {
-
-        border: 1px solid rgba(140, 150, 255, .5);
-
-        box-shadow:
-            0 0 20px rgba(140, 150, 255, .2),
-            0 0 40px rgba(120, 140, 255, .15);
-
-    }
-
-    .work-card:hover .card-logo {
-        opacity: 0;
-    }
-
-    .work-card:hover .card-video {
-        opacity: 1;
     }
 
     .work-card h3 {
