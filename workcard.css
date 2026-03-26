@@ -742,16 +742,44 @@
     .carousel-dots .dot.active {
         width: 16px;
     }
-        .work-card:hover .card-video {
-        opacity: 0 !important;
+/* 1. 確保容器是正常的網格，不要有高度限制 */
+    .cards {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
+        gap: 20px !important;
+        height: auto !important; /* 移除桌面版固定的 360px */
+        position: static !important;
     }
 
-    .work-card:hover .card-logo {
+    /* 2. 重置卡片屬性：這是最關鍵的修改 */
+    .work-card {
+        position: relative !important; /* 從 absolute 改回 relative */
+        top: auto !important;
+        left: auto !important;
+        width: 100% !important; /* 讓它填滿網格欄位 */
+        
+        /* 移除縮小與偏移 */
+        transform: none !important; 
         opacity: 1 !important;
+        filter: blur(0) !important;
+        
+        margin-bottom: 20px;
+        pointer-events: auto !important;
     }
 
-    .work-card:hover {
+    /* 3. 確保點擊時不會有任何位移或縮放 */
+    .work-card:hover, 
+    .work-card:active {
         transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* 5. 影片在手機上通常不自動 hover 播放，建議維持 Logo 顯示 */
+    .card-video {
+        display: none !important;
+    }
+    .card-logo {
+        opacity: 1 !important;
     }
 }
 
