@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FamilyMart App | Portfolio</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="../workcard.css">
+    <link rel="icon" href="../logo.PNG">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #05040a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top, #1b1a2f, #05040a 70%);
+            color: #eae8ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* container */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            padding-top: 120px;
+            flex: 1;
+        }
+
+        /* glass card */
+
+        .glass {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(140, 150, 255, .15);
+            border-radius: 20px;
+            padding: 36px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 60px;
+        }
+
+        /* section */
+
+        .section {
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+
+            transition: all .6s ease .2s;
+        }
+
+        .section.show h2 {
+
+            opacity: 1;
+            transform: translateY(0);
+
+        }
+
+        .section p {
+            max-width: 720px;
+            margin: auto;
+            line-height: 1.8;
+            opacity: .85;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+
+        /* ===== 導覽列 ===== */
+        .nav {
+            height: 100px;
+            padding: 0 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 20;
+
+            background: rgba(15, 14, 30, .45);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(160, 160, 255, .08);
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            letter-spacing: 3px;
+            opacity: .9;
+        }
+
+        .menu {
+            display: flex;
+            gap: 56px;
+            list-style: none;
+        }
+
+        .menu li {
+            position: relative;
+            font-size: 14px;
+            letter-spacing: 1.2px;
+            cursor: pointer;
+            opacity: .7;
+            transition: .4s;
+        }
+
+        /* 修正 nav a 樣式 */
+        .menu li a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu li::after {
+            content: '';
+            position: absolute;
+            left: -10%;
+            bottom: -8px;
+            width: 120%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(122, 162, 227, .8),
+                    transparent);
+            opacity: 0;
+            transition: .4s;
+        }
+
+        .menu li:hover {
+            opacity: 1;
+        }
+
+        .menu li:hover::after {
+            opacity: 1;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            letter-spacing: 4px;
+        }
+
+        .hero p {
+            opacity: .7;
+            margin-top: 10px;
+        }
+
+        /* project info layout */
+
+        .project-info {
+
+            margin-top: 40px;
+
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .project-item {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+
+        .label {
+
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            opacity: .5;
+
+            margin-bottom: 6px;
+
+        }
+
+        .value {
+
+            font-size: 15px;
+            letter-spacing: .5px;
+
+        }
+
+        .project-item {
+
+            transition: .35s;
+
+        }
+
+        .project-item:hover {
+
+            transform: translateY(-4px);
+
+        }
+
+        .project-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: infoFade 0.8s ease forwards;
+        }
+
+        .project-item:nth-child(1) {
+            animation-delay: .4s;
+        }
+
+        .project-item:nth-child(2) {
+            animation-delay: .6s;
+        }
+
+        .project-item:nth-child(3) {
+            animation-delay: .8s;
+        }
+
+        @keyframes infoFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Info */
+        .info {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .info div {
+            flex: 1;
+            min-width: 200px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .info div {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(140, 150, 255, 0.2);
+
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .info div:hover {
+            transform: translateY(-5px);
+            border-color: rgba(140, 150, 255, 0.4);
+        }
+
+        /* ===== Behance UI Layout ===== */
+
+        .ui-block {
+            margin-top: 60px;
+            text-align: left;
+        }
+
+        .ui-block h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        /* Grid 排版 */
+        .ui-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            /* 🔥 置中 */
+        }
+
+        /* 圖片（無邊框版本） */
+        .ui-grid img {
+            width: 260px;
+            /* 固定手機寬 */
+            height: 520px;
+            /* 固定手機高 */
+            object-fit: contain;
+            /* 填滿（像真手機） */
+            border-radius: 28px;
+            transition: 0.4s;
+        }
+
+        .ui-grid img:hover {
+            transform: scale(1.04);
+        }
+
+        /* Prototype 按鈕 */
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 28px;
+            border-radius: 30px;
+            border: 1px solid rgba(140, 150, 255, .4);
+            text-decoration: none;
+            color: #eae8ff;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: rgba(140, 150, 255, .15);
+        }
+
+
+
+        /* 卡片外框（微發光） */
+        .item {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(140, 150, 255, 0.08);
+        }
+
+        /* 圖片 */
+        .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s ease;
+        }
+
+        /* hover 放大 */
+        .item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* 遮罩（升級版） */
+        .overlay {
+            position: absolute;
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(4px);
+
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.4s;
+        }
+
+        /* 顯示 */
+        .item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* 文字 */
+        .overlay p {
+            color: #fff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        /* demo button */
+
+        .demo {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .demo a {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 24px;
+            border: 1px solid rgba(140, 150, 255, .4);
+            color: #fff;
+            text-decoration: none;
+            margin: 10px;
+            transition: .3s;
+        }
+
+        .demo a:hover {
+            background: rgba(140, 150, 255, .25);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            background: transparent;
+            opacity: 0.5;
+            padding: 40px 0;
+        }
+
+        /* 滾動動畫 */
+        .hero h1 {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroTitle 1s ease forwards;
+        }
+
+        .hero p {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroText 1s ease forwards;
+            animation-delay: .3s;
+        }
+
+        .hero .info {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroText 1s ease forwards;
+            animation-delay: .6s;
+        }
+
+        @keyframes heroTitle {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroText {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+
+            opacity: 0;
+            transform: translateY(60px) scale(.98);
+
+            transition:
+                opacity 1s ease,
+                transform 1s ease;
+
+        }
+
+        .section.show {
+
+            opacity: 1;
+            transform: translateY(0) scale(1);
+
+        }
+
+        /* ========================= */
+        /* Key Features */
+        /* ========================= */
+
+        .features {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* 每一列 */
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            /* 左 中 右 */
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        /* 左右方塊 */
+        .feature-box {
+            padding: 20px 30px;
+            border-radius: 30px;
+            min-width: 260px;
+            max-width: 360px;
+
+            font-size: 15px;
+            letter-spacing: 1px;
+            text-align: center;
+
+            background: rgba(140, 150, 255, 0.15);
+            border: 1px solid rgba(140, 150, 255, 0.4);
+
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        /* 左右顏色微差 */
+        .feature-box.left {
+            background: rgba(140, 150, 255, 0.2);
+            justify-self: end;
+        }
+
+        .feature-box.right {
+            background: rgba(140, 150, 255, 0.1);
+            justify-self: start;
+        }
+
+        /* hover 效果 */
+        .feature-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(140, 150, 255, 0.7);
+        }
+
+        /* 箭頭 */
+        .arrow {
+            text-align: center;
+            font-size: 24px;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+        /* hover 連動 */
+        .feature-row:hover .arrow {
+            transform: translateX(6px);
+            opacity: 1;
+        }
+
+        /* ========================= */
+        /* 📱 手機版 */
+        /* ========================= */
+
+        @media (max-width: 768px) {
+
+            .feature-row {
+                grid-template-columns: 1fr;
+                /* 變直排 */
+                text-align: center;
+            }
+
+            .feature-box.left,
+            .feature-box.right {
+                justify-self: center;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .feature-row:hover .arrow {
+                transform: rotate(90deg) translateX(6px);
+            }
+        }
+
+
+        /* ========================= */
+        /* Persona 完整升級版 */
+        /* ========================= */
+
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 36px;
+            margin-top: 60px;
+        }
+
+        /* 卡片 */
+        .persona-card {
+            position: relative;
+            padding: 32px;
+            border-radius: 24px;
+
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(140, 150, 255, 0.25);
+
+            backdrop-filter: blur(14px);
+            transition: 0.4s;
+        }
+
+        .persona-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(140, 150, 255, 0.6);
+        }
+
+        /* 左側漸層線（升級） */
+        .persona-card::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 24px;
+            bottom: 24px;
+            width: 4px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #7aa2e3, #9b8cff);
+            opacity: 0.8;
+        }
+
+        /* 小標籤（質感來源🔥） */
+        .persona-card::after {
+            content: "PERSONA";
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            opacity: 0.2;
+        }
+
+        /* 上方 */
+        .persona-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .persona-top img {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* 名字 */
+        .persona-name {
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* 標籤 */
+        .persona-tag {
+            font-size: 13px;
+            opacity: 0.6;
+        }
+
+        /* 描述 */
+        .persona-desc {
+            font-size: 14px;
+            line-height: 1.8;
+            opacity: 0.8;
+            margin-bottom: 26px;
+        }
+
+        /* 區塊 */
+        .persona-block {
+            margin-bottom: 22px;
+            text-align: left;
+        }
+
+        /* 標題 */
+        .persona-block h4 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0.9;
+        }
+
+        /* icon */
+        .persona-block h4 i {
+            color: #9b8cff;
+        }
+
+        /* list */
+        .persona-block ul {
+            padding-left: 20px;
+        }
+
+        .persona-block li {
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+            opacity: 0.85;
+        }
+
+        /* hover 微動畫 */
+        .persona-card:hover .persona-top img {
+            transform: scale(1.05);
+        }
+
+        /* ========================= */
+        /* 📱 手機版 */
+        /* ========================= */
+
+        @media (max-width: 768px) {
+
+            .persona-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .persona-card {
+                padding: 22px;
+            }
+
+            .persona-top img {
+                width: 56px;
+                height: 56px;
+            }
+
+            .persona-name {
+                font-size: 16px;
+            }
+
+            .persona-desc {
+                font-size: 13px;
+            }
+
+            .persona-block li {
+                font-size: 13px;
+            }
+        }
+
+
+        /* ========================= */
+        /* 📱 Mobile RWD */
+        /* ========================= */
+        @media (max-width: 768px) {
+
+            /* ===== 全域 ===== */
+            body {
+                font-size: 14px;
+                line-height: 1.7;
+                letter-spacing: 0.3px;
+            }
+
+            .container {
+                width: 90%;
+                padding-top: 90px;
+            }
+
+            /* ===== Hero（🔥重點）===== */
+            .hero h1 {
+                font-size: 30px;
+                letter-spacing: 2px;
+                line-height: 1.3;
+            }
+
+            .hero p {
+                font-size: 13px;
+                opacity: 0.7;
+                margin-top: 6px;
+            }
+
+            /* ===== section 標題（🔥像小熊）===== */
+            .section h2 {
+                font-size: 20px;
+                letter-spacing: 1.2px;
+                margin-bottom: 10px;
+            }
+
+            /* ===== 內文（🔥關鍵）===== */
+            .section p {
+                font-size: 13.5px;
+                line-height: 1.8;
+                opacity: 0.8;
+            }
+
+            /* ===== glass（縮乾淨）===== */
+            .glass {
+                padding: 18px;
+                margin-bottom: 30px;
+                border-radius: 16px;
+            }
+
+            /* ===== project info ===== */
+            .project-info {
+                flex-direction: column;
+                /* 🔥 關鍵：橫排 → 直排 */
+                align-items: center;
+                gap: 18px;
+                margin-top: 24px;
+            }
+
+            .project-item {
+                width: 100%;
+                max-width: 260px;
+                text-align: center;
+            }
+
+            /* label（上面小字） */
+            .label {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+                opacity: 0.5;
+            }
+
+            /* value（下面主字） */
+            .value {
+                font-size: 14px;
+                letter-spacing: 0.5px;
+            }
+
+            /* ===== Feature ===== */
+            .feature-box {
+                font-size: 13px;
+                padding: 14px 18px;
+                border-radius: 20px;
+            }
+
+            /* ===== Persona ===== */
+            .circle {
+                min-width: 46px;
+                height: 46px;
+                font-size: 12px;
+            }
+
+            .node p {
+                font-size: 12.5px;
+            }
+
+            /* ===== UI 圖片 ===== */
+            .ui-grid img {
+                width: 85%;
+                max-width: 240px;
+            }
+
+            /* ===== Test Card ===== */
+            .test-card {
+                padding: 16px;
+            }
+
+            .test-card h4 {
+                font-size: 13px;
+            }
+
+            .test-card li {
+                font-size: 12.5px;
+            }
+
+            /* ===== Nav ===== */
+            .nav {
+                height: 64px;
+                padding: 0 14px;
+            }
+
+            .logo {
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+
+            .menu {
+                gap: 12px;
+                font-size: 12px;
+            }
+
+        }
+
+        /* ===== hamburger ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 30;
+        }
+
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: #fff;
+            transition: .3s;
+        }
+
+        /* ===== mobile menu ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+
+            background: rgba(15, 14, 30, .85);
+            backdrop-filter: blur(16px);
+
+            border: 1px solid rgba(140, 150, 255, .2);
+            border-radius: 16px;
+
+            padding: 20px 28px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: .3s;
+
+            z-index: 25;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: .8;
+            transition: .3s;
+        }
+
+        .mobile-menu a:hover {
+            opacity: 1;
+        }
+
+        /* 打開 */
+        .mobile-menu.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* ===== 手機顯示 ===== */
+        @media (max-width: 480px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="worksOverlay">
+        <div class="works-panel">
+            <button class="close-btn">✕</button>
+
+            <h2 class="works-title">WORKS</h2>
+
+            <!-- 左右切換按鈕 -->
+            <button class="nav-btn left">‹</button>
+            <button class="nav-btn right">›</button>
+
+            <div class="carousel">
+                <div class="cards">
+                    <!-- Web -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card1.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card1.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>海好有你</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>
+                            SDGs14 海洋保育互動網站，
+                            透過資訊與互動設計讓使用者理解海洋污染議題，
+                            並鼓勵參與環境行動。
+                        </p>
+
+                        <a href="../ocean/ocean.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+                    <!-- Web -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card-image.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card-image.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>修起來</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>
+                            SDGs14 海洋保育互動網站，
+                            透過資訊與互動設計讓使用者理解海洋污染議題，
+                            並鼓勵參與環境行動。
+                        </p>
+
+                        <a href="../image-editing/image.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+
+                    <!-- App -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card2.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card2.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>咖啡廳點餐 App</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/androidstudio.JPG" alt="">
+                                <span>Android Studio</span>
+                            </div>
+                        </div>
+                        <p>
+                            以 Android Studio 開發的行動點餐應用程式，
+                            提供咖啡與甜點搜尋、加入購物車與結帳流程。
+                        </p>
+
+                        <a href="../coffee/coffee.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+
+                    <!-- Figma -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card3.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card3.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>Invisible Mask</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/figma.PNG" alt="">
+                                <span>Figma</span>
+                            </div>
+                        </div>
+                        <p>
+                            是一款以 Figma 設計的美妝 App，
+                            結合 AI 臉部分析與 AR 試妝，
+                            打造快速且個人化的妝容體驗。
+                        </p>
+
+                        <a href="../mask/mask.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+                    <!-- Figma -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card_familymart.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card_familymart.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>FamilyMart App Redesign</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/figma.PNG" alt="">
+                                <span>Figma</span>
+                            </div>
+                        </div>
+                        <p>
+                            針對全家 App 進行 UI/UX 改版，
+                            聚焦高頻使用情境，優化操作流程與資訊架構，
+                            提升結帳效率與使用體驗。
+                        </p>
+
+                        <a href="./family.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+                    <!-- Unity -->
+                    <div class="work-card image-slider-card">
+                        <div class="card-media">
+                            <div class="slider">
+                                <div class="track">
+                                    <img src="../card/card4.PNG" class="slide active">
+                                    <img src="../draw/spring-bg.PNG" class="slide">
+                                    <img src="../draw/summer-bg.PNG" class="slide">
+                                    <img src="../draw/autumn-bg.PNG" class="slide">
+                                    <img src="../draw/winter-bg.PNG" class="slide">
+                                    <img src="../draw/space-bg.PNG" class="slide">
+                                </div>
+                            </div>
+                        </div>
+                        <h3>小熊歷險記</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/procreate.JPG" alt="">
+                                <span>Procreate</span>
+                            </div>
+
+                            <div class="tool">
+                                <img src="../icon/ppt.JPG" alt="">
+                                <span>PowerPoint</span>
+                            </div>
+                        </div>
+                        <p>童話風卡牌互動遊戲，透過插畫敘事與四季場景變化，呈現角色的成長歷程與情感體驗。</p>
+                        <a href="../draw/draw.html">
+                            <button>View Project</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- ✅ 放這裡！！！ -->
+            <div class="carousel-dots"></div>
+        </div>
+    </div>
+    <nav class="nav">
+        <div class="logo">Yi Zhen Huang</div>
+        <ul class="menu">
+            <li><a href="../index.html">Home</a></li>
+            <li>Works</li>
+            <li><a href="../about/about.html">About</a></li>
+        </ul>
+        <!-- hamburger -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <!-- mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="#" id="mobileWorksBtn">Works</a>
+        <a href="../about/about.html">About</a>
+    </div>
+    <!-- Hero -->
+    <div class="container">
+
+        <div class="hero">
+
+            <h1>FamilyMart App <br>UX Redesign</h1>
+            <p>優化便利商店高頻使用情境，提升操作效率</p>
+
+            <div class="project-info">
+
+                <div class="project-item">
+                    <span class="label">Project Type</span>
+                    <span class="value">UX/UI Design Project</span>
+                </div>
+
+                <div class="project-item">
+                    <span class="label">Tools</span>
+                    <span class="value">Figma / Prototyping</span>
+                </div>
+
+                <div class="project-item">
+                    <span class="label">Team / Role</span>
+                    <span class="value">Solo Project<br>UX Research / UI Design</span>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Info -->
+        <div class="glass section">
+            <h2>Project Overview</h2>
+            <p>
+                本專案針對全家便利商店 App 進行 UI/UX 改版，
+                聚焦於「高頻使用情境」，優化資訊架構與操作流程，
+                提升使用效率與決策速度。
+            </p>
+
+            <img src="./mockup.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+
+
+        <div class="glass section">
+            <h2>User Flow</h2>
+            <p>
+                本設計聚焦兩大核心流程：快速兌換商品與快速轉贈商品，
+                讓使用者在最少步驟內完成任務。
+            </p>
+            <img src="./userflow1.png" style="width:100%; margin-top:40px; border-radius:12px;">
+            <img src="./userflow2.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+
+        <div class="glass section">
+            <h2>Key Features</h2>
+            <p>核心功能與使用者價值</p>
+
+            <div class="features">
+
+                <div class="feature-row">
+                    <div class="feature-box left">
+                        高頻功能前置（條碼 / 支付 / 兌換）
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="feature-box right">
+                        降低操作步驟，提升結帳效率
+                    </div>
+                </div>
+
+                <div class="feature-row">
+                    <div class="feature-box left">
+                        「你現在最需要」任務導向
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="feature-box right">
+                        使用者可快速知道當下要做什麼
+                    </div>
+                </div>
+
+                <div class="feature-row">
+                    <div class="feature-box left">
+                        門市庫存 + 偏好門市提示
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="feature-box right">
+                        一眼判斷哪裡可以兌換
+                    </div>
+                </div>
+
+                <div class="feature-row">
+                    <div class="feature-box left">
+                        一鍵轉贈 + 常用對象
+                    </div>
+                    <div class="arrow">→</div>
+                    <div class="feature-box right">
+                        降低送禮流程成本
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="glass section">
+            <h2>Persona</h2>
+            <p>針對不同使用情境，建立兩種典型使用者輪廓</p>
+
+            <div class="persona-grid">
+
+                <!-- Persona 1 -->
+                <div class="persona-card">
+
+                    <div class="persona-top">
+                        <img src="./persona1.png">
+                        <div>
+                            <div class="persona-name">林子翔</div>
+                            <div class="persona-tag">28歲｜上班族</div>
+                        </div>
+                    </div>
+
+                    <p class="persona-desc">
+                        上班途中或午休，用最少時間完成購買，之後再找方便的門市兌換
+                    </p>
+
+                    <div class="persona-block">
+                        <h4><i class="fa-solid fa-bullseye"></i>目標</h4>
+                        <ul>
+                            <li>用最短時間完成購買與兌換</li>
+                            <li>清楚掌握可使用商品</li>
+                        </ul>
+                    </div>
+
+                    <div class="persona-block">
+                        <h4><i class="fa-solid fa-bolt"></i>動機</h4>
+                        <ul>
+                            <li>時間零碎，不想研究介面</li>
+                            <li>希望流程穩定、不出錯</li>
+                        </ul>
+                    </div>
+
+                    <div class="persona-block">
+                        <h4><i class="fa-solid fa-triangle-exclamation"></i>痛點</h4>
+                        <ul>
+                            <li>功能分散，要先思考去哪</li>
+                            <li>不清楚門市庫存，怕白跑</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+
+                <!-- Persona 2 -->
+                <div class="persona-card">
+
+                    <div class="persona-top">
+                        <img src="./persona2.png">
+                        <div>
+                            <div class="persona-name">陳怡安</div>
+                            <div class="persona-tag">24歲｜學生</div>
+                        </div>
+                    </div>
+
+                    <p class="persona-desc">
+                        臨時需要送禮，用最快方式把商品轉贈給對方
+                    </p>
+
+                    <div class="persona-block">
+                        <h4><i class="fa-solid fa-bullseye"></i>目標</h4>
+                        <ul>
+                            <li>快速完成送禮</li>
+                            <li>確保對方能順利兌換</li>
+                        </ul>
+                    </div>
+
+                    <div class="persona-block">
+                        <h4><i class="fa-solid fa-bolt"></i>動機</h4>
+                        <ul>
+                            <li>情境突然發生</li>
+                            <li>希望送禮流程自然不尷尬</li>
+                        </ul>
+                    </div>
+
+                    <div class="persona-block">
+                        <h4><i class="fa-solid fa-triangle-exclamation"></i>痛點</h4>
+                        <ul>
+                            <li>流程繁瑣需多次確認</li>
+                            <li>每次都要重新找對象</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="glass section">
+            <h2>Design Opportunity</h2>
+            <p>
+                如何讓使用者在「趕時間」的情境下，
+                能快速完成購買、兌換與轉贈，
+                並降低資訊搜尋與決策成本？
+            </p>
+
+        </div>
+        <div class="glass section">
+            <h2>User Research</h2>
+            <p>
+                透過 App Store 評價分析，整理出三大使用痛點：
+                功能層級混亂、決策負擔過高、門市資訊不直覺，
+                作為本次 UI/UX 改版依據。
+            </p>
+
+        </div>
+
+        <!-- UI DESIGN（Behance風） -->
+        <div class="glass section">
+            <h2>UI Design</h2>
+            <p>核心介面設計與使用流程展示</p>
+
+            <!-- HOME -->
+            <div class="ui-block">
+                <h3>Home</h3>
+                <div class="ui-grid">
+                    <img src="./home.png">
+                </div>
+            </div>
+
+            <div class="ui-block">
+                <h3>Payment</h3>
+                <div class="ui-grid">
+                    <img src="./pay1.png">
+                    <img src="./pay2.png">
+                </div>
+            </div>
+
+            <div class="ui-block">
+                <h3>隨買跨店取</h3>
+                <div class="ui-grid">
+                    <img src="./shop1.png">
+                    <img src="./shop2.png">
+                    <img src="./shop3.png">
+                </div>
+            </div>
+
+            <div class="ui-block">
+                <h3>My Items</h3>
+                <div class="ui-grid">
+                    <img src="./Item1.png">
+                    <img src="./Item3.png">
+                    <img src="./Item4.png">
+                </div>
+            </div>
+
+            <div class="ui-block">
+                <h3>User Profile</h3>
+                <div class="ui-grid">
+                    <img src="./profile1.png">
+                    <img src="./profile2.png">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="glass section">
+            <h2>Structure</h2>
+            <p>
+                透過資訊架構規劃使用流程，
+                確保使用者能以最少步驟完成操作。
+            </p>
+            <img src="./IA.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+        <div class="glass section">
+            <h2>Design system</h2>
+            <p>建立一致的視覺規範與元件系統，提升介面一致性與開發效率。</p>
+            <img src="./design1.png" style="width:100%; margin-top:40px; border-radius:12px;">
+            <img src="./design2.png" style="width:100%; margin-top:40px; border-radius:12px;">
+            <img src="./design3.png" style="width:100%; margin-top:40px; border-radius:12px;">
+            <img src="./design4.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+
+    </div>
+    </div>
+    <!-- Prototype -->
+    <div class="glass section">
+
+        <h2>Prototype</h2>
+
+        <p>
+            點擊下方體驗完整互動流程
+        </p>
+
+        <div class="demo">
+
+            <a href="https://www.figma.com/proto/WM4D3S94pWOfELhPwRd05R/%E6%9C%9F%E6%9C%AB?node-id=135-653&starting-point-node-id=135%3A653&t=HoGAAn8JleGkj9dM-1"
+                target="_blank">
+                View Figma Prototype
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <section class="footer">
+        <p>© Yi Zhen Huang Portfolio</p>
+    </section>
+    <script src="../workcard.js"></script>
+    <script>
+        /* ============================= */
+        /* Scroll Reveal */
+        /* ============================= */
+
+        const sections = document.querySelectorAll(".section");
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                }
+            });
+        }, {
+            threshold: 0.05
+        });
+
+
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        /* ============================= */
+        /* Hamburger Menu */
+        /* ============================= */
+
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        hamburger.addEventListener("click", () => {
+            mobileMenu.classList.toggle("show");
+        });
+        /* 點選選單自動關閉（手機體驗更好） */
+        document.querySelectorAll(".menu li").forEach(item => {
+            item.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                menu.classList.remove("active");
+            });
+        });
+    </script>
+</body>
+
+</html>
