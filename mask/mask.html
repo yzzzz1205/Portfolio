@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invisible Mask | Portfolio</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../workcard.css">
+    <link rel="icon" href="../logo.PNG">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #05040a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top, #1b1a2f, #05040a 70%);
+            color: #eae8ff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* container */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            padding-top: 120px;
+            flex: 1;
+        }
+
+        /* glass card */
+
+        .glass {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(140, 150, 255, .15);
+            border-radius: 20px;
+            padding: 36px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 60px;
+        }
+
+        /* section */
+
+        .section {
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+
+            transition: all .6s ease .2s;
+        }
+
+        .section.show h2 {
+
+            opacity: 1;
+            transform: translateY(0);
+
+        }
+
+        .section p {
+            max-width: 720px;
+            margin: auto;
+            line-height: 1.8;
+            opacity: .85;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+
+        /* ===== 導覽列 ===== */
+        .nav {
+            height: 100px;
+            padding: 0 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 20;
+
+            background: rgba(15, 14, 30, .45);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(160, 160, 255, .08);
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            letter-spacing: 3px;
+            opacity: .9;
+        }
+
+        .menu {
+            display: flex;
+            gap: 56px;
+            list-style: none;
+        }
+
+        .menu li {
+            position: relative;
+            font-size: 14px;
+            letter-spacing: 1.2px;
+            cursor: pointer;
+            opacity: .7;
+            transition: .4s;
+        }
+
+        /* 修正 nav a 樣式 */
+        .menu li a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu li::after {
+            content: '';
+            position: absolute;
+            left: -10%;
+            bottom: -8px;
+            width: 120%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(122, 162, 227, .8),
+                    transparent);
+            opacity: 0;
+            transition: .4s;
+        }
+
+        .menu li:hover {
+            opacity: 1;
+        }
+
+        .menu li:hover::after {
+            opacity: 1;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            letter-spacing: 4px;
+        }
+
+        .hero p {
+            opacity: .7;
+            margin-top: 10px;
+        }
+
+        /* project info layout */
+
+        .project-info {
+
+            margin-top: 40px;
+
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .project-item {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 180px;
+            /* 🔥 關鍵：統一寬度 */
+            text-align: center;
+        }
+
+        .label {
+
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            opacity: .5;
+
+            margin-bottom: 6px;
+
+        }
+
+        .value {
+
+            font-size: 15px;
+            letter-spacing: .5px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .project-item {
+
+            transition: .35s;
+
+        }
+
+        .project-item:hover {
+
+            transform: translateY(-4px);
+
+        }
+
+        .project-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: infoFade 0.8s ease forwards;
+        }
+
+        .project-item:nth-child(1) {
+            animation-delay: .4s;
+        }
+
+        .project-item:nth-child(2) {
+            animation-delay: .6s;
+            text-align: center;
+        }
+
+        .project-item:nth-child(3) {
+            animation-delay: .8s;
+        }
+
+        @keyframes infoFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Info */
+        .info {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .info div {
+            flex: 1;
+            min-width: 200px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .info div {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px;
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(140, 150, 255, 0.2);
+
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .info div:hover {
+            transform: translateY(-5px);
+            border-color: rgba(140, 150, 255, 0.4);
+        }
+
+        /* Video 
+        .video {
+            margin-top: 26px;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 18px;
+            border: 1px solid rgba(140, 150, 255, .2);
+            background: black;
+
+            filter: grayscale(100%) brightness(0.6);
+            transition: filter .4s ease;
+            cursor: pointer;
+            transition: filter .4s ease, transform .4s ease;
+        }
+
+        video:hover {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.02);
+        }
+        */
+        /* ===== Behance UI Layout ===== */
+
+        .ui-block {
+            margin-top: 60px;
+            text-align: left;
+        }
+
+        .ui-block h3 {
+            margin-bottom: 20px;
+            font-size: 20px;
+            opacity: 0.9;
+        }
+
+        /* Grid 排版 */
+        .ui-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            /* 🔥 置中 */
+        }
+
+        /* 圖片（無邊框版本） */
+        .ui-grid img {
+            width: 260px;
+            /* 固定手機寬 */
+            height: 520px;
+            /* 固定手機高 */
+            object-fit: contain;
+            /* 填滿（像真手機） */
+            border-radius: 28px;
+            transition: 0.4s;
+        }
+
+        .ui-grid img:hover {
+            transform: scale(1.04);
+        }
+
+        /* Prototype 按鈕 */
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 28px;
+            border-radius: 30px;
+            border: 1px solid rgba(140, 150, 255, .4);
+            text-decoration: none;
+            color: #eae8ff;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: rgba(140, 150, 255, .15);
+        }
+
+
+
+        /* 卡片外框（微發光） */
+        .item {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(140, 150, 255, 0.08);
+        }
+
+        /* 圖片 */
+        .item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s ease;
+        }
+
+        /* hover 放大 */
+        .item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* 遮罩（升級版） */
+        .overlay {
+            position: absolute;
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(4px);
+
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.4s;
+        }
+
+        /* 顯示 */
+        .item:hover .overlay {
+            opacity: 1;
+        }
+
+        /* 文字 */
+        .overlay p {
+            color: #fff;
+            font-size: 15px;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+
+        /* demo button */
+
+        .demo {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .demo a {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 24px;
+            border: 1px solid rgba(140, 150, 255, .4);
+            color: #fff;
+            text-decoration: none;
+            margin: 10px;
+            transition: .3s;
+        }
+
+        .demo a:hover {
+            background: rgba(140, 150, 255, .25);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            background: transparent;
+            opacity: 0.5;
+            padding: 40px 0;
+        }
+
+        /* 滾動動畫 */
+        .hero h1 {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroTitle 1s ease forwards;
+        }
+
+        .hero p {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroText 1s ease forwards;
+            animation-delay: .3s;
+        }
+
+        .hero .info {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroText 1s ease forwards;
+            animation-delay: .6s;
+        }
+
+        @keyframes heroTitle {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroText {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+
+            opacity: 0;
+            transform: translateY(60px) scale(.98);
+
+            transition:
+                opacity 1s ease,
+                transform 1s ease;
+
+        }
+
+        .section.show {
+
+            opacity: 1;
+            transform: translateY(0) scale(1);
+
+        }
+
+        /* ========================= */
+        /* Key Features */
+        /* ========================= */
+
+        .features {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* 每一列 */
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 80px 1fr;
+            /* 左 中 右 */
+            align-items: center;
+            gap: 20px;
+        }
+
+
+        /* 左右方塊 */
+        .feature-box {
+            padding: 20px 30px;
+            border-radius: 30px;
+            min-width: 260px;
+            max-width: 360px;
+
+            font-size: 15px;
+            letter-spacing: 1px;
+            text-align: center;
+
+            background: rgba(140, 150, 255, 0.15);
+            border: 1px solid rgba(140, 150, 255, 0.4);
+
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        /* 左右顏色微差 */
+        .feature-box.left {
+            background: rgba(140, 150, 255, 0.2);
+            justify-self: end;
+        }
+
+        .feature-box.right {
+            background: rgba(140, 150, 255, 0.1);
+            justify-self: start;
+        }
+
+        /* hover 效果 */
+        .feature-box:hover {
+            transform: translateY(-4px);
+            border-color: rgba(140, 150, 255, 0.7);
+        }
+
+        /* 箭頭 */
+        .arrow {
+            text-align: center;
+            font-size: 24px;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+        /* hover 連動 */
+        .feature-row:hover .arrow {
+            transform: translateX(6px);
+            opacity: 1;
+        }
+
+        /* ========================= */
+        /* 📱 手機版 */
+        /* ========================= */
+
+        @media (max-width: 768px) {
+
+            .feature-row {
+                grid-template-columns: 1fr;
+                /* 變直排 */
+                text-align: center;
+            }
+
+            .feature-box.left,
+            .feature-box.right {
+                justify-self: center;
+            }
+
+            .arrow {
+                transform: rotate(90deg);
+            }
+
+            .feature-row:hover .arrow {
+                transform: rotate(90deg) translateX(6px);
+            }
+        }
+
+
+        /* ========================= */
+        /* Persona 升級版 */
+        /* ========================= */
+
+        .persona-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 80px;
+            position: relative;
+        }
+
+        /* 左右區 */
+        .persona-side {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            width: 28%;
+        }
+
+        /* 中間人物 */
+        .persona-center {
+            text-align: center;
+            position: relative;
+        }
+
+        .persona-center img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .persona-center h3 {
+            margin-top: 14px;
+            font-size: 18px;
+        }
+
+        /* 節點 */
+        .node {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+        }
+
+        /* 左右對齊 */
+        .left .node {
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        .right .node {
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        /* 圓（更精緻） */
+        .circle {
+            min-width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 1px solid rgba(140, 150, 255, 0.5);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 13px;
+            letter-spacing: 1px;
+
+            background: radial-gradient(circle, rgba(140, 150, 255, 0.2), transparent);
+            backdrop-filter: blur(6px);
+
+            transition: 0.3s;
+        }
+
+        /* hover 微互動 */
+        .node:hover .circle {
+            transform: scale(1.1);
+            border-color: rgba(140, 150, 255, 0.8);
+        }
+
+        /* 文字 */
+        .node p {
+            max-width: 180px;
+            font-size: 13px;
+            opacity: 0.85;
+        }
+
+        /* ✨ 連接線（重點） */
+        .node::after {
+            content: "";
+            position: absolute;
+            width: 60px;
+            height: 1px;
+            background: rgba(140, 150, 255, 0.2);
+        }
+
+        .left .node::after {
+            right: -60px;
+        }
+
+        .right .node::after {
+            left: -60px;
+        }
+
+        /* ========================= */
+        /* 手機優化 */
+        /* ========================= */
+
+        @media (max-width: 768px) {
+
+            .persona-wrap {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .persona-side {
+                width: 100%;
+                gap: 20px;
+            }
+
+            .node {
+                justify-content: flex-start !important;
+                text-align: left !important;
+            }
+
+            .node::after {
+                display: none;
+            }
+
+            .persona-center img {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        /* ========================= */
+        /* User Testing */
+        /* ========================= */
+
+        .test-grid {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .test-card {
+            flex: 1;
+            min-width: 220px;
+            max-width: 280px;
+
+            padding: 20px;
+            border-radius: 16px;
+
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(140, 150, 255, 0.2);
+
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .test-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(140, 150, 255, 0.5);
+        }
+
+        .test-card h4 {
+            margin-bottom: 10px;
+            font-size: 14px;
+            opacity: 0.8;
+            letter-spacing: 1px;
+        }
+
+        .test-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .test-card li {
+            font-size: 13px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        /* ========================= */
+        /* SUS */
+        /* ========================= */
+
+        .sus-block {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .sus-block h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .sus-bar {
+            width: 100%;
+            max-width: 400px;
+            height: 8px;
+            margin: 20px auto;
+
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .sus-fill {
+            width: 82%;
+            height: 100%;
+            background: linear-gradient(90deg, #7aa2e3, #9b8cff);
+        }
+
+        /* 使用者分數 */
+        .sus-users {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        /* ========================= */
+        /* 📱 Mobile */
+        /* ========================= */
+
+        @media (max-width: 768px) {
+
+            .test-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .sus-users {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+
+        /* ========================= */
+        /* 📱 Mobile RWD */
+        /* ========================= */
+        @media (max-width: 768px) {
+
+            /* ===== 全域 ===== */
+            body {
+                font-size: 14px;
+                line-height: 1.7;
+                letter-spacing: 0.3px;
+            }
+
+            .container {
+                width: 90%;
+                padding-top: 90px;
+            }
+
+            /* ===== Hero（🔥重點）===== */
+            .hero h1 {
+                font-size: 30px;
+                letter-spacing: 2px;
+                line-height: 1.3;
+            }
+
+            .hero p {
+                font-size: 13px;
+                opacity: 0.7;
+                margin-top: 6px;
+            }
+
+            /* ===== section 標題（🔥像小熊）===== */
+            .section h2 {
+                font-size: 20px;
+                letter-spacing: 1.2px;
+                margin-bottom: 10px;
+            }
+
+            /* ===== 內文（🔥關鍵）===== */
+            .section p {
+                font-size: 13.5px;
+                line-height: 1.8;
+                opacity: 0.8;
+            }
+
+            /* ===== glass（縮乾淨）===== */
+            .glass {
+                padding: 18px;
+                margin-bottom: 30px;
+                border-radius: 16px;
+            }
+
+            /* ===== project info ===== */
+            .project-info {
+                flex-direction: column;
+                /* 🔥 關鍵：橫排 → 直排 */
+                align-items: center;
+                gap: 18px;
+                margin-top: 24px;
+            }
+
+            .project-item {
+                width: 100%;
+                max-width: 260px;
+                text-align: center;
+            }
+
+            /* label（上面小字） */
+            .label {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+                opacity: 0.5;
+            }
+
+            /* value（下面主字） */
+            .value {
+                font-size: 14px;
+                letter-spacing: 0.5px;
+            }
+
+            /* ===== Feature ===== */
+            .feature-box {
+                font-size: 13px;
+                padding: 14px 18px;
+                border-radius: 20px;
+            }
+
+            /* ===== Persona ===== */
+            .circle {
+                min-width: 46px;
+                height: 46px;
+                font-size: 12px;
+            }
+
+            .node p {
+                font-size: 12.5px;
+            }
+
+            /* ===== UI 圖片 ===== */
+            .ui-grid img {
+                width: 85%;
+                max-width: 240px;
+            }
+
+            /* ===== Test Card ===== */
+            .test-card {
+                padding: 16px;
+            }
+
+            .test-card h4 {
+                font-size: 13px;
+            }
+
+            .test-card li {
+                font-size: 12.5px;
+            }
+
+            /* ===== Nav ===== */
+            .nav {
+                height: 64px;
+                padding: 0 14px;
+            }
+
+            .logo {
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+
+            .menu {
+                gap: 12px;
+                font-size: 12px;
+            }
+
+        }
+
+        /* ===== hamburger ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 30;
+        }
+
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: #fff;
+            transition: .3s;
+        }
+
+        /* ===== mobile menu ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+
+            background: rgba(15, 14, 30, .85);
+            backdrop-filter: blur(16px);
+
+            border: 1px solid rgba(140, 150, 255, .2);
+            border-radius: 16px;
+
+            padding: 20px 28px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: .3s;
+
+            z-index: 25;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: .8;
+            transition: .3s;
+        }
+
+        .mobile-menu a:hover {
+            opacity: 1;
+        }
+
+        /* 打開 */
+        .mobile-menu.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* ===== 手機顯示 ===== */
+        @media (max-width: 480px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+           <div id="worksOverlay">
+        <div class="works-panel">
+            <button class="close-btn">✕</button>
+
+            <h2 class="works-title">WORKS</h2>
+
+            <!-- 左右切換按鈕 -->
+            <button class="nav-btn left">‹</button>
+            <button class="nav-btn right">›</button>
+
+            <div class="carousel">
+                <div class="cards">
+                    <!-- Web -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card1.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card1.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>海好有你</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>
+                            SDGs14 海洋保育互動網站，
+                            透過資訊與互動設計讓使用者理解海洋污染議題，
+                            並鼓勵參與環境行動。
+                        </p>
+
+                        <a href="../ocean/ocean.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+                    <!-- Web -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card-image.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card-image.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>修起來</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>
+                            線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，
+                            讓使用者透過直覺操作快速完成個人化影像創作。
+                        </p>
+
+                        <a href="../image-editing/image.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+
+                    <!-- App -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card2.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card2.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>咖啡廳點餐 App</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/androidstudio.JPG" alt="">
+                                <span>Android Studio</span>
+                            </div>
+                        </div>
+                        <p>
+                            以 Android Studio 開發的行動點餐應用程式，
+                            提供咖啡與甜點搜尋、加入購物車與結帳流程。
+                        </p>
+
+                        <a href="../coffee/coffee.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+
+                    <!-- Figma -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card3.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card3.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>Invisible Mask</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/figma.PNG" alt="">
+                                <span>Figma</span>
+                            </div>
+                        </div>
+                        <p>
+                            是一款以 Figma 設計的美妝 App，
+                            結合 AI 臉部分析與 AR 試妝，
+                            打造快速且個人化的妝容體驗。
+                        </p>
+
+                        <a href="./mask.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+                    <!-- Figma -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card_familymart.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card_familymart.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>FamilyMart App Redesign</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/figma.PNG" alt="">
+                                <span>Figma</span>
+                            </div>
+                        </div>
+                        <p>
+                            針對全家 App 進行 UI/UX 改版，
+                            聚焦高頻使用情境，優化操作流程與資訊架構，
+                            提升結帳效率與使用體驗。
+                        </p>
+
+                        <a href="../familymart/family.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+                    <!-- Unity -->
+                    <div class="work-card image-slider-card">
+                        <div class="card-media">
+                            <div class="slider">
+                                <div class="track">
+                                    <img src="../card/card4.PNG" class="slide active">
+                                    <img src="../draw/spring-bg.PNG" class="slide">
+                                    <img src="../draw/summer-bg.PNG" class="slide">
+                                    <img src="../draw/autumn-bg.PNG" class="slide">
+                                    <img src="../draw/winter-bg.PNG" class="slide">
+                                    <img src="../draw/space-bg.PNG" class="slide">
+                                </div>
+                            </div>
+                        </div>
+                        <h3>小熊歷險記</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/procreate.JPG" alt="">
+                                <span>Procreate</span>
+                            </div>
+
+                            <div class="tool">
+                                <img src="../icon/ppt.JPG" alt="">
+                                <span>PowerPoint</span>
+                            </div>
+                        </div>
+                        <p>童話風卡牌互動遊戲，透過插畫敘事與四季場景變化，呈現角色的成長歷程與情感體驗。</p>
+                        <a href="../draw/draw.html">
+                            <button>View Project</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- ✅ 放這裡！！！ -->
+            <div class="carousel-dots"></div>
+        </div>
+    </div>
+    <nav class="nav">
+        <div class="logo">Yi Zhen Huang</div>
+        <ul class="menu">
+            <li><a href="../index.html">Home</a></li>
+            <li>Works</li>
+            <li><a href="../about/about.html">About</a></li>
+        </ul>
+        <!-- hamburger -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <!-- mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="#" id="mobileWorksBtn">Works</a>
+        <a href="../about/about.html">About</a>
+    </div>
+    <!-- Hero -->
+    <div class="container">
+
+        <div class="hero">
+
+            <h1>Invisible Mask</h1>
+            <p>AI Makeup Experience / AR Try-On / Beauty Tech App</p>
+
+            <div class="project-info">
+
+                <div class="project-item">
+                    <span class="label">Project Type</span>
+                    <span class="value">UX/UI Design Project</span>
+                </div>
+
+                <div class="project-item">
+                    <span class="label">Tools</span>
+                    <span class="value">Figma / Prototyping</span>
+                </div>
+
+                <div class="project-item">
+                    <span class="label">Team / Role</span>
+                    <span class="value">
+                        5 People Team<br>
+                        UX Collab / UI (Solo)
+                    </span>
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- Info -->
+        <div class="glass section">
+            <h2>Project Overview</h2>
+            <p>
+                Invisible Mask 是一種可即時貼附的完整妝容技術（隱形面膜），
+                結合 AI 臉部分析與 AR 試妝，讓使用者能在短時間內完成「分析 → 試妝 → 套用」的妝容流程。
+            </p>
+
+            <p style="margin-top:20px;">
+                本產品以「省時、省力」為核心，重新定義妝容的使用方式——
+                妝容不再只是逐步完成的過程，而是一種可以被快速套用與流動的數位商品。
+            </p>
+
+            <p style="margin-top:20px;">
+                Invisible Mask 並不取代傳統化妝品，而是提供另一種選擇：
+                對於仍然享受化妝過程的人，傳統市場依然存在；
+                而對於追求效率的使用者，則能以更低門檻與時間成本，
+                快速達到「適合出門的狀態」。
+            </p>
+            <p style="margin-top:24px; font-style: italic; opacity:0.8;">
+                “Makeup becomes something you can wear instantly.”
+            </p>
+            <img src="./mockupui.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+
+
+        <div class="glass section">
+            <h2>User Flow</h2>
+            <p>
+                使用者可透過簡單流程快速完成妝容
+            </p>
+            <img src="./userflow.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+
+        <div class="glass section">
+            <h2>Key Features</h2>
+            <p>核心功能與使用者價值</p>
+
+            <div class="features">
+
+                <!-- 1 -->
+                <div class="feature-row">
+                    <div class="feature-box left">
+                        AI 臉部分析
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="feature-box right">
+                        精準找到最適合你的妝容
+                    </div>
+                </div>
+
+                <!-- 2 -->
+                <div class="feature-row">
+                    <div class="feature-box left">
+                        AR 即時試妝
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="feature-box right">
+                        真實呈現妝效，降低試錯成本
+                    </div>
+                </div>
+
+                <!-- 3 -->
+                <div class="feature-row">
+                    <div class="feature-box left">
+                        妝容商品化
+                    </div>
+
+                    <div class="arrow">→</div>
+
+                    <div class="feature-box right">
+                        讓美妝變成可分享與交易的內容
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="glass section">
+            <h2>Persona & Empathy Map</h2>
+            <p>
+                25 歲，上班族、重度社群使用者，追求快速且自然的妝容體驗
+            </p>
+            <p style="margin-top:10px; opacity:0.7; font-size:13px;">
+                目標：快速完成精緻妝容並維持社群形象
+            </p>
+
+            <div class="persona-wrap">
+
+                <!-- 左 -->
+                <div class="persona-side left">
+
+                    <div class="node">
+                        <div class="circle">聽</div>
+                        <p>同事與朋友推薦保養與化妝品</p>
+                    </div>
+
+                    <div class="node">
+                        <div class="circle">看</div>
+                        <p>IG / 小紅書上美妝影片與教學</p>
+                    </div>
+
+                    <div class="node">
+                        <div class="circle">想</div>
+                        <p>快速完成自然又精緻的妝容</p>
+                    </div>
+
+                </div>
+
+                <!-- 中 -->
+                <div class="persona-center">
+                    <img src="./persona.PNG">
+                    <h3>周沐妍</h3>
+                </div>
+
+                <!-- 右 -->
+                <div class="persona-side right">
+
+                    <div class="node">
+                        <div class="circle">做</div>
+                        <p>反覆嘗試不同妝容與產品</p>
+                    </div>
+
+                    <div class="node">
+                        <div class="circle">痛點</div>
+                        <p>選擇困難、耗時、試妝不自然</p>
+                    </div>
+
+                    <div class="node">
+                        <div class="circle">獲得</div>
+                        <p>快速找到適合妝容並提升效率</p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="glass section">
+            <h2>Design Opportunity</h2>
+            <p>
+                如何在「快速」與「自然」之間取得平衡，
+                讓使用者在最短時間內完成真實且適合自己的妝容體驗？
+            </p>
+
+        </div>
+        <div class="glass section">
+            <h2>User Research</h2>
+            <p>
+                透過使用者訪談，發現化妝流程耗時、選擇困難以及濾鏡不自然為主要痛點，
+                因此設計出結合 AI 分析與 AR 試妝的解決方案。
+            </p>
+            <img src="./research.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+
+        <!-- Service Blueprint -->
+        <div class="glass section">
+            <h2>Service Blueprint</h2>
+            <p>透過服務藍圖分析前台與後台系統如何支撐整體體驗。</p>
+
+            <img src="./blueprint.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+
+        <!-- Journey Map -->
+        <div class="glass section">
+            <h2>User Journey Map</h2>
+            <p>以下呈現一般使用者從接觸產品到完成妝容的完整體驗流程。</p>
+
+            <img src="./journey.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+
+        <!-- UI DESIGN（Behance風） -->
+        <div class="glass section">
+            <h2>UI Design</h2>
+            <p>核心介面設計與使用流程展示</p>
+
+            <!-- HOME -->
+            <div class="ui-block">
+                <h3>Home</h3>
+                <div class="ui-grid">
+                    <img src="./home.png">
+                </div>
+            </div>
+
+            <!-- ANALYSIS -->
+            <div class="ui-block">
+                <h3>AI Analysis</h3>
+                <div class="ui-grid">
+                    <img src="./analysis1.png">
+                    <img src="./analysis2.png">
+                </div>
+            </div>
+
+            <!-- AR -->
+            <div class="ui-block">
+                <h3>AR Try-On</h3>
+                <div class="ui-grid">
+                    <img src="./ar1.png">
+                    <img src="./ar2.png">
+                    <img src="./ar3.png">
+                </div>
+            </div>
+
+            <!-- SHOP -->
+            <div class="ui-block">
+                <h3>Shopping Experience</h3>
+                <div class="ui-grid">
+                    <img src="./shop.png">
+                    <img src="./makeup.png">
+                    <img src="./cart.png">
+                    <img src="./detail.png">
+                    <img src="./make.png">
+                </div>
+            </div>
+
+            <!-- REELS -->
+            <div class="ui-block">
+                <h3>Reels / Social</h3>
+                <div class="ui-grid">
+                    <img src="./reels1.png">
+                    <img src="./reels2.png">
+                    <img src="./reels3.png">
+                </div>
+            </div>
+            <!-- PROFILE -->
+            <div class="ui-block">
+                <h3>User Profile</h3>
+                <div class="ui-grid">
+                    <img src="./profile1.png">
+                    <img src="./profile2.png">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="glass section">
+            <h2>Structure</h2>
+            <p>
+                透過資訊架構規劃使用流程，
+                確保使用者能以最少步驟完成操作。
+            </p>
+            <img src="./IA.png" style="width:100%; margin-top:40px; border-radius:12px;">
+        </div>
+        <div class="glass section">
+            <h2>User Testing</h2>
+            <p>透過任務導向測試，觀察使用者在核心流程中的操作與反應</p>
+
+            <!-- 測試內容 -->
+            <div class="test-grid">
+
+                <!-- 任務 -->
+                <div class="test-card">
+                    <h4>Tasks</h4>
+                    <ul>
+                        <li>找到適合自己的妝容並完成套用</li>
+                        <li>嘗試創作並上架一款妝容</li>
+                        <li>從 Reels 發現妝容並完成購買與再次使用</li>
+                    </ul>
+                </div>
+
+
+                <!-- 發現 -->
+                <div class="test-card">
+                    <h4>Insights</h4>
+                    <ul>
+                        <li>濾鏡操作按鈕不夠直覺，需加強功能提示</li>
+                        <li>創作頁面操作元件（如錢包）辨識度不足</li>
+                        <li>缺少「已購妝容」入口，影響回訪與使用效率</li>
+                    </ul>
+                </div>
+
+
+                <!-- 優化 -->
+                <div class="test-card">
+                    <h4>Iteration</h4>
+                    <ul>
+                        <li>優化濾鏡按鈕設計，提升操作清晰度</li>
+                        <li>放大關鍵功能按鈕，提升可見性</li>
+                        <li>新增「我的濾鏡」入口，提升回訪體驗</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- SUS -->
+            <div class="sus-block">
+
+                <h3>SUS Score</h3>
+                <p>
+                    系統可用性量表（SUS）平均分數為 <strong>87.5 / 100</strong>，
+                    屬於 Excellent 等級，顯示整體使用體驗良好且易於上手。
+                </p>
+
+
+                <!-- 分數條 -->
+                <div class="sus-bar">
+                    <div class="sus-fill"></div>
+                </div>
+
+                <!-- 個別使用者 -->
+                <div class="sus-users">
+                    <span>User A — 87.5</span>
+                    <span>User B — 80</span>
+                    <span>User C — 95</span>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="glass section">
+            <h2>Business Model</h2>
+            <p>
+                平台提供數位妝容與實體隱形面膜，
+                並採用創作者分潤機制（70% / 30%），
+                建立可持續的內容與商業模式。
+            </p>
+
+        </div>
+    </div>
+    <!-- Prototype -->
+    <div class="glass section">
+
+        <h2>Prototype</h2>
+
+        <p>
+            點擊下方體驗完整互動流程
+        </p>
+
+        <div class="demo">
+
+            <a href="https://www.figma.com/proto/N8ZWrLNZWWCMGoSyPPZkOh/%E6%9C%9F%E4%B8%AD?node-id=771-807&starting-point-node-id=771%3A807&t=EOTPstT8IPoStnJP-1"
+                target="_blank">
+                View Figma Prototype
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <section class="footer">
+        <p>© Yi Zhen Huang Portfolio</p>
+    </section>
+    <script src="../workcard.js"></script>
+    <script>
+        /* ============================= */
+        /* Scroll Reveal */
+        /* ============================= */
+
+        const sections = document.querySelectorAll(".section");
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                }
+            });
+        }, {
+            threshold: 0.05
+        });
+
+
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        /* ============================= */
+        /* Hamburger Menu */
+        /* ============================= */
+
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        hamburger.addEventListener("click", () => {
+            mobileMenu.classList.toggle("show");
+        });
+        /* 點選選單自動關閉（手機體驗更好） */
+        document.querySelectorAll(".menu li").forEach(item => {
+            item.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                menu.classList.remove("active");
+            });
+        });
+    </script>
+</body>
+
+</html>

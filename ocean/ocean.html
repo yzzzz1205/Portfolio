@@ -1,0 +1,1615 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <title>海好有你 | Portfolio</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../workcard.css">
+    <link rel="icon" href="../logo.PNG">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #05040a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top, #1b1a2f, #05040a 70%);
+            color: #eae8ff;
+            overflow-x: hidden;
+        }
+
+        /* container */
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: auto;
+            padding-top: 120px;
+            padding-bottom: 100px;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        /* ===== 導覽列 ===== */
+        .nav {
+            height: 100px;
+            padding: 0 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 20;
+
+            background: rgba(15, 14, 30, .45);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(160, 160, 255, .08);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            letter-spacing: 3px;
+            opacity: .9;
+        }
+
+        .menu {
+            display: flex;
+            gap: 56px;
+            list-style: none;
+        }
+
+        .menu li {
+            position: relative;
+            font-size: 14px;
+            letter-spacing: 1.2px;
+            cursor: pointer;
+            opacity: .7;
+            transition: .4s;
+        }
+
+        /* 修正 nav a 樣式 */
+        .menu li a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu li::after {
+            content: '';
+            position: absolute;
+            left: -10%;
+            bottom: -8px;
+            width: 120%;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(122, 162, 227, .8),
+                    transparent);
+            opacity: 0;
+            transition: .4s;
+        }
+
+        .menu li:hover {
+            opacity: 1;
+        }
+
+        .menu li:hover::after {
+            opacity: 1;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+        }
+
+        /* hero */
+
+        .hero {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .hero h1 {
+            font-family: 'Noto Serif TC', serif;
+            font-size: 64px;
+            letter-spacing: 4px;
+        }
+
+        .hero p {
+            opacity: .7;
+            margin-top: 10px;
+        }
+
+        /* project info layout */
+
+        .project-info {
+
+            margin-top: 40px;
+
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+
+            flex-wrap: wrap;
+
+        }
+
+        .project-item {
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 180px;
+            /* 🔥 關鍵：統一寬度 */
+            text-align: center;
+        }
+
+        .label {
+
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            opacity: .5;
+
+            margin-bottom: 6px;
+
+        }
+
+        .value {
+
+            font-size: 15px;
+            letter-spacing: .5px;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .project-item {
+
+            transition: .35s;
+
+        }
+
+        .project-item:hover {
+
+            transform: translateY(-4px);
+
+        }
+
+        .project-item {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: infoFade 0.8s ease forwards;
+        }
+
+        .project-item:nth-child(1) {
+            animation-delay: .4s;
+        }
+
+        .project-item:nth-child(2) {
+            animation-delay: .6s;
+        }
+
+        .project-item:nth-child(3) {
+            animation-delay: .8s;
+        }
+
+        @keyframes infoFade {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* glass card */
+
+        .glass {
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(140, 150, 255, .15);
+            border-radius: 20px;
+            padding: 36px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 60px;
+        }
+
+        /* section */
+
+        .section {
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            margin-bottom: 16px;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+
+            transition: all .6s ease .2s;
+        }
+
+        .section.show h2 {
+
+            opacity: 1;
+            transform: translateY(0);
+
+        }
+
+        .section p {
+            max-width: 720px;
+            margin: auto;
+            line-height: 1.8;
+            opacity: .85;
+        }
+
+        /* project info */
+
+        .info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .info div {
+            font-size: 14px;
+            opacity: .85;
+        }
+
+        /* structure */
+
+        .structure {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .structure div {
+            padding: 10px 18px;
+            border-radius: 20px;
+            border: 1px solid rgba(140, 150, 255, .3);
+            background: rgba(255, 255, 255, .05);
+        }
+
+        /* ===== Site Structure Marquee - 升級版 ===== */
+
+        .structure-marquee {
+            overflow: hidden;
+            margin-top: 30px;
+        }
+
+        .row {
+            display: flex;
+            gap: 18px;
+            width: max-content;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .row1 {
+            animation: marqueeRightToLeft 22s linear infinite;
+        }
+
+        .row2 {
+            margin-left: 120px;
+            animation: marqueeLeftToRight 26s linear infinite;
+        }
+
+        /* pill */
+
+        .pill {
+            padding: 10px 20px;
+            border-radius: 22px;
+            border: 1px solid rgba(140, 150, 255, .35);
+            background: rgba(255, 255, 255, .05);
+            backdrop-filter: blur(12px);
+            white-space: nowrap;
+            font-size: 14px;
+            transition: .3s ease, transform .5s ease;
+            animation: float 3s ease-in-out infinite alternate;
+            cursor: default;
+        }
+
+        /* hover 暫停 + 發光 */
+
+        .row1:hover,
+        .row2:hover {
+            animation-play-state: paused;
+        }
+
+        .pill:hover {
+            box-shadow: 0 0 12px rgba(122, 162, 227, .6), 0 0 24px rgba(143, 134, 201, .45);
+            transform: translateY(-4px);
+        }
+
+        /* float animation */
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-6px);
+            }
+        }
+
+        /* marquee 動畫 */
+
+        @keyframes marqueeRightToLeft {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @keyframes marqueeLeftToRight {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* video */
+
+        .video-card {
+            margin-top: 32px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .video-card:hover {
+            z-index: 10;
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-section {
+            margin-top: 60px;
+            /* 👈 影片區往下推 */
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1200 / 648;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        /* iframe 本體 */
+        .video-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+
+            /* hover 前效果（模擬你原本 video hover） */
+            filter: grayscale(100%) brightness(0.7);
+            transition: all 0.4s ease;
+        }
+
+        /* hover 時變回正常 */
+        .video-card:hover .video-wrapper iframe {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.03);
+        }
+
+        /* contribution grid */
+
+        .contribution-grid {
+
+            margin-top: 32px;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 20px;
+
+        }
+
+        @media (max-width:768px) {
+
+            .contribution-grid {
+
+                grid-template-columns: 1fr 1fr;
+
+            }
+
+        }
+
+        /* card */
+
+        .contribution-card {
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 16px 18px;
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, .05);
+            border: 1px solid rgba(140, 150, 255, .18);
+
+            transition: .35s;
+        }
+
+        .contribution-card i {
+            font-size: 16px;
+            color: #9aa7ff;
+        }
+
+        .contribution-card span {
+            font-size: 14px;
+            opacity: .9;
+        }
+
+        /* hover */
+
+        .contribution-card:hover {
+
+            transform: translateY(-4px);
+
+            border: 1px solid rgba(140, 150, 255, .45);
+
+            box-shadow:
+                0 0 12px rgba(122, 162, 227, .25),
+                0 0 24px rgba(143, 134, 201, .15);
+        }
+
+        /* highlight */
+
+        .contribution-card.highlight {
+
+            border: 1px solid rgba(140, 150, 255, .4);
+
+            background: rgba(140, 150, 255, .08);
+        }
+
+        /* demo button */
+
+        .demo {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .demo a {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 24px;
+            border: 1px solid rgba(140, 150, 255, .4);
+            color: #fff;
+            text-decoration: none;
+            margin: 10px;
+            transition: .3s;
+        }
+
+        .demo a:hover {
+            background: rgba(140, 150, 255, .25);
+        }
+
+        /* 掉落垃圾 */
+        .trash {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background: white;
+            border-radius: 6px;
+            opacity: 0.85;
+
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        #trash-world {
+            position: fixed;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            /* 讓垃圾在最底層 */
+        }
+
+        #trash-world canvas {
+            pointer-events: none;
+        }
+
+        #trash-world canvas {
+            display: block;
+            background: transparent !important;
+        }
+
+        #cleanTrash {
+            position: fixed;
+            top: 110px;
+            /* nav 高度 + margin */
+            right: 40px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(140, 150, 255, .4);
+            background: rgba(255, 255, 255, .08);
+            color: white;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: .3s;
+            z-index: 5;
+            /* 保證在垃圾圖層之上 */
+        }
+
+        #cleanTrash:hover {
+            background: rgba(140, 150, 255, .25);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            background: transparent;
+            opacity: 0.5;
+        }
+
+        /* 滾動動畫 */
+        .hero h1 {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroTitle 1s ease forwards;
+        }
+
+        .hero p {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroText 1s ease forwards;
+            animation-delay: .3s;
+        }
+
+        .hero .info {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: heroText 1s ease forwards;
+            animation-delay: .6s;
+        }
+
+        @keyframes heroTitle {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heroText {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+
+            opacity: 0;
+            transform: translateY(60px) scale(.98);
+
+            transition:
+                opacity 1s ease,
+                transform 1s ease;
+
+        }
+
+        .section.show {
+
+            opacity: 1;
+            transform: translateY(0) scale(1);
+
+        }
+
+        /* =========================
+   📱 Tablet（768px以下）
+========================= */
+        @media (max-width: 768px) {
+
+            /* container */
+            .container {
+                width: 92%;
+                padding-top: 90px;
+                padding-bottom: 60px;
+            }
+
+            /* nav */
+            .nav {
+                height: 70px;
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+
+            .menu {
+                gap: 20px;
+                font-size: 12px;
+            }
+
+            /* hero */
+            .hero h1 {
+                font-size: 36px;
+                letter-spacing: 2px;
+            }
+
+            .hero p {
+                font-size: 13px;
+            }
+
+            /* project info */
+            .project-info {
+                gap: 20px;
+            }
+
+            /* glass */
+            .glass {
+                padding: 24px;
+            }
+
+            /* section */
+            .section {
+                margin: 50px 0;
+            }
+
+            .section h2 {
+                font-size: 22px;
+            }
+
+            .section p {
+                font-size: 14px;
+                line-height: 1.7;
+            }
+
+            .row1 {
+                animation: marqueeRightToLeft 40s linear infinite;
+            }
+
+            .row2 {
+                animation: marqueeLeftToRight 50s linear infinite;
+            }
+
+
+            .structure-marquee {
+                overflow-x: auto;
+            }
+
+            .row {
+                width: max-content;
+            }
+
+            /* pill */
+            .pill {
+                font-size: 13px;
+                padding: 8px 16px;
+            }
+
+            /* video */
+            video {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            /* contribution */
+            .contribution-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Clean 按鈕 */
+            #cleanTrash {
+                top: 80px;
+                right: 20px;
+                font-size: 12px;
+                padding: 8px 14px;
+            }
+
+        }
+
+
+        /* =========================
+   📱 手機（480px以下）
+========================= */
+        @media (max-width: 480px) {
+
+            /* hero */
+            .hero h1 {
+                font-size: 28px;
+            }
+
+            /* menu → 隱藏（避免擠） */
+            .menu {
+                display: none;
+            }
+
+            /* project info 改直排 */
+            .project-info {
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .value {
+                font-size: 13px;
+            }
+
+            /* pill 改更小 */
+            .pill {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .video-section {
+                padding: 40px 20px;
+            }
+
+            .video-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .video-card {
+                transform: none !important;
+                /* 👈 手機取消 hover 放大 */
+            }
+
+            .video-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+
+            /* Clean 按鈕再縮 */
+            #cleanTrash {
+                display: none;
+            }
+
+        }
+
+        /* ===== hamburger ===== */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 30;
+        }
+
+        .hamburger span {
+            width: 22px;
+            height: 2px;
+            background: #fff;
+            transition: .3s;
+        }
+
+        /* ===== mobile menu ===== */
+        .mobile-menu {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+
+            background: rgba(15, 14, 30, .85);
+            backdrop-filter: blur(16px);
+
+            border: 1px solid rgba(140, 150, 255, .2);
+            border-radius: 16px;
+
+            padding: 20px 28px;
+
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-10px);
+            transition: .3s;
+
+            z-index: 25;
+        }
+
+        .mobile-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            opacity: .8;
+            transition: .3s;
+        }
+
+        .mobile-menu a:hover {
+            opacity: 1;
+        }
+
+        /* 打開 */
+        .mobile-menu.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* ===== 手機顯示 ===== */
+        @media (max-width: 480px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+       <div id="worksOverlay">
+        <div class="works-panel">
+            <button class="close-btn">✕</button>
+
+            <h2 class="works-title">WORKS</h2>
+
+            <!-- 左右切換按鈕 -->
+            <button class="nav-btn left">‹</button>
+            <button class="nav-btn right">›</button>
+
+            <div class="carousel">
+                <div class="cards">
+                    <!-- Web -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card1.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card1.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>海好有你</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>
+                            SDGs14 海洋保育互動網站，
+                            透過資訊與互動設計讓使用者理解海洋污染議題，
+                            並鼓勵參與環境行動。
+                        </p>
+
+                        <a href="./ocean.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+                    <!-- Web -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card-image.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card-image.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>修起來</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>
+                            線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，
+                            讓使用者透過直覺操作快速完成個人化影像創作。
+                        </p>
+
+                        <a href="../image-editing/image.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+
+                    <!-- App -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card2.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card2.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>咖啡廳點餐 App</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/androidstudio.JPG" alt="">
+                                <span>Android Studio</span>
+                            </div>
+                        </div>
+                        <p>
+                            以 Android Studio 開發的行動點餐應用程式，
+                            提供咖啡與甜點搜尋、加入購物車與結帳流程。
+                        </p>
+
+                        <a href="../coffee/coffee.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+
+                    <!-- Figma -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card3.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card3.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>Invisible Mask</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/figma.PNG" alt="">
+                                <span>Figma</span>
+                            </div>
+                        </div>
+                        <p>
+                            是一款以 Figma 設計的美妝 App，
+                            結合 AI 臉部分析與 AR 試妝，
+                            打造快速且個人化的妝容體驗。
+                        </p>
+
+                        <a href="../mask/mask.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+                    <!-- Figma -->
+                    <div class="work-card">
+
+                        <div class="card-media">
+
+                            <!-- logo -->
+                            <img src="../card/card_familymart.png" class="card-logo">
+
+                            <!-- hover video -->
+                            <video class="card-video" muted loop>
+                                <source src="../card/card_familymart.mp4" type="video/mp4">
+                            </video>
+
+                        </div>
+
+                        <h3>FamilyMart App Redesign</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/figma.PNG" alt="">
+                                <span>Figma</span>
+                            </div>
+                        </div>
+                        <p>
+                            針對全家 App 進行 UI/UX 改版，
+                            聚焦高頻使用情境，優化操作流程與資訊架構，
+                            提升結帳效率與使用體驗。
+                        </p>
+
+                        <a href="../familymart/family.html">
+                            <button>View Project</button>
+                        </a>
+
+                    </div>
+                    <!-- Unity -->
+                    <div class="work-card image-slider-card">
+                        <div class="card-media">
+                            <div class="slider">
+                                <div class="track">
+                                    <img src="../card/card4.PNG" class="slide active">
+                                    <img src="../draw/spring-bg.PNG" class="slide">
+                                    <img src="../draw/summer-bg.PNG" class="slide">
+                                    <img src="../draw/autumn-bg.PNG" class="slide">
+                                    <img src="../draw/winter-bg.PNG" class="slide">
+                                    <img src="../draw/space-bg.PNG" class="slide">
+                                </div>
+                            </div>
+                        </div>
+                        <h3>小熊歷險記</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/procreate.JPG" alt="">
+                                <span>Procreate</span>
+                            </div>
+
+                            <div class="tool">
+                                <img src="../icon/ppt.JPG" alt="">
+                                <span>PowerPoint</span>
+                            </div>
+                        </div>
+                        <p>童話風卡牌互動遊戲，透過插畫敘事與四季場景變化，呈現角色的成長歷程與情感體驗。</p>
+                        <a href="../draw/draw.html">
+                            <button>View Project</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- ✅ 放這裡！！！ -->
+            <div class="carousel-dots"></div>
+        </div>
+    </div>
+
+    <nav class="nav">
+        <div class="logo">Yi Zhen Huang</div>
+        <ul class="menu">
+            <li><a href="../index.html">Home</a></li>
+            <li>Works</li>
+            <li><a href="../about/about.html">About</a></li>
+        </ul>
+        <!-- hamburger -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    <!-- mobile menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="#" id="mobileWorksBtn">Works</a>
+        <a href="../about/about.html">About</a>
+    </div>
+    <button id="cleanTrash">Clean Ocean</button>
+
+    <div class="container">
+
+        <!-- Hero -->
+
+        <div class="hero">
+            <h1>海好有你</h1>
+            <p>SDGs14 海洋保育互動網站</p>
+
+            <div class="project-info">
+
+                <div class="project-item">
+                    <span class="label">Project Type</span>
+                    <span class="value">Web Design</span>
+                </div>
+
+                <div class="project-item">
+                    <span class="label">Tools</span>
+                    <span class="value">HTML / CSS / JavaScript</span>
+                </div>
+
+                <div class="project-item">
+                    <span class="label">Team / Role</span>
+                    <span class="value">5 People Team<br>UI / Interaction / Game</span>
+                </div>
+
+            </div>
+
+            <!-- Overview -->
+
+            <div class="glass section">
+
+                <h2>Project Overview</h2>
+
+                <p>
+                    《海好有你》是一個以 SDGs14「保育海洋生態」為主題的互動網站，
+                    透過視覺敘事與互動設計讓使用者了解海洋污染問題。
+                    網站從海洋生態介紹到海洋垃圾議題，
+                    再透過遊戲與互動體驗讓使用者理解人類活動對海洋環境造成的影響，
+                    希望藉由視覺與互動設計提升大眾對海洋保育的關注。
+                </p>
+
+            </div>
+
+            <!-- Concept -->
+
+            <div class="glass section">
+
+                <h2>Design Concept</h2>
+
+                <p>
+                    網站的核心概念為「從清澈海洋到污染海洋」。
+                    在首頁設計中，使用者向下滑動時海水顏色會逐漸變得混濁，
+                    象徵海洋環境逐漸受到污染。
+                    透過這樣的視覺敘事方式，
+                    讓使用者在瀏覽網站的過程中直觀感受到海洋環境的變化。
+                </p>
+
+            </div>
+
+            <!-- Structure -->
+
+            <div class="glass section">
+
+                <h2>Site Structure</h2>
+
+                <div class="structure-marquee">
+
+                    <div class="row row1">
+                        <div class="pill">首頁 Home</div>
+                        <div class="pill">海洋生態 Ocean Life</div>
+                        <div class="pill">海洋垃圾 Marine Debris</div>
+                        <div class="pill">海洋消消樂 Game</div>
+                        <div class="pill">環保商品 Eco Products</div>
+                        <div class="pill">志工 Volunteers</div>
+
+                        <!-- duplicate for loop -->
+                        <div class="pill">首頁 Home</div>
+                        <div class="pill">海洋生態 Ocean Life</div>
+                        <div class="pill">海洋垃圾 Marine Debris</div>
+                        <div class="pill">海洋消消樂 Game</div>
+                        <div class="pill">環保商品 Eco Products</div>
+                        <div class="pill">志工 Volunteers</div>
+                    </div>
+
+                    <div class="row row2">
+                        <div class="pill">海洋消消樂 Game</div>
+                        <div class="pill">志工 Volunteers</div>
+                        <div class="pill">首頁 Home</div>
+                        <div class="pill">海洋垃圾 Marine Debris</div>
+                        <div class="pill">海洋生態 Ocean Life</div>
+                        <div class="pill">環保商品 Eco Products</div>
+
+                        <!-- duplicate 兩輪，保證無限循環 -->
+                        <div class="pill">海洋消消樂 Game</div>
+                        <div class="pill">志工 Volunteers</div>
+                        <div class="pill">首頁 Home</div>
+                        <div class="pill">海洋垃圾 Marine Debris</div>
+                        <div class="pill">海洋生態 Ocean Life</div>
+                        <div class="pill">環保商品 Eco Products</div>
+                    </div>
+
+                </div>
+
+
+                <p style="margin-top:18px;">
+                    本網站共包含六個主要內容區塊，
+                    結合資訊介紹、互動遊戲與環保行動。
+                </p>
+
+            </div>
+
+            <!-- Home -->
+
+            <div class="section">
+
+                <h2>Home Page</h2>
+
+                <p>
+                    首頁透過滑動式視覺設計呈現海洋環境的變化。
+                    當使用者向下滑動頁面時，
+                    海水的顏色會從清澈的藍色逐漸變得混濁，
+                    象徵海洋污染問題的加劇。
+                    頁面同時包含海洋圖片對比、最新資訊與關於我們等內容。
+                </p>
+
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/ouICjQ2Tkus" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Ocean life -->
+
+            <div class="section">
+
+                <h2>Ocean Life</h2>
+
+                <p>
+                    海洋生態頁面介紹多種海洋生物，
+                    透過圖文內容讓使用者認識不同海洋物種，
+                    並了解海洋生態系統的重要性。
+                    此區塊希望讓使用者在了解海洋生物之後，
+                    更能意識到海洋保育的重要性。
+                </p>
+
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/NmMrgyyc66I" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Marine debris -->
+
+            <div class="section">
+
+                <h2>Marine Debris</h2>
+
+                <p>
+                    此頁面介紹七種常見的海洋垃圾，
+                    例如塑膠袋、寶特瓶與吸管等。
+                    透過圖像與文字說明，
+                    讓使用者了解這些垃圾如何進入海洋並造成污染，
+                    同時也引導使用者進入下一個互動遊戲頁面。
+                </p>
+
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/hhjqXHbFklM" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Game -->
+
+            <div class="section">
+
+                <h2>Garbage Game</h2>
+
+                <p>
+                    海洋消消樂是一個互動遊戲，
+                    玩家需要拖曳並配對相同的海洋垃圾進行消除。
+                    遊戲共有三個關卡，
+                    每通過一個關卡海水的顏色會逐漸變得乾淨，
+                    象徵海洋環境的改善。
+                    完成所有關卡後玩家可以進入無盡模式繼續遊玩。
+                </p>
+
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/6qFSqLzGU9E" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Eco products -->
+
+            <div class="section">
+
+                <h2>Eco Products</h2>
+
+                <p>
+                    此區展示由海洋廢棄物再生製成的環保商品，
+                    模擬簡單的電商購物流程。
+                    使用者可以瀏覽商品並加入購物車，
+                    藉此傳達海洋廢棄物再利用的概念。
+                </p>
+
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/XRSeEWa6p60" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Volunteers -->
+
+            <div class="section">
+
+                <h2>Volunteers</h2>
+
+                <p>
+                    志工頁面介紹專案團隊成員，
+                    並提供志工報名表單，
+                    鼓勵使用者參與海洋保育相關活動，
+                    將網站的理念延伸到實際行動。
+                </p>
+
+                <div class="video-card">
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/7Q--xp4JqWA" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+
+            </div>
+            <!-- My Contribution -->
+            <div class="glass section">
+                <h2>My Contribution</h2>
+                <p>
+                    在《海好有你》專案中，我負責整體網頁設計與互動製作，從視覺發想到部分功能開發皆有參與：
+                </p>
+
+                <div class="contribution-grid">
+
+                    <div class="contribution-card">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span>網站版面與架構設計</span>
+                    </div>
+
+                    <div class="contribution-card">
+                        <i class="fa-solid fa-pen-nib"></i>
+                        <span>Logo 設計</span>
+                    </div>
+
+                    <div class="contribution-card">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <span>素材與文案蒐集</span>
+                    </div>
+
+                    <div class="contribution-card">
+                        <i class="fa-solid fa-compass"></i>
+                        <span>Navigation Bar 製作</span>
+                    </div>
+
+                    <div class="contribution-card">
+                        <i class="fa-solid fa-window-maximize"></i>
+                        <span>內容頁面設計</span>
+                    </div>
+
+                    <div class="contribution-card highlight">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span>海洋消消樂互動設計</span>
+                    </div>
+
+                </div>
+
+                <p style="margin-top: 18px;">
+                    海洋消消樂為我獨立設計與開發的互動功能。
+                    最具挑戰的是垃圾掉落動畫的流暢感，我反覆嘗試多種實作方式與參數設定，最終完成符合預期的自然物理效果，這也是我在本專案最滿意的部分。
+                </p>
+            </div>
+            <!-- Demo -->
+
+            <div class="glass section">
+
+                <h2>Project Demo</h2>
+
+                <p>
+                    若想實際體驗網站互動內容，
+                    可以透過以下連結查看專案。
+                </p>
+
+                <div class="demo">
+
+                    <a href="https://yzzzz1205.github.io/ocean/" target="_blank">
+                        Live Website
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Footer -->
+        <section class="footer">
+            <p>© Yi Zhen Huang Portfolio</p>
+        </section>
+        <div id="trash-world"></div>
+        <script src="https://cdn.jsdelivr.net/npm/matter-js@0.19.0/build/matter.min.js"></script>
+        <script src="../workcard.js"></script>
+        <script>
+            /* ============================= */
+            /* video hover autoplay */
+            /* ============================= */
+
+            const videos = document.querySelectorAll("video");
+
+            videos.forEach(video => {
+
+                video.addEventListener("mouseenter", () => {
+                    video.play();
+                });
+
+                video.addEventListener("mouseleave", () => {
+                    video.pause();
+                    video.currentTime = 0;
+                });
+
+            });
+
+
+            /* ============================= */
+            /* Matter.js Trash System - SVG icons version */
+            /* ============================= */
+            const isMobile = window.innerWidth < 768;
+
+            if (!isMobile) {
+                const { Engine, Render, Runner, World, Bodies, Composite, Body } = Matter;
+
+                const engine = Engine.create();
+                engine.gravity.y = 0.5;
+                const world = engine.world;
+
+                /* 取得頁面高度 */
+                const pageHeight = document.body.scrollHeight;
+
+                /* renderer */
+                const render = Render.create({
+                    element: document.getElementById("trash-world"),
+                    engine: engine,
+                    options: {
+                        width: window.innerWidth,
+                        height: window.innerHeight,
+                        wireframes: false,
+                        background: "transparent",
+                        pixelRatio: 1
+                    }
+                });
+
+                Render.run(render);
+                Runner.run(Runner.create(), engine);
+
+                /* floor */
+                const floor = Bodies.rectangle(
+                    window.innerWidth / 2,
+                    window.innerHeight - 10,
+                    window.innerWidth,
+                    20,
+                    { isStatic: true }
+                );
+
+                World.add(world, [floor]);
+
+                /* 垃圾圖示列表 (Font Awesome SVG) */
+                const icons = [
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'><path fill='white' d='M232.7 69.9L224 96L128 96C110.3 96 96 110.3 96 128C96 145.7 110.3 160 128 160L512 160C529.7 160 544 145.7 544 128C544 110.3 529.7 96 512 96L416 96L407.3 69.9C402.9 56.8 390.7 48 376.9 48L263.1 48C249.3 48 237.1 56.8 232.7 69.9zM512 208L128 208L149.1 531.1C150.7 556.4 171.7 576 197 576L443 576C468.3 576 489.3 556.4 490.9 531.1L512 208z'/></svg>",
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'><path fill='rgb(255,255,255)' d='M272 32L368 32C385.7 32 400 46.3 400 64C400 81.7 385.7 96 368 96L272 96C254.3 96 240 81.7 240 64C240 46.3 254.3 32 272 32zM176 208C176 172.7 204.7 144 240 144L400 144C435.3 144 464 172.7 464 208C464 232.1 450.7 253.1 431 264C450.7 274.9 464 295.9 464 320C464 344.1 450.7 365.1 431 376C450.7 386.9 464 407.9 464 432C464 456.1 450.7 477.1 431 488C450.7 498.9 464 519.9 464 544C464 579.3 435.3 608 400 608L240 608C204.7 608 176 579.3 176 544C176 519.9 189.3 498.9 209 488C189.3 477.1 176 456.1 176 432C176 407.9 189.3 386.9 209 376C189.3 365.1 176 344.1 176 320C176 295.9 189.3 274.9 209 264C189.3 253.1 176 232.1 176 208z'/></svg>",
+                    "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'><path fill='rgb(255,255,255)' d='M240 64C240 46.3 254.3 32 272 32L368 32C385.7 32 400 46.3 400 64C400 81.7 385.7 96 368 96L368 199.3C432.9 219.7 480 280.3 480 352L480 544C480 579.3 451.3 608 416 608L224 608C188.7 608 160 579.3 160 544L160 352C160 280.4 207.1 219.7 272 199.3L272 96C254.3 96 240 81.7 240 64zM320 480C355.3 480 384 447.6 384 416C384 394.8 355.1 351.5 336.1 325.4C328 314.3 311.9 314.3 303.8 325.4C284.8 351.5 255.9 394.8 255.9 416C255.9 447.6 284.6 480 319.9 480z'/></svg>"
+                ];
+
+                /* 垃圾生成 */
+                function createTrash() {
+                    const size = 24 + Math.random() * 16; // 改小尺寸
+                    const icon = icons[Math.floor(Math.random() * icons.length)];
+
+                    const trash = Bodies.rectangle(
+                        Math.random() * window.innerWidth,
+                        -50,
+                        size,
+                        size,
+                        {
+                            restitution: 0.1,
+                            friction: 0.6,
+                            frictionAir: 0.02,
+                            density: 0.002,
+                            render: {
+                                sprite: {
+                                    texture: icon,
+                                    xScale: size / 64,
+                                    yScale: size / 64
+                                },
+                                fillStyle: "#ffffff"
+                            }
+                        }
+                    );
+                    World.add(world, trash);
+                }
+
+                setInterval(createTrash, 2000); // 每秒掉一個垃圾
+
+                /* ============================= */
+                /* Clean Ocean */
+                const cleanBtn = document.getElementById("cleanTrash");
+
+                cleanBtn.addEventListener("click", () => {
+                    const bodies = Composite.allBodies(world);
+
+                    bodies.forEach(body => {
+                        if (!body.isStatic) {
+                            let scale = 1;
+                            let opacity = 1;
+
+                            function animate() {
+                                scale -= 0.05;
+                                opacity -= 0.05;
+
+                                if (scale <= 0 || opacity <= 0) {
+                                    World.remove(world, body);
+                                    return;
+                                }
+
+                                Body.scale(body, 0.95, 0.95);
+                                body.render.opacity = opacity;
+
+                                requestAnimationFrame(animate);
+                            }
+
+                            animate();
+                        }
+                    });
+                });
+            }
+            /* ============================= */
+            /* Scroll Reveal */
+            /* ============================= */
+
+            const sections = document.querySelectorAll(".section");
+
+            const observer = new IntersectionObserver(entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("show");
+                    }
+
+                });
+
+            }, {
+                threshold: 0.2
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            /* ============================= */
+            /* Hamburger Menu */
+            /* ============================= */
+
+            const hamburger = document.getElementById("hamburger");
+            const mobileMenu = document.getElementById("mobileMenu");
+
+            hamburger.addEventListener("click", () => {
+                mobileMenu.classList.toggle("show");
+            });
+            /* 點選選單自動關閉（手機體驗更好） */
+            document.querySelectorAll(".menu li").forEach(item => {
+                item.addEventListener("click", () => {
+                    hamburger.classList.remove("active");
+                    menu.classList.remove("active");
+                });
+            });
+        </script>
+
+</body>
+
+</html>
