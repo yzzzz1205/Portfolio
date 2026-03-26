@@ -740,13 +740,13 @@
         box-shadow: none;
     }
 
-    .work-card:hover .card-logo {
-        opacity: 1;
+ .card-video {
+        opacity: 0 !important;
+        pointer-events: none;
     }
 
-    .work-card:hover .card-video {
-        opacity: 0;
-        transform: none;
+    .card-logo {
+        opacity: 1 !important;
     }
    .cards {
             display: grid !important;
