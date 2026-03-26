@@ -742,6 +742,17 @@
     .carousel-dots .dot.active {
         width: 16px;
     }
+        .work-card:hover .card-video {
+        opacity: 0 !important;
+    }
+
+    .work-card:hover .card-logo {
+        opacity: 1 !important;
+    }
+
+    .work-card:hover {
+        transform: none !important;
+    }
 }
 
 .carousel-dots {
