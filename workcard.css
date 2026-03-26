@@ -1,0 +1,807 @@
+/* ===== Works Overlay ===== */
+#worksOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 10, 20, .75);
+    backdrop-filter: blur(18px);
+    z-index: 50;
+    opacity: 0;
+    pointer-events: none;
+    transition: .6s ease;
+}
+
+#worksOverlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.works-panel {
+    width: 90%;
+    max-width: 1200px;
+    margin: 120px auto;
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: -40px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: .6;
+}
+
+.close-btn:hover {
+    opacity: 1;
+}
+
+.works-title {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 6px;
+    font-size: 36px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* ===== Cards ===== */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+}
+
+.work-card {
+    background: rgba(255, 255, 255, .05);
+    border: 1px solid rgba(140, 150, 255, .15);
+    border-radius: 18px;
+    padding: 18px;
+    transition: .4s ease;
+}
+
+.work-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, .08);
+}
+
+.card-media {
+    width: 100%;
+    aspect-ratio: 1200 / 648;
+    /* 完全符合你的圖片比例 */
+
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+
+    margin-bottom: 16px;
+}
+
+.card-logo {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: opacity .35s ease;
+}
+
+.work-card:hover .card-logo {
+    opacity: 0;
+}
+
+.card-video {
+
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    opacity: 0;
+    transition: opacity .35s ease, transform .6s ease;
+
+}
+
+/* hover 顯示 */
+
+.work-card:hover .card-video {
+    opacity: 1;
+    transform: scale(1.03);
+}
+
+/* hover */
+.work-card:hover {
+
+    border: 1px solid rgba(140, 150, 255, .5);
+
+    box-shadow:
+        0 0 20px rgba(140, 150, 255, .2),
+        0 0 40px rgba(120, 140, 255, .15);
+
+}
+
+.work-card:hover .card-logo {
+    opacity: 0;
+}
+
+.work-card:hover .card-video {
+    opacity: 1;
+}
+
+.work-card h3 {
+    font-size: 16px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+
+.work-card p {
+    font-size: 13px;
+    opacity: .75;
+    line-height: 1.6;
+}
+
+.work-card button {
+    margin-top: 14px;
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 20px;
+    border: 1px solid rgba(140, 150, 255, .4);
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: .4s;
+}
+
+.work-card button:hover {
+    background: rgba(140, 150, 255, .25);
+}
+
+/*卡片圖片輪播*/
+.image-slider-card .slider {
+    width: 100%;
+    aspect-ratio: 1200 / 648;
+    overflow: hidden;
+    border-radius: 12px;
+    position: relative;
+    background: #000;
+    height: 100%; /* ⭐ 加這行 */
+}
+
+/* 軌道 */
+.image-slider-card .track {
+    display: flex;
+    height: 100%;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 圖片 */
+.image-slider-card .slide {
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9) saturate(1.1);
+}
+
+/* ===== Carousel ===== */
+.carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /* ⭐ 讓 dots 可以在下面 */
+}
+
+.cards {
+    position: relative;
+    width: 100%;
+    height: 360px;
+}
+
+.work-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 260px;
+    transform:
+        translate(-50%, -50%) scale(.7);
+    opacity: .4;
+    filter: blur(4px);
+    transition:
+        transform .5s ease,
+        opacity .5s ease,
+        filter .5s ease;
+}
+
+/* 中間那張更大 */
+.work-card.active {
+    transform: translate(-50%, -30%) scale(1.5);
+    /* ← 中間卡片變更大 */
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+}
+
+/* 左右保持稍微大一點 */
+.work-card.left {
+    transform: translate(calc(-50% - 260px), -40%) scale(.8);
+    z-index: 2;
+}
+
+.work-card.right {
+    transform: translate(calc(-50% + 260px), -40%) scale(.8);
+    z-index: 2;
+}
+
+
+.work-card.hidden {
+    transform: translate(-50%, -50%) scale(.4);
+    opacity: 0;
+    filter: blur(8px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 按鈕位置 */
+.works-panel .nav-btn {
+    position: absolute;
+    top: 55%;
+    /* 垂直靠近卡片中心 */
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 40px;
+    cursor: pointer;
+    opacity: .6;
+    z-index: 10;
+    transition: .3s;
+}
+
+.works-panel .nav-btn:hover {
+    opacity: 1;
+}
+
+.works-panel .nav-btn.left {
+    left: 30px;
+}
+
+/* 距離 panel 左邊 30px */
+.works-panel .nav-btn.right {
+    right: 30px;
+}
+
+#worksOverlay .tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 8px 0 12px;
+}
+
+#worksOverlay .tool {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 4px 10px;
+    border-radius: 999px;
+
+    border: 1px solid rgba(140, 150, 255, .25);
+    background: rgba(255, 255, 255, .04);
+
+    font-size: 12px;
+    opacity: .85;
+}
+
+#worksOverlay .tool img {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    border-radius: 20%;
+}
+
+#worksOverlay .tool span {
+    white-space: nowrap;
+}
+
+.card-logo,
+.card-video {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+.cards.carousel-mode {
+    display: block !important;
+    position: relative;
+    width: 100%;
+    height: 360px;
+}
+
+.cards.grid-mode {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+    width: 100%;
+}
+
+.cards.carousel-mode .work-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 260px;
+
+    transform: translate(-50%, -50%) scale(.7);
+    opacity: .4;
+    filter: blur(4px);
+
+    transition: transform .5s ease, opacity .5s ease, filter .5s ease;
+}
+
+.cards.carousel-mode .work-card.active {
+    transform: translate(-50%, -30%) scale(1.5);
+    opacity: 1;
+    filter: blur(0);
+    z-index: 3;
+}
+
+.cards.carousel-mode .work-card.left {
+    transform: translate(calc(-50% - 260px), -40%) scale(.8);
+    z-index: 2;
+}
+
+.cards.carousel-mode .work-card.right {
+    transform: translate(calc(-50% + 260px), -40%) scale(.8);
+    z-index: 2;
+}
+
+@media (max-width: 768px) {
+    .cards {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .cards.carousel-mode {
+        display: none !important;
+    }
+
+    /* ===== Works Overlay ===== */
+    #worksOverlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(10, 10, 20, .75);
+        backdrop-filter: blur(18px);
+        z-index: 50;
+        opacity: 0;
+        pointer-events: none;
+        transition: .6s ease;
+    }
+
+    #worksOverlay.show {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .works-panel {
+        width: 90%;
+        max-width: 1200px;
+        margin: 120px auto;
+        position: relative;
+    }
+
+    .close-btn {
+        position: absolute;
+        right: 0;
+        top: -40px;
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: .6;
+    }
+
+    .close-btn:hover {
+        opacity: 1;
+    }
+
+    .works-title {
+        font-family: 'Playfair Display', serif;
+        letter-spacing: 6px;
+        font-size: 36px;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    /* ===== Cards ===== */
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 28px;
+    }
+
+    .work-card {
+        background: rgba(255, 255, 255, .05);
+        border: 1px solid rgba(140, 150, 255, .15);
+        border-radius: 18px;
+        padding: 18px;
+        transition: .4s ease;
+    }
+
+    .work-card:hover {
+        transform: translateY(-6px);
+        background: rgba(255, 255, 255, .08);
+    }
+
+    .card-media {
+        width: 100%;
+        aspect-ratio: 1200 / 648;
+        /* 完全符合你的圖片比例 */
+
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+
+        margin-bottom: 16px;
+    }
+
+    .card-logo {
+        position: absolute;
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        transition: opacity .35s ease;
+    }
+
+    .work-card:hover .card-logo {
+        opacity: 0;
+    }
+
+    .card-video {
+
+        position: absolute;
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+
+        opacity: 0;
+        transition: opacity .35s ease, transform .6s ease;
+
+    }
+
+    /* hover 顯示 */
+
+    .work-card:hover .card-video {
+        opacity: 1;
+        transform: scale(1.03);
+    }
+
+    /* hover */
+    .work-card:hover {
+
+        border: 1px solid rgba(140, 150, 255, .5);
+
+        box-shadow:
+            0 0 20px rgba(140, 150, 255, .2),
+            0 0 40px rgba(120, 140, 255, .15);
+
+    }
+
+    .work-card:hover .card-logo {
+        opacity: 0;
+    }
+
+    .work-card:hover .card-video {
+        opacity: 1;
+    }
+
+    .work-card h3 {
+        font-size: 16px;
+        letter-spacing: 1px;
+        margin-bottom: 8px;
+    }
+
+    .work-card p {
+        font-size: 13px;
+        opacity: .75;
+        line-height: 1.6;
+    }
+
+    .work-card button {
+        margin-top: 14px;
+        width: 100%;
+        padding: 10px 0;
+        border-radius: 20px;
+        border: 1px solid rgba(140, 150, 255, .4);
+        background: transparent;
+        color: #fff;
+        cursor: pointer;
+        transition: .4s;
+    }
+
+    .work-card button:hover {
+        background: rgba(140, 150, 255, .25);
+    }
+
+    /*卡片圖片輪播*/
+    .image-slider-card .slider {
+        width: 100%;
+        aspect-ratio: 1200 / 648;
+        overflow: hidden;
+        border-radius: 12px;
+        position: relative;
+        background: #000;
+    }
+
+    /* 軌道 */
+    .image-slider-card .track {
+        display: flex;
+        height: 100%;
+        transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* 圖片 */
+    .image-slider-card .slide {
+        min-width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.9) saturate(1.1);
+    }
+
+    /* ===== Carousel ===== */
+    .carousel {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cards {
+        position: relative;
+        width: 100%;
+        height: 360px;
+    }
+
+    .work-card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 260px;
+        transform:
+            translate(-50%, -50%) scale(.7);
+        opacity: .4;
+        filter: blur(4px);
+        transition:
+            transform .5s ease,
+            opacity .5s ease,
+            filter .5s ease;
+    }
+
+    /* 中間那張更大 */
+    .work-card.active {
+        transform: translate(-50%, -30%) scale(1.5);
+        /* ← 中間卡片變更大 */
+        opacity: 1;
+        filter: blur(0);
+        z-index: 3;
+    }
+
+    /* 左右保持稍微大一點 */
+    .work-card.left {
+        transform: translate(calc(-50% - 260px), -40%) scale(.8);
+        z-index: 2;
+    }
+
+    .work-card.right {
+        transform: translate(calc(-50% + 260px), -40%) scale(.8);
+        z-index: 2;
+    }
+
+
+    .work-card.hidden {
+        transform: translate(-50%, -50%) scale(.4);
+        opacity: 0;
+        filter: blur(8px);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* 按鈕位置 */
+    .works-panel .nav-btn {
+        color: #111;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 24px;
+        backdrop-filter: blur(6px);
+    }
+
+    .works-panel .nav-btn:hover {
+        background: rgba(255, 255, 255, 1);
+    }
+
+    .works-panel .nav-btn.left {
+        left: 30px;
+    }
+
+    /* 距離 panel 左邊 30px */
+    .works-panel .nav-btn.right {
+        right: 30px;
+    }
+
+    #worksOverlay .tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 8px 0 12px;
+    }
+
+    #worksOverlay .tool {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        padding: 4px 10px;
+        border-radius: 999px;
+
+        border: 1px solid rgba(140, 150, 255, .25);
+        background: rgba(255, 255, 255, .04);
+
+        font-size: 12px;
+        opacity: .85;
+    }
+
+    #worksOverlay .tool img {
+        width: 14px;
+        height: 14px;
+        object-fit: contain;
+        border-radius: 20%;
+    }
+
+    #worksOverlay .tool span {
+        white-space: nowrap;
+    }
+
+    .card-logo,
+    .card-video {
+        position: absolute;
+        inset: 0;
+
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+    }
+
+    .cards.carousel-mode {
+        display: block !important;
+        position: relative;
+        width: 100%;
+        height: 360px;
+    }
+
+    .cards.grid-mode {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 28px;
+        width: 100%;
+    }
+
+    .cards.carousel-mode .work-card {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 260px;
+
+        transform: translate(-50%, -50%) scale(.7);
+        opacity: .4;
+        filter: blur(4px);
+
+        transition: transform .5s ease, opacity .5s ease, filter .5s ease;
+    }
+
+    .cards.carousel-mode .work-card.active {
+        transform: translate(-50%, -30%) scale(1.5);
+        opacity: 1;
+        filter: blur(0);
+        z-index: 3;
+    }
+
+    .cards.carousel-mode .work-card.left {
+        transform: translate(calc(-50% - 260px), -40%) scale(.8);
+        z-index: 2;
+    }
+
+    .cards.carousel-mode .work-card.right {
+        transform: translate(calc(-50% + 260px), -40%) scale(.8);
+        z-index: 2;
+    }
+
+    .work-card:hover {
+        transform: none;
+        background: rgba(255, 255, 255, .05);
+        box-shadow: none;
+    }
+
+    .work-card:hover .card-logo {
+        opacity: 1;
+    }
+
+    .work-card:hover .card-video {
+        opacity: 0;
+        transform: none;
+    }
+   .cards {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .cards.carousel-mode {
+            display: none !important;
+        }
+        .carousel-dots {
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .carousel-dots .dot {
+        width: 6px;
+        height: 6px;
+    }
+
+    .carousel-dots .dot.active {
+        width: 16px;
+    }
+}
+.carousel-dots {
+    position: static; /* ❗不要 absolute */
+    margin-top: 170px; /* ⭐ 跟卡片距離 */
+
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.carousel-dots .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.3);
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+/* hover 微互動 */
+.carousel-dots .dot:hover {
+    background: rgba(255,255,255,0.6);
+}
+
+/* 當前 */
+.carousel-dots .dot.active {
+    width: 20px;
+    border-radius: 999px;
+
+    background: rgba(140,150,255,0.9);
+
+    box-shadow:
+        0 0 10px rgba(140,150,255,0.6),
+        0 0 20px rgba(140,150,255,0.4);
+}

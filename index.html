@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+
+  <!-- 字體 -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&display=swap"
+    rel="stylesheet">
+
+  <!-- Font Awesome icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="./workcard.css">
+  <link rel="icon" href="./logo.PNG">
+  <style>
+    /* ===== 基本 ===== */
+    html {
+      overflow-y: scroll;
+      /* 永遠保留垂直滾動條，即使頁面內容不夠長 */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      background: #05040a;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1b1a2f, #05040a 70%);
+      color: #eae8ff;
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ===== 導覽列 ===== */
+    .nav {
+      height: 100px;
+      padding: 0 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 20;
+
+      background: rgba(15, 14, 30, .45);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(160, 160, 255, .08);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      letter-spacing: 3px;
+      opacity: .9;
+    }
+
+    .menu {
+      display: flex;
+      gap: 56px;
+      list-style: none;
+    }
+
+    .menu li {
+      position: relative;
+      font-size: 14px;
+      letter-spacing: 1.2px;
+      cursor: pointer;
+      opacity: .7;
+      transition: .4s;
+    }
+
+    .menu li::after {
+      content: '';
+      position: absolute;
+      left: -10%;
+      bottom: -8px;
+      width: 120%;
+      height: 1px;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(122, 162, 227, .8),
+          transparent);
+      opacity: 0;
+      transition: .4s;
+    }
+
+    .menu li:hover {
+      opacity: 1;
+    }
+
+    .menu li:hover::after {
+      opacity: 1;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 88px;
+      /* ⬅ 主標大很多 */
+      letter-spacing: 6px;
+      /* ⬅ 高級感 */
+      font-weight: 700;
+      position: relative;
+      animation: fadeUp 1.4s ease forwards, titleBreath 4s ease-in-out infinite;
+    }
+
+    .hero h1::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      color: #9aa4ff;
+      filter: blur(18px);
+      opacity: .45;
+      transform: scale(1.05);
+    }
+
+    .hero p {
+      margin-top: 18px;
+      font-size: 15px;
+      opacity: .75;
+      animation: fadeUp 1.6s ease forwards;
+    }
+
+    @keyframes titleBreath {
+      0% {
+        text-shadow:
+          0 0 20px rgba(120, 150, 255, .25),
+          0 0 40px rgba(140, 160, 255, .15);
+      }
+
+      50% {
+        text-shadow:
+          0 0 36px rgba(160, 190, 255, .45),
+          0 0 80px rgba(120, 140, 255, .25);
+      }
+
+      100% {
+        text-shadow:
+          0 0 20px rgba(120, 150, 255, .25),
+          0 0 40px rgba(140, 160, 255, .15);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width:768px) {
+      .hero h1 {
+        font-size: 56px;
+        letter-spacing: 3px;
+      }
+    }
+
+    .hero-btn {
+      margin-top: 50px;
+      padding: 12px 28px;
+
+      border-radius: 999px;
+      border: 1px solid rgba(140, 150, 255, .4);
+
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+
+      font-size: 14px;
+      letter-spacing: 1px;
+      cursor: pointer;
+
+      transition: .4s;
+    }
+
+    .hero-btn:hover {
+      background: rgba(140, 150, 255, .25);
+      box-shadow:
+        0 0 20px rgba(140, 150, 255, .3),
+        0 0 40px rgba(120, 140, 255, .2);
+    }
+
+    /* ===== icon 掉落 ===== */
+    #iconContainer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .falling-icon {
+      position: absolute;
+      top: -40px;
+      opacity: .85;
+      filter: drop-shadow(0 0 0 rgba(140, 130, 210, 0));
+      transition: filter .4s ease;
+    }
+
+    .falling-icon.glow {
+      filter:
+        drop-shadow(0 0 6px rgba(143, 134, 201, .6)) drop-shadow(0 0 14px rgba(122, 162, 227, .4));
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+      }
+    }
+
+    /* ===== 殘影 ===== */
+    .trail {
+      position: fixed;
+      pointer-events: none;
+      opacity: .25;
+      filter: blur(4px);
+      transition: opacity .6s ease;
+    }
+
+    /* ===== 粒子 ===== */
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* ===== 游標 ===== */
+    #cursor {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 1px solid rgba(220, 220, 255, .25);
+      background: radial-gradient(circle, rgba(220, 220, 255, .18), transparent 70%);
+      pointer-events: none;
+      mix-blend-mode: screen;
+      transform: translate(-50%, -50%);
+      z-index: 999;
+
+    }
+
+    @media (max-width: 768px) {
+      #cursor {
+        display: none;
+      }
+    }
+
+
+    /* ========================= */
+    /* 📱 手機版完整優化 */
+    /* ========================= */
+    @media (max-width: 768px) {
+
+      /* ===== body 修正 ===== */
+      body {
+        overflow: auto;
+        /* 手機不能鎖死 */
+      }
+
+      /* ===== nav ===== */
+      .nav {
+        height: 70px;
+        padding: 0 20px;
+      }
+
+      .logo {
+        font-size: 14px;
+        letter-spacing: 2px;
+      }
+
+      .menu {
+        gap: 20px;
+      }
+
+      .menu li {
+        font-size: 12px;
+      }
+
+      /* ===== hero ===== */
+      .hero {
+        padding: 0 20px;
+      }
+
+      .hero h1 {
+        font-size: 42px;
+        letter-spacing: 2px;
+      }
+
+      .hero p {
+        font-size: 13px;
+      }
+
+      .hero-btn {
+        margin-top: 30px;
+        padding: 10px 20px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      /* nav */
+      .nav {
+        height: 70px;
+        padding: 0 20px;
+      }
+
+      .logo {
+        font-size: 14px;
+        letter-spacing: 2px;
+      }
+
+      .menu {
+        gap: 20px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        height: 70px;
+        padding: 0 20px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .menu {
+        display: none;
+      }
+    }
+
+    /* ===== hamburger ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 30;
+    }
+
+    .hamburger span {
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      transition: .3s;
+    }
+
+    /* ===== mobile menu ===== */
+    .mobile-menu {
+      position: fixed;
+      top: 70px;
+      right: 20px;
+
+      background: rgba(15, 14, 30, .85);
+      backdrop-filter: blur(16px);
+
+      border: 1px solid rgba(140, 150, 255, .2);
+      border-radius: 16px;
+
+      padding: 20px 28px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: .3s;
+
+      z-index: 25;
+    }
+
+    .mobile-menu a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      opacity: .8;
+      transition: .3s;
+    }
+
+    .mobile-menu a:hover {
+      opacity: 1;
+    }
+
+    /* 打開 */
+    .mobile-menu.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* ===== 手機顯示 ===== */
+    @media (max-width: 480px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .menu {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="worksOverlay">
+    <div class="works-panel">
+      <button class="close-btn">✕</button>
+
+      <h2 class="works-title">WORKS</h2>
+
+      <!-- 左右切換按鈕 -->
+      <button class="nav-btn left">‹</button>
+      <button class="nav-btn right">›</button>
+
+      <div class="carousel">
+        <div class="cards">
+          <!-- Web -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="./card/card1.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="./card/card1.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>海好有你</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="./icon/vs.JPG" alt="">
+                <span>Visual Studio Code</span>
+              </div>
+            </div>
+            <p>
+              SDGs14 海洋保育互動網站，
+              透過資訊與互動設計讓使用者理解海洋污染議題，
+              並鼓勵參與環境行動。
+            </p>
+
+            <a href="./ocean/ocean.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+          <!-- Web -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="./card/card-image.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="./card/card-image.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>修起來</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="./icon/vs.JPG" alt="">
+                <span>Visual Studio Code</span>
+              </div>
+            </div>
+            <p>
+              線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，
+              讓使用者透過直覺操作快速完成個人化影像創作。
+            </p>
+
+            <a href="./image-editing/image.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+
+          <!-- App -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="./card/card2.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="./card/card2.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>咖啡廳點餐 App</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="./icon/androidstudio.JPG" alt="">
+                <span>Android Studio</span>
+              </div>
+            </div>
+            <p>
+              以 Android Studio 開發的行動點餐應用程式，
+              提供咖啡與甜點搜尋、加入購物車與結帳流程。
+            </p>
+
+            <a href="./coffee/coffee.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+
+          <!-- Figma -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="./card/card3.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="./card/card3.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>Invisible Mask</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="./icon/figma.PNG" alt="">
+                <span>Figma</span>
+              </div>
+            </div>
+            <p>
+              是一款以 Figma 設計的美妝 App，
+              結合 AI 臉部分析與 AR 試妝，
+              打造快速且個人化的妝容體驗。
+            </p>
+
+            <a href="./mask/mask.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+          <!-- Figma -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="./card/card_familymart.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="./card/card_familymart.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>FamilyMart App Redesign</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="./icon/figma.PNG" alt="">
+                <span>Figma</span>
+              </div>
+            </div>
+            <p>
+              針對全家 App 進行 UI/UX 改版，
+              聚焦高頻使用情境，優化操作流程與資訊架構，
+              提升結帳效率與使用體驗。
+            </p>
+
+            <a href="./familymart/family.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+          <!-- Unity -->
+          <div class="work-card image-slider-card">
+            <div class="card-media">
+              <div class="slider">
+                <div class="track">
+                  <img src="./card/card4.PNG" class="slide active">
+                  <img src="./draw/spring-bg.PNG" class="slide">
+                  <img src="./draw/summer-bg.PNG" class="slide">
+                  <img src="./draw/autumn-bg.PNG" class="slide">
+                  <img src="./draw/winter-bg.PNG" class="slide">
+                  <img src="./draw/space-bg.PNG" class="slide">
+                </div>
+              </div>
+            </div>
+            <h3>小熊歷險記</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="./icon/procreate.JPG" alt="">
+                <span>Procreate</span>
+              </div>
+
+              <div class="tool">
+                <img src="./icon/ppt.JPG" alt="">
+                <span>PowerPoint</span>
+              </div>
+            </div>
+            <p>童話風卡牌互動遊戲，透過插畫敘事與四季場景變化，呈現角色的成長歷程與情感體驗。</p>
+            <a href="./draw/draw.html">
+              <button>View Project</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- ✅ 放這裡！！！ -->
+      <div class="carousel-dots"></div>
+    </div>
+  </div>
+
+  <!-- ===== 導覽列 ===== -->
+  <nav class="nav">
+    <div class="logo">Yi Zhen Huang</div>
+    <ul class="menu">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Works</a></li>
+      <li><a href="./about/about.html">About</a></li>
+    </ul>
+    <!-- hamburger -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+  <!-- mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#">Home</a>
+    <a href="#" id="mobileWorksBtn">Works</a>
+    <a href="./about/about.html">About</a>
+  </div>
+
+  </nav>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h1 data-text="PORTFOLIO">PORTFOLIO</h1>
+      <p class="subtitle">UI/UX · Web Development · App Design · Illustration</p>
+      <button class="hero-btn">View Works</button>
+    </div>
+  </div>
+
+  <canvas id="particles"></canvas>
+  <div id="iconContainer"></div>
+  <div id="cursor"></div>
+
+  <script>
+    /* ===== 指標（滑鼠＋觸控） ===== */
+    const pointer = { x: -999, y: -999 };
+    const cursor = document.getElementById('cursor');
+
+    /* 桌機滑鼠 */
+    window.addEventListener('mousemove', e => {
+      pointer.x = e.clientX;
+      pointer.y = e.clientY;
+
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    /* 手機觸控 */
+    window.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      pointer.x = t.clientX;
+      pointer.y = t.clientY;
+    });
+
+    window.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      pointer.x = t.clientX;
+      pointer.y = t.clientY;
+    });
+
+    /* 手指離開畫面 */
+    window.addEventListener('touchend', () => {
+      pointer.x = -999;
+      pointer.y = -999;
+    });
+
+    /* ===== icon ===== */
+    const icons = [
+      'fa-brands fa-figma',          // Figma
+      'fa-brands fa-unity',          // Unity
+      'fa-brands fa-android',        // Android Studio
+      'fa-solid fa-code',            // VS Code（語意正確）
+      'fa-solid fa-circle-nodes'     // TouchDesigner（節點/互動）
+    ];
+
+    const colors = ['#8F86C9', '#7AA2E3'];
+    const container = document.getElementById('iconContainer');
+
+    function createIcon() {
+      const i = document.createElement('i');
+      i.className = `falling-icon ${icons[Math.floor(Math.random() * icons.length)]}`;
+      i.style.left = Math.random() * 100 + 'vw';
+      i.style.fontSize = Math.random() * 22 + 22 + 'px';
+      i.style.color = colors[Math.floor(Math.random() * colors.length)];
+      const d = Math.random() * 10 + 14;
+      i.style.animation = `fall ${d}s linear infinite`;
+      container.appendChild(i);
+
+      const data = { x: 0, y: 0 };
+
+      function update() {
+        const r = i.getBoundingClientRect();
+        const dx = r.left + r.width / 2 - pointer.x;
+        const dy = r.top + r.height / 2 - pointer.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const range = 120;
+
+        if (dist < range) {
+          const force = (1 - dist / range) * 28;
+          data.x += (dx / dist) * force;
+          data.y += (dy / dist) * force;
+          i.classList.add('glow');
+          createTrail(i, r, data);
+        } else {
+          data.x *= 0.9;
+          data.y *= 0.9;
+          i.classList.remove('glow');
+        }
+        i.style.transform = `translate(${data.x}px,${data.y}px)`;
+        requestAnimationFrame(update);
+      }
+      update();
+      setTimeout(() => i.remove(), d * 1000);
+    }
+
+    function createTrail(icon, rect, data) {
+      const t = icon.cloneNode(true);
+      t.classList.add('trail');
+      t.style.left = rect.left + 'px';
+      t.style.top = rect.top + 'px';
+      t.style.transform = `translate(${data.x}px,${data.y}px)`;
+      document.body.appendChild(t);
+      setTimeout(() => t.remove(), 600);
+    }
+
+    setInterval(createIcon, 700);
+
+    /* ===== 粒子 ===== */
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    for (let i = 0; i < 120; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: Math.random() * 1.4 + .3,
+        s: Math.random() * .3 + .1
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = 'rgba(255,255,255,.6)';
+      particles.forEach(p => {
+        p.y += p.s;
+        if (p.y > h) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    /* ===== Works ===== */
+    const worksOverlay = document.getElementById('worksOverlay');
+
+    const worksBtn = document.querySelector('.menu li:nth-child(2)');
+    const mobileWorksBtn = document.getElementById('mobileWorksBtn');
+    const closeBtn = document.querySelector('.close-btn');
+
+    /* 桌機 Works */
+    if (worksBtn) {
+      worksBtn.addEventListener('click', () => {
+        worksOverlay.classList.add('show');
+      });
+    }
+
+    /* 手機 Works */
+    if (mobileWorksBtn) {
+      mobileWorksBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        worksOverlay.classList.add('show');
+
+        // 關閉手機選單（加分體驗）
+        document.getElementById('mobileMenu').classList.remove('show');
+        document.getElementById('hamburger').classList.remove('active');
+      });
+    }
+
+    /* 關閉 overlay */
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
+        worksOverlay.classList.remove('show');
+      });
+    }
+    /* ===== Carousel Logic ===== */
+    const cards = document.querySelectorAll('.work-card');
+    const btnLeft = document.querySelector('.nav-btn.left');
+    const btnRight = document.querySelector('.nav-btn.right');
+
+    let current = 0;
+
+    function updateCarousel() {
+      cards.forEach((card, i) => {
+        card.classList.remove('active', 'left', 'right', 'hidden');
+
+        if (i === current) {
+          card.classList.add('active');
+        } else if (i === current - 1) {
+          card.classList.add('left');
+        } else if (i === current + 1) {
+          card.classList.add('right');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      updateDots(); // ⭐ 加這行
+    }
+
+    btnLeft.addEventListener('click', () => {
+      if (current > 0) {
+        current--;
+        updateCarousel();
+      }
+    });
+
+    btnRight.addEventListener('click', () => {
+      if (current < cards.length - 1) {
+        current++;
+        updateCarousel();
+      }
+    });
+
+    const dotsContainer = document.querySelector('.carousel-dots');
+    let dots = [];
+
+    // 建立 dots
+    cards.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+
+      dot.addEventListener('click', () => {
+        current = i;
+        updateCarousel();
+        updateDots();
+      });
+
+      dotsContainer.appendChild(dot);
+      dots.push(dot);
+    });
+
+    function updateDots() {
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === current);
+      });
+    }
+    updateCarousel();
+    /* ===== 卡片的影片播放 ===== */
+    document.querySelectorAll('.work-card').forEach(card => {
+
+      const video = card.querySelector('video');
+      if (!video) return;
+
+      card.addEventListener('mouseenter', () => {
+
+        video.style.opacity = 0;
+
+        setTimeout(() => {
+          video.currentTime = 0;
+          video.play();
+          video.style.opacity = 1;
+        }, 150);
+
+      });
+
+      card.addEventListener('mouseleave', () => {
+
+        video.style.opacity = 0;
+
+        setTimeout(() => {
+          video.pause();
+          video.currentTime = 0;
+        }, 200);
+
+      });
+
+    });
+
+    const heroBtn = document.querySelector('.hero-btn');
+
+    if (heroBtn) {
+      heroBtn.addEventListener('click', () => {
+        worksOverlay.classList.add('show');
+      });
+    }
+
+    /* ===== 卡片的圖片切換 ===== */
+    document.querySelectorAll(".image-slider-card").forEach(card => {
+
+      const track = card.querySelector(".track");
+      const slides = card.querySelectorAll(".slide");
+
+      let index = 0;
+      let interval = null;
+
+      function updateSlider() {
+        track.style.transform = `translateX(-${index * 100}%)`;
+      }
+
+      function nextSlide() {
+        index = (index + 1) % slides.length;
+        updateSlider();
+      }
+
+      card.addEventListener("mouseenter", () => {
+        interval = setInterval(nextSlide, 2000);
+      });
+
+      card.addEventListener("mouseleave", () => {
+        clearInterval(interval);
+        index = 0;
+        updateSlider();
+      });
+
+    });
+
+    /* ============================= */
+    /* Hamburger Menu */
+    /* ============================= */
+
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    hamburger.addEventListener("click", () => {
+      mobileMenu.classList.toggle("show");
+    });
+    /* 點選選單自動關閉（手機體驗更好） */
+    document.querySelectorAll(".menu li").forEach(item => {
+      item.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        menu.classList.remove("active");
+      });
+    });
+  </script>
+
+</body>
+
+</html>
