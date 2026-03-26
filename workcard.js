@@ -38,31 +38,23 @@ const btnRight = document.querySelector('.nav-btn.right');
 
 let current = 0;
 
-function getIndex(i) {
-    return (i + cards.length) % cards.length;
-}
-
 function updateCarousel() {
     cards.forEach((card, i) => {
         card.classList.remove('active', 'left', 'right', 'hidden');
 
-        const leftIndex = getIndex(current - 1);
-        const rightIndex = getIndex(current + 1);
-
         if (i === current) {
             card.classList.add('active');
-        } else if (i === leftIndex) {
+        } else if (i === current - 1) {
             card.classList.add('left');
-        } else if (i === rightIndex) {
+        } else if (i === current + 1) {
             card.classList.add('right');
         } else {
             card.classList.add('hidden');
         }
     });
 
-    updateDots();
+    updateDots(); // ⭐ 加這行
 }
-
 
 btnLeft.addEventListener('click', () => {
     if (current > 0) {
@@ -170,31 +162,3 @@ document.querySelectorAll(".image-slider-card").forEach(card => {
     });
 
 });
-
-const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-if (!isMobile) {
-    document.querySelectorAll('.work-card').forEach(card => {
-        const video = card.querySelector('video');
-        if (!video) return;
-
-        card.addEventListener('mouseenter', () => {
-            video.style.opacity = 0;
-
-            setTimeout(() => {
-                video.currentTime = 0;
-                video.play();
-                video.style.opacity = 1;
-            }, 150);
-        });
-
-        card.addEventListener('mouseleave', () => {
-            video.style.opacity = 0;
-
-            setTimeout(() => {
-                video.pause();
-                video.currentTime = 0;
-            }, 200);
-        });
-    });
-}
