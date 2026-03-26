@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Me</title>
+
+  <!-- 字體（跟你主站一致） -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../workcard.css">
+  <link rel="icon" href="../logo.PNG">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      background: #05040a;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at top, #1b1a2f, #05040a 70%);
+      color: #eae8ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      cursor: url('./bear.PNG') 16 16, auto;
+    }
+
+    /* ===== 導覽列 ===== */
+    .nav {
+      height: 100px;
+      padding: 0 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 20;
+
+      background: rgba(15, 14, 30, .45);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(160, 160, 255, .08);
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      letter-spacing: 3px;
+      opacity: .9;
+    }
+
+    .menu {
+      display: flex;
+      gap: 56px;
+      list-style: none;
+    }
+
+    .menu li {
+      position: relative;
+      font-size: 14px;
+      letter-spacing: 1.2px;
+      cursor: pointer;
+      opacity: .7;
+      transition: .4s;
+    }
+
+    .menu li::after {
+      content: '';
+      position: absolute;
+      left: -10%;
+      bottom: -8px;
+      width: 120%;
+      height: 1px;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(122, 162, 227, .8),
+          transparent);
+      opacity: 0;
+      transition: .4s;
+    }
+
+    .menu li:hover {
+      opacity: 1;
+    }
+
+    .menu li:hover::after {
+      opacity: 1;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    /* ===== layout ===== */
+    .about {
+      padding: 140px 10%;
+    }
+
+    .container {
+      display: flex;
+      gap: 100px;
+      align-items: flex-start;
+    }
+
+    /* 左 */
+    .left img {
+      width: 320px;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 20px;
+
+      box-shadow:
+        0 0 30px rgba(140, 150, 255, .2),
+        0 0 80px rgba(120, 140, 255, .1);
+
+      transition: all .4s ease;
+    }
+
+    .left img:hover {
+      transform: scale(1.05) translateY(-6px);
+
+      box-shadow:
+        0 0 40px rgba(140, 150, 255, .35),
+        0 0 100px rgba(120, 140, 255, .25);
+
+      filter: brightness(1.05);
+    }
+
+    .photo {
+      position: relative;
+      display: inline-block;
+      perspective: 1000px;
+      /* 🔥 3D 必備 */
+    }
+
+    .photo img {
+      animation: float 6s ease-in-out infinite;
+      transform-style: preserve-3d;
+      transition: transform .3s ease, box-shadow .3s ease, filter .3s ease;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-8px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    .photo img:hover {
+      transform: scale(1.05) translateY(-6px) rotateX(6deg) rotateY(-6deg);
+
+      box-shadow:
+        0 20px 40px rgba(140, 150, 255, .35),
+        0 0 100px rgba(120, 140, 255, .25);
+
+      filter: brightness(1.05);
+    }
+
+    .photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: radial-gradient(circle at center, rgba(140, 150, 255, .2), transparent 70%);
+      opacity: 0;
+      transition: .4s;
+    }
+
+    .photo:hover::after {
+      opacity: 1;
+    }
+
+    /* 右 */
+    .right {
+      max-width: 620px;
+    }
+
+    /* ===== 標題 ===== */
+    .title-block h1 {
+      font-size: 46px;
+      letter-spacing: 6px;
+    }
+
+    .name-zh {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 56px;
+      /* 🔥 放大 */
+      font-weight: 700;
+      /* 加粗 */
+      letter-spacing: 6px;
+      /* 拉開字距 */
+
+      margin-bottom: 6px;
+
+      /* 🔥 關鍵：讓它更有「主標感」 */
+      background: linear-gradient(90deg, #ffffff, #b8c1ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+
+      text-shadow: 0 0 20px rgba(140, 150, 255, .25);
+    }
+
+    .en {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      opacity: .4;
+      letter-spacing: 3px;
+    }
+
+    .name-zh {
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px rgba(140, 150, 255, .2);
+      }
+
+      to {
+        text-shadow: 0 0 25px rgba(140, 150, 255, .5);
+      }
+    }
+
+    /* ===== intro ===== */
+    .intro {
+      margin-top: 20px;
+      line-height: 1.9;
+      opacity: .8;
+    }
+
+    /* 分隔線 */
+    .divider {
+      margin: 30px 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(140, 150, 255, .5), transparent);
+    }
+
+    /* ===== 區塊 ===== */
+    .info {
+      margin-bottom: 25px;
+    }
+
+    .info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+      opacity: .7;
+    }
+
+    .info p {
+      font-size: 14px;
+      opacity: .85;
+      margin: 4px 0;
+    }
+
+    /* grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .material-icons {
+      font-size: 18px;
+      vertical-align: middle;
+      margin-right: 6px;
+      opacity: 0.8;
+    }
+
+    /* ===== skills ===== */
+    .skills {
+      margin-top: 30px;
+    }
+
+    /* 技能 tag */
+    .skill-tags {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .skill-tags span {
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 999px;
+
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(140, 150, 255, .25);
+
+      text-align: center;
+      /* ✅ 文字置中 */
+      display: flex;
+      /* 🔥 更穩 */
+      justify-content: center;
+      /* 水平置中 */
+      align-items: center;
+      /* 垂直置中 */
+
+      transition: .3s;
+    }
+
+    .skill-tags span:hover {
+      background: rgba(140, 150, 255, .2);
+      box-shadow: 0 0 10px rgba(140, 150, 255, .4);
+    }
+
+
+    /* ===== software（重做🔥） ===== */
+    .software-icons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .software-icons img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, .04);
+      padding: 8px;
+      transition: .3s;
+    }
+
+    .software-icons img:hover {
+      transform: scale(1.15);
+      filter: drop-shadow(0 0 10px rgba(140, 150, 255, .5));
+      box-shadow: 0 0 12px rgba(140, 150, 255, .4);
+    }
+
+    /* ===== video ===== */
+    .video-section {
+      margin-top: 40px;
+    }
+
+    .video {
+      aspect-ratio: 16/9;
+      border-radius: 14px;
+      margin-top: 10px;
+      border-radius: 16px;
+      overflow: hidden;
+
+      box-shadow:
+        0 0 20px rgba(140, 150, 255, .15);
+    }
+
+    .video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ===== RWD ===== */
+    @media (max-width:768px) {
+
+      /* nav */
+      .nav {
+        height: 70px;
+        padding: 0 20px;
+      }
+
+      .menu {
+        gap: 20px;
+        font-size: 12px;
+      }
+
+      .logo {
+        font-size: 14px;
+        letter-spacing: 2px;
+      }
+
+      .about {
+        padding: 120px 20px;
+      }
+
+      .container {
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      .left img {
+        width: 100%;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 480px) {
+      .nav {
+        height: 70px;
+        padding: 0 20px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .icons img {
+        width: 48px;
+        height: 48px;
+      }
+
+      .menu {
+        display: none;
+      }
+    }
+
+
+
+    /* ===== scroll fade-in ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .fade-in.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-in:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    .fade-in:nth-child(2) {
+      transition-delay: 0.2s;
+    }
+
+    .fade-in:nth-child(3) {
+      transition-delay: 0.3s;
+    }
+
+    /* ===== hamburger ===== */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 30;
+    }
+
+    .hamburger span {
+      width: 22px;
+      height: 2px;
+      background: #fff;
+      transition: .3s;
+    }
+
+    /* ===== mobile menu ===== */
+    .mobile-menu {
+      position: fixed;
+      top: 70px;
+      right: 20px;
+
+      background: rgba(15, 14, 30, .85);
+      backdrop-filter: blur(16px);
+
+      border: 1px solid rgba(140, 150, 255, .2);
+      border-radius: 16px;
+
+      padding: 20px 28px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: .3s;
+
+      z-index: 25;
+    }
+
+    .mobile-menu a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      opacity: .8;
+      transition: .3s;
+    }
+
+    .mobile-menu a:hover {
+      opacity: 1;
+    }
+
+    /* 打開 */
+    .mobile-menu.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* ===== 手機顯示 ===== */
+    @media (max-width: 480px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .menu {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="worksOverlay">
+    <div class="works-panel">
+      <button class="close-btn">✕</button>
+
+      <h2 class="works-title">WORKS</h2>
+
+      <!-- 左右切換按鈕 -->
+      <button class="nav-btn left">‹</button>
+      <button class="nav-btn right">›</button>
+
+      <div class="carousel">
+        <div class="cards">
+          <!-- Web -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="../card/card1.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="../card/card1.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>海好有你</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="../icon/vs.JPG" alt="">
+                <span>Visual Studio Code</span>
+              </div>
+            </div>
+            <p>
+              SDGs14 海洋保育互動網站，
+              透過資訊與互動設計讓使用者理解海洋污染議題，
+              並鼓勵參與環境行動。
+            </p>
+
+            <a href="../ocean/ocean.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+          <!-- Web -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="../card/card-image.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="../card/card-image.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>修起來</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="../icon/vs.JPG" alt="">
+                <span>Visual Studio Code</span>
+              </div>
+            </div>
+            <p>
+              線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，
+              讓使用者透過直覺操作快速完成個人化影像創作。
+            </p>
+
+            <a href="../image-editing/image.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+
+          <!-- App -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="../card/card2.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="../card/card2.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>咖啡廳點餐 App</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="../icon/androidstudio.JPG" alt="">
+                <span>Android Studio</span>
+              </div>
+            </div>
+            <p>
+              以 Android Studio 開發的行動點餐應用程式，
+              提供咖啡與甜點搜尋、加入購物車與結帳流程。
+            </p>
+
+            <a href="../coffee/coffee.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+
+          <!-- Figma -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="../card/card3.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="../card/card3.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>Invisible Mask</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="../icon/figma.PNG" alt="">
+                <span>Figma</span>
+              </div>
+            </div>
+            <p>
+              是一款以 Figma 設計的美妝 App，
+              結合 AI 臉部分析與 AR 試妝，
+              打造快速且個人化的妝容體驗。
+            </p>
+
+            <a href="../mask/mask.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+          <!-- Figma -->
+          <div class="work-card">
+
+            <div class="card-media">
+
+              <!-- logo -->
+              <img src="../card/card_familymart.png" class="card-logo">
+
+              <!-- hover video -->
+              <video class="card-video" muted loop>
+                <source src="../card/card_familymart.mp4" type="video/mp4">
+              </video>
+
+            </div>
+
+            <h3>FamilyMart App Redesign</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="../icon/figma.PNG" alt="">
+                <span>Figma</span>
+              </div>
+            </div>
+            <p>
+              針對全家 App 進行 UI/UX 改版，
+              聚焦高頻使用情境，優化操作流程與資訊架構，
+              提升結帳效率與使用體驗。
+            </p>
+
+            <a href="../familymart/family.html">
+              <button>View Project</button>
+            </a>
+
+          </div>
+          <!-- Unity -->
+          <div class="work-card image-slider-card">
+            <div class="card-media">
+              <div class="slider">
+                <div class="track">
+                  <img src="../card/card4.PNG" class="slide active">
+                  <img src="../draw/spring-bg.PNG" class="slide">
+                  <img src="../draw/summer-bg.PNG" class="slide">
+                  <img src="../draw/autumn-bg.PNG" class="slide">
+                  <img src="../draw/winter-bg.PNG" class="slide">
+                  <img src="../draw/space-bg.PNG" class="slide">
+                </div>
+              </div>
+            </div>
+            <h3>小熊歷險記</h3>
+            <div class="tools">
+              <div class="tool">
+                <img src="../icon/procreate.JPG" alt="">
+                <span>Procreate</span>
+              </div>
+
+              <div class="tool">
+                <img src="../icon/ppt.JPG" alt="">
+                <span>PowerPoint</span>
+              </div>
+            </div>
+            <p>童話風卡牌互動遊戲，透過插畫敘事與四季場景變化，呈現角色的成長歷程與情感體驗。</p>
+            <a href="../draw/draw.html">
+              <button>View Project</button>
+            </a>
+          </div>
+        </div>
+      </div>
+      <!-- ✅ 放這裡！！！ -->
+      <div class="carousel-dots"></div>
+    </div>
+  </div>
+  <!-- ===== 導覽列 ===== -->
+  <nav class="nav">
+    <div class="logo">Yi Zhen Huang</div>
+    <ul class="menu">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="#">Works</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+    <!-- hamburger -->
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+  <!-- mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="../index.html">Home</a>
+    <a href="#" id="mobileWorksBtn">Works</a>
+    <a href="#">About</a>
+  </div>
+  </nav>
+
+  <section class="about fade-in">
+    <div class="container">
+
+      <!-- 左：照片 -->
+      <div class="left">
+        <div class="photo">
+          <img src="./me.JPG">
+        </div>
+      </div>
+
+      <!-- 右：內容 -->
+      <div class="right">
+
+        <!-- 名字 -->
+        <div class="title-block fade-in">
+          <h1 class="name-zh">黃翊禎</h1>
+          <p class="en">Yi Zhen Huang</p>
+        </div>
+
+        <!-- 自我介紹 -->
+        <p class="intro fade-in">
+          我個性內斂細心，具備良好的規劃能力，習慣在行動前先整理方向與步驟，並穩定執行，因此多數任務都能提前完成，也會持續調整細節，讓成果更加完整。
+          我對新事物充滿好奇，喜歡主動探索與嘗試。從小學習繪畫與鋼琴，培養了我對細節與情感表達的敏感度，也能將想法轉化為具體呈現。
+          在團隊中，我傾向先傾聽與理解他人，但在需要時，即使較為害羞，也會主動提出想法，讓討論持續推進。
+
+        </p>
+
+        <!-- 分隔線 -->
+        <div class="divider"></div>
+
+        <!-- Contact -->
+        <div class="info fade-in">
+          <h3>CONTACT</h3>
+          <p><span class="material-icons">call</span> 0972572036</p>
+          <p><span class="material-icons">mail</span> diamond931024@gmail.com</p>
+        </div>
+
+        <!-- Education + Experience -->
+        <div class="grid">
+
+          <div class="info fade-in">
+            <h3>EDUCATION</h3>
+            <p>2020 復旦高中</p>
+            <p>2023 元智大學 資訊傳播學系科技組</p>
+          </div>
+
+          <div class="info fade-in">
+            <h3>EXPERIENCE</h3>
+            <p>育秀盃 初賽入選</p>
+            <p>Young Ones / TISDC</p>
+          </div>
+
+        </div>
+
+        <!-- Awards -->
+        <div class="info fade-in">
+          <h3>AWARDS</h3>
+          <p>有庠獎｜學年排名前三</p>
+        </div>
+        <!-- Skills -->
+        <div class="info skills fade-in">
+          <h3>SKILLS</h3>
+
+          <div class="skill-tags">
+            <span>UI/UX Design</span>
+            <span>Web Design</span>
+            <span>Digital Illustration</span>
+            <span>App Development</span>
+            <span>Video Editing</span>
+          </div>
+        </div>
+        <!-- Software -->
+        <div class="info fade-in">
+          <h3>SOFTWARE</h3>
+
+          <div class="software-icons">
+            <img src="../icon/ps.JPG">
+            <img src="../icon/figma.PNG">
+            <img src="../icon/procreate.JPG">
+            <img src="../icon/vscode.JPG">
+            <img src="../icon/visual studio.JPG">
+            <img src="../icon/androidstudio.JPG">
+            <img src="../icon/unity.PNG">
+            <img src="../icon/capcut.PNG">
+          </div>
+        </div>
+
+        <!-- Video -->
+        <div class="info video-section fade-in">
+          <h3>SELF INTRODUCTION</h3>
+
+          <div class="video">
+            <iframe src="https://www.youtube.com/embed/ea0oTDB5_HM?rel=0&modestbranding=1" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <script src="../workcard.js"></script>
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, {
+      threshold: 0.15
+    });
+
+    const elements = document.querySelectorAll('.fade-in');
+    elements.forEach(el => observer.observe(el));
+
+    /* ============================= */
+    /* Hamburger Menu */
+    /* ============================= */
+
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    hamburger.addEventListener("click", () => {
+      mobileMenu.classList.toggle("show");
+    });
+    /* 點選選單自動關閉（手機體驗更好） */
+    document.querySelectorAll(".menu li").forEach(item => {
+      item.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        menu.classList.remove("active");
+      });
+    });
+  </script>
+</body>
+
+</html>
