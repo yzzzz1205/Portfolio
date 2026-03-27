@@ -1603,11 +1603,12 @@
             });
             /* 點選選單自動關閉（手機體驗更好） */
             document.querySelectorAll(".menu li").forEach(item => {
-                item.addEventListener("click", () => {
-                    hamburger.classList.remove("active");
-                    menu.classList.remove("active");
-                });
-            });
+    item.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        mobileMenu.classList.remove("show"); // ✅ 改這裡
+    });
+});
+
         </script>
 
 </body>
