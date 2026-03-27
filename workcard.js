@@ -4,6 +4,8 @@ const worksOverlay = document.getElementById('worksOverlay');
 const worksBtn = document.querySelector('.menu li:nth-child(2)');
 const mobileWorksBtn = document.getElementById('mobileWorksBtn');
 const closeBtn = document.querySelector('.close-btn');
+const isMobile = window.innerWidth <= 768;
+
 
 /* 桌機 Works */
 if (worksBtn) {
@@ -56,19 +58,25 @@ function updateCarousel() {
     updateDots(); // ⭐ 加這行
 }
 
-btnLeft.addEventListener('click', () => {
-    if (current > 0) {
-        current--;
-        updateCarousel();
-    }
-});
+if (btnLeft) {
+    btnLeft.addEventListener('click', () => {
+        if (current > 0) {
+            current--;
+            updateCarousel();
+        }
+    });
+}
 
-btnRight.addEventListener('click', () => {
-    if (current < cards.length - 1) {
-        current++;
-        updateCarousel();
-    }
-});
+
+if (btnRight) {
+    btnRight.addEventListener('click', () => {
+        if (current < cards.length - 1) {
+            current++;
+            updateCarousel();
+        }
+    });
+}
+
 /* ===== 手機滑動切換 ===== */
 let startX = 0;
 let endX = 0;
@@ -105,19 +113,23 @@ const dotsContainer = document.querySelector('.carousel-dots');
 let dots = [];
 
 // 建立 dots
-cards.forEach((_, i) => {
-    const dot = document.createElement('span');
-    dot.classList.add('dot');
+if (dotsContainer) {
 
-    dot.addEventListener('click', () => {
-        current = i;
-        updateCarousel();
-        updateDots();
+    cards.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+
+        dot.addEventListener('click', () => {
+            current = i;
+            updateCarousel();
+            updateDots();
+        });
+
+        dotsContainer.appendChild(dot);
+        dots.push(dot);
     });
 
-    dotsContainer.appendChild(dot);
-    dots.push(dot);
-});
+}
 
 function updateDots() {
     dots.forEach((dot, i) => {
