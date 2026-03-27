@@ -69,6 +69,37 @@ btnRight.addEventListener('click', () => {
         updateCarousel();
     }
 });
+/* ===== 手機滑動切換 ===== */
+let startX = 0;
+let endX = 0;
+
+const cardsContainer = document.querySelector('.cards');
+
+if (cardsContainer) {
+
+    cardsContainer.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+    });
+
+    cardsContainer.addEventListener('touchend', (e) => {
+        endX = e.changedTouches[0].clientX;
+
+        const diff = endX - startX;
+
+        if (Math.abs(diff) > 50) {
+
+            if (diff > 0 && current > 0) {
+                current--;
+                updateCarousel();
+            } else if (diff < 0 && current < cards.length - 1) {
+                current++;
+                updateCarousel();
+            }
+
+        }
+    });
+
+}
 
 const dotsContainer = document.querySelector('.carousel-dots');
 let dots = [];
@@ -96,7 +127,7 @@ function updateDots() {
 updateCarousel();
 /* ===== 卡片的影片播放 ===== */
 document.querySelectorAll('.work-card').forEach(card => {
-
+if (isMobile) return; // ⭐ 手機直接跳過
     const video = card.querySelector('video');
     if (!video) return;
 
