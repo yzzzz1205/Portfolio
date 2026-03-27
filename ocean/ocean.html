@@ -690,10 +690,12 @@
                 line-height: 1.7;
             }
 
-            /* 📱 structure marquee → 不要跑動畫（手機會暈+卡） */
-            .row1,
+            .row1 {
+                animation: marqueeRightToLeft 40s linear infinite;
+            }
+
             .row2 {
-                animation: none;
+                animation: marqueeLeftToRight 45s linear infinite;
             }
 
             .structure-marquee {
@@ -783,13 +785,14 @@
                 box-shadow: none;
             }
 
- #trash-world {
-        display: none;
-    }
+            #trash-world {
+                display: none;
+            }
 
-    #cleanTrash {
-        display: none;
-    }
+            #cleanTrash {
+                display: none;
+            }
+
         }
 
         /* ===== hamburger ===== */
