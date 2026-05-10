@@ -1433,7 +1433,10 @@
             const mobileMenu = document.getElementById("mobileMenu");
 
             hamburger.addEventListener("click", () => {
+
+                hamburger.classList.toggle("active");
                 mobileMenu.classList.toggle("show");
+
             });
             /* 點選選單自動關閉（手機體驗更好） */
             document.querySelectorAll(".menu li").forEach(item => {
