@@ -1520,7 +1520,14 @@
                 World.add(world, trash);
             }
 
-            setInterval(createTrash, 2000); // 每秒掉一個垃圾
+            if (window.innerWidth > 1024) {
+
+                Render.run(render);
+                Runner.run(Runner.create(), engine);
+
+                setInterval(createTrash, 2000);
+
+            }
 
             /* ============================= */
             /* Clean Ocean */
