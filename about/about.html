@@ -476,7 +476,19 @@
       background: #fff;
       transition: .3s;
     }
+    /* ===== hamburger animation ===== */
 
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
     /* ===== mobile menu ===== */
     .mobile-menu {
       position: fixed;
@@ -898,7 +910,10 @@
     const mobileMenu = document.getElementById("mobileMenu");
 
     hamburger.addEventListener("click", () => {
+
+      hamburger.classList.toggle("active");
       mobileMenu.classList.toggle("show");
+
     });
     /* 點選選單自動關閉（手機體驗更好） */
     document.querySelectorAll(".menu li").forEach(item => {
