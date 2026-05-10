@@ -1471,8 +1471,14 @@
                 }
             });
 
-            Render.run(render);
-            Runner.run(Runner.create(), engine);
+            if (window.innerWidth > 1024) {
+
+                Render.run(render);
+                Runner.run(Runner.create(), engine);
+
+                setInterval(createTrash, 2000);
+
+            }
 
             /* floor */
             const floor = Bodies.rectangle(
@@ -1518,15 +1524,6 @@
                     }
                 );
                 World.add(world, trash);
-            }
-
-            if (window.innerWidth > 1024) {
-
-                Render.run(render);
-                Runner.run(Runner.create(), engine);
-
-                setInterval(createTrash, 2000);
-
             }
 
             /* ============================= */
