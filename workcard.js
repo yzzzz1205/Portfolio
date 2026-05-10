@@ -38,7 +38,18 @@ const cards = document.querySelectorAll('.work-card');
 const btnLeft = document.querySelector('.nav-btn.left');
 const btnRight = document.querySelector('.nav-btn.right');
 
-let current = 0;
+const pageMap = {
+    "ocean.html": 0,
+    "image.html": 1,
+    "coffee.html": 2,
+    "mask.html": 3,
+    "family.html": 4,
+    "draw.html": 5
+};
+
+const currentPage = window.location.pathname.split("/").pop();
+
+let current = pageMap[currentPage] ?? 0;
 
 function updateCarousel() {
     cards.forEach((card, i) => {
