@@ -1471,14 +1471,23 @@
                 }
             });
 
-            if (window.innerWidth > 1024) {
+const isTouchDevice =
+    'ontouchstart' in window ||
+    navigator.maxTouchPoints > 0;
 
-                Render.run(render);
-                Runner.run(Runner.create(), engine);
+if (!isTouchDevice && window.innerWidth > 1024) {
 
-                setInterval(createTrash, 2000);
+    Render.run(render);
+    Runner.run(Runner.create(), engine);
 
-            }
+    setInterval(createTrash, 2000);
+
+} else {
+
+    document.getElementById("trash-world").style.display = "none";
+    document.getElementById("cleanTrash").style.display = "none";
+
+}
 
             /* floor */
             const floor = Bodies.rectangle(
