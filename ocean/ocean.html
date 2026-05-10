@@ -811,6 +811,20 @@
             transition: .3s;
         }
 
+        /* ===== hamburger animation ===== */
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
         /* ===== mobile menu ===== */
         .mobile-menu {
             position: fixed;
@@ -1471,23 +1485,23 @@
                 }
             });
 
-const isTouchDevice =
-    'ontouchstart' in window ||
-    navigator.maxTouchPoints > 0;
+            const isTouchDevice =
+                'ontouchstart' in window ||
+                navigator.maxTouchPoints > 0;
 
-if (!isTouchDevice && window.innerWidth > 1024) {
+            if (!isTouchDevice && window.innerWidth > 1024) {
 
-    Render.run(render);
-    Runner.run(Runner.create(), engine);
+                Render.run(render);
+                Runner.run(Runner.create(), engine);
 
-    setInterval(createTrash, 2000);
+                setInterval(createTrash, 2000);
 
-} else {
+            } else {
 
-    document.getElementById("trash-world").style.display = "none";
-    document.getElementById("cleanTrash").style.display = "none";
+                document.getElementById("trash-world").style.display = "none";
+                document.getElementById("cleanTrash").style.display = "none";
 
-}
+            }
 
             /* floor */
             const floor = Bodies.rectangle(
@@ -1534,6 +1548,7 @@ if (!isTouchDevice && window.innerWidth > 1024) {
                 );
                 World.add(world, trash);
             }
+
 
             /* ============================= */
             /* Clean Ocean */
@@ -1598,7 +1613,10 @@ if (!isTouchDevice && window.innerWidth > 1024) {
             const mobileMenu = document.getElementById("mobileMenu");
 
             hamburger.addEventListener("click", () => {
+
+                hamburger.classList.toggle("active");
                 mobileMenu.classList.toggle("show");
+
             });
             /* 點選選單自動關閉（手機體驗更好） */
             document.querySelectorAll(".menu li").forEach(item => {
