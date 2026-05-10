@@ -1515,26 +1515,26 @@
         sections.forEach(section => {
             observer.observe(section);
         });
-        /* ============================= */
-        /* Hamburger Menu */
-        /* ============================= */
+            /* ============================= */
+            /* Hamburger Menu */
+            /* ============================= */
 
-        const hamburger = document.getElementById("hamburger");
-        const mobileMenu = document.getElementById("mobileMenu");
+            const hamburger = document.getElementById("hamburger");
+            const mobileMenu = document.getElementById("mobileMenu");
 
             hamburger.addEventListener("click", () => {
 
-      hamburger.classList.toggle("active");
-      mobileMenu.classList.toggle("show");
+                hamburger.classList.toggle("active");
+                mobileMenu.classList.toggle("show");
 
-    });
-        /* 點選選單自動關閉（手機體驗更好） */
-        document.querySelectorAll(".menu li").forEach(item => {
-            item.addEventListener("click", () => {
-                hamburger.classList.remove("active");
-                menu.classList.remove("active");
             });
-        });
+            /* 點選選單自動關閉（手機體驗更好） */
+            document.querySelectorAll(".menu li").forEach(item => {
+                item.addEventListener("click", () => {
+                    hamburger.classList.remove("active");
+                    mobileMenu.classList.remove("show"); // 🔥 正確
+                });
+            });
     </script>
 </body>
 
