@@ -5,14 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Me</title>
-
-  <!-- 字體（跟你主站一致） -->
   <link
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&display=swap"
     rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="../workcard.css">
+  <link rel="stylesheet" href="../mobile-menu.css">
   <link rel="icon" href="../logo.PNG">
   <style>
     * {
@@ -461,85 +460,6 @@
       transition-delay: 0.3s;
     }
 
-    /* ===== hamburger ===== */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      z-index: 30;
-    }
-
-.hamburger span {
-    width: 22px;
-    height: 2px;
-    background: #fff;
-    border-radius: 10px;
-
-    transition:
-        transform .3s ease,
-        opacity .15s ease;
-
-    transform-origin: center;
-}
-    /* ===== hamburger animation ===== */
-
-    .hamburger.active span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-}
-
-    .hamburger.active span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
-    /* ===== mobile menu ===== */
-    .mobile-menu {
-      position: fixed;
-      top: 70px;
-      right: 20px;
-
-      background: rgba(15, 14, 30, .85);
-      backdrop-filter: blur(16px);
-
-      border: 1px solid rgba(140, 150, 255, .2);
-      border-radius: 16px;
-
-      padding: 20px 28px;
-
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-10px);
-      transition: .3s;
-
-      z-index: 25;
-    }
-
-    .mobile-menu a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      opacity: .8;
-      transition: .3s;
-    }
-
-    .mobile-menu a:hover {
-      opacity: 1;
-    }
-
-    /* 打開 */
-    .mobile-menu.show {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
 
     /* ===== 手機顯示 ===== */
     @media (max-width: 480px) {
