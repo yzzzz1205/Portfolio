@@ -6,12 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio</title>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&family=Noto+Serif+TC:wght@400;700&display=swap"
-        rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400&family=Noto+Serif+TC:wght@400;700&display=swap"
+    rel="stylesheet">
   <!-- Font Awesome icon -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="./workcard.css">
+  <link rel="stylesheet" href="./mobile-menu.css">
   <link rel="icon" href="./logo.PNG">
   <style>
     /* ===== 基本 ===== */
@@ -357,79 +358,6 @@
       }
     }
 
-    /* ===== hamburger ===== */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      z-index: 30;
-    }
-
-    .hamburger span {
-      width: 22px;
-      height: 2px;
-      background: #fff;
-      transition: .3s;
-    }
-    /* ===== hamburger animation ===== */
-
-        .hamburger.active span:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-    /* ===== mobile menu ===== */
-    .mobile-menu {
-      position: fixed;
-      top: 70px;
-      right: 20px;
-
-      background: rgba(15, 14, 30, .85);
-      backdrop-filter: blur(16px);
-
-      border: 1px solid rgba(140, 150, 255, .2);
-      border-radius: 16px;
-
-      padding: 20px 28px;
-
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-10px);
-      transition: .3s;
-
-      z-index: 25;
-    }
-
-    .mobile-menu a {
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      opacity: .8;
-      transition: .3s;
-    }
-
-    .mobile-menu a:hover {
-      opacity: 1;
-    }
-
-    /* 打開 */
-    .mobile-menu.show {
-      opacity: 1;
-      pointer-events: auto;
-      transform: translateY(0);
-    }
-
     /* ===== 手機顯示 ===== */
     @media (max-width: 480px) {
       .hamburger {
@@ -734,8 +662,7 @@
       'fa-brands fa-figma',          // Figma
       'fa-brands fa-unity',          // Unity
       'fa-brands fa-android',        // Android Studio
-      'fa-solid fa-code',            // VS Code（語意正確）
-      'fa-solid fa-circle-nodes'     // TouchDesigner（節點/互動）
+      'fa-solid fa-code',            // VS Code
     ];
 
     const colors = ['#8F86C9', '#7AA2E3'];
@@ -824,25 +751,25 @@
     }
     draw();
 
-   /* ===== Works ===== */
-const worksOverlay = document.getElementById('worksOverlay');
+    /* ===== Works ===== */
+    const worksOverlay = document.getElementById('worksOverlay');
 
-const worksBtn = document.querySelector('.menu li:nth-child(2)');
-const mobileWorksBtn = document.getElementById('mobileWorksBtn');
-const closeBtn = document.querySelector('.close-btn');
-const isMobile = window.innerWidth <= 768;
+    const worksBtn = document.querySelector('.menu li:nth-child(2)');
+    const mobileWorksBtn = document.getElementById('mobileWorksBtn');
+    const closeBtn = document.querySelector('.close-btn');
+    const isMobile = window.innerWidth <= 768;
 
 
-/* 桌機 Works */
-if (worksBtn) {
-    worksBtn.addEventListener('click', () => {
+    /* 桌機 Works */
+    if (worksBtn) {
+      worksBtn.addEventListener('click', () => {
         worksOverlay.classList.add('show');
-    });
-}
+      });
+    }
 
-/* 手機 Works */
-if (mobileWorksBtn) {
-    mobileWorksBtn.addEventListener('click', (e) => {
+    /* 手機 Works */
+    if (mobileWorksBtn) {
+      mobileWorksBtn.addEventListener('click', (e) => {
         e.preventDefault();
 
         worksOverlay.classList.add('show');
@@ -850,157 +777,157 @@ if (mobileWorksBtn) {
         // 關閉手機選單（加分體驗）
         document.getElementById('mobileMenu').classList.remove('show');
         document.getElementById('hamburger').classList.remove('active');
-    });
-}
+      });
+    }
 
-/* 關閉 overlay */
-if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
+    /* 關閉 overlay */
+    if (closeBtn) {
+      closeBtn.addEventListener('click', () => {
         worksOverlay.classList.remove('show');
-    });
-}
-/* ===== Carousel Logic ===== */
-const cards = document.querySelectorAll('.work-card');
-const btnLeft = document.querySelector('.nav-btn.left');
-const btnRight = document.querySelector('.nav-btn.right');
+      });
+    }
+    /* ===== Carousel Logic ===== */
+    const cards = document.querySelectorAll('.work-card');
+    const btnLeft = document.querySelector('.nav-btn.left');
+    const btnRight = document.querySelector('.nav-btn.right');
 
-let current = 0;
+    let current = 0;
 
-function updateCarousel() {
-    cards.forEach((card, i) => {
+    function updateCarousel() {
+      cards.forEach((card, i) => {
         card.classList.remove('active', 'left', 'right', 'hidden');
 
         if (i === current) {
-            card.classList.add('active');
+          card.classList.add('active');
         } else if (i === current - 1) {
-            card.classList.add('left');
+          card.classList.add('left');
         } else if (i === current + 1) {
-            card.classList.add('right');
+          card.classList.add('right');
         } else {
-            card.classList.add('hidden');
+          card.classList.add('hidden');
         }
-    });
+      });
 
-    updateDots(); // ⭐ 加這行
-}
+      updateDots(); // ⭐ 加這行
+    }
 
-if (btnLeft) {
-    btnLeft.addEventListener('click', () => {
+    if (btnLeft) {
+      btnLeft.addEventListener('click', () => {
         if (current > 0) {
-            current--;
-            updateCarousel();
+          current--;
+          updateCarousel();
         }
-    });
-}
+      });
+    }
 
 
-if (btnRight) {
-    btnRight.addEventListener('click', () => {
+    if (btnRight) {
+      btnRight.addEventListener('click', () => {
         if (current < cards.length - 1) {
-            current++;
-            updateCarousel();
+          current++;
+          updateCarousel();
         }
-    });
-}
+      });
+    }
 
-/* ===== 手機滑動切換 ===== */
-let startX = 0;
-let endX = 0;
+    /* ===== 手機滑動切換 ===== */
+    let startX = 0;
+    let endX = 0;
 
-const cardsContainer = document.querySelector('.cards');
+    const cardsContainer = document.querySelector('.cards');
 
-if (cardsContainer) {
+    if (cardsContainer) {
 
-    cardsContainer.addEventListener('touchstart', (e) => {
+      cardsContainer.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
-    });
+      });
 
-    cardsContainer.addEventListener('touchend', (e) => {
+      cardsContainer.addEventListener('touchend', (e) => {
         endX = e.changedTouches[0].clientX;
 
         const diff = endX - startX;
 
         if (Math.abs(diff) > 50) {
 
-            if (diff > 0 && current > 0) {
-                current--;
-                updateCarousel();
-            } else if (diff < 0 && current < cards.length - 1) {
-                current++;
-                updateCarousel();
-            }
+          if (diff > 0 && current > 0) {
+            current--;
+            updateCarousel();
+          } else if (diff < 0 && current < cards.length - 1) {
+            current++;
+            updateCarousel();
+          }
 
         }
-    });
+      });
 
-}
+    }
 
-const dotsContainer = document.querySelector('.carousel-dots');
-let dots = [];
+    const dotsContainer = document.querySelector('.carousel-dots');
+    let dots = [];
 
-// 建立 dots
-if (dotsContainer) {
+    // 建立 dots
+    if (dotsContainer) {
 
-    cards.forEach((_, i) => {
+      cards.forEach((_, i) => {
         const dot = document.createElement('span');
         dot.classList.add('dot');
 
         dot.addEventListener('click', () => {
-            current = i;
-            updateCarousel();
-            updateDots();
+          current = i;
+          updateCarousel();
+          updateDots();
         });
 
         dotsContainer.appendChild(dot);
         dots.push(dot);
-    });
+      });
 
-}
+    }
 
-function updateDots() {
-    dots.forEach((dot, i) => {
+    function updateDots() {
+      dots.forEach((dot, i) => {
         dot.classList.toggle('active', i === current);
-    });
-}
-updateCarousel();
-/* ===== 卡片的影片播放 ===== */
-document.querySelectorAll('.work-card').forEach(card => {
-if (isMobile) return; // ⭐ 手機直接跳過
-    const video = card.querySelector('video');
-    if (!video) return;
+      });
+    }
+    updateCarousel();
+    /* ===== 卡片的影片播放 ===== */
+    document.querySelectorAll('.work-card').forEach(card => {
+      if (isMobile) return; // ⭐ 手機直接跳過
+      const video = card.querySelector('video');
+      if (!video) return;
 
-    card.addEventListener('mouseenter', () => {
+      card.addEventListener('mouseenter', () => {
 
         video.style.opacity = 0;
 
         setTimeout(() => {
-            video.currentTime = 0;
-            video.play();
-            video.style.opacity = 1;
+          video.currentTime = 0;
+          video.play();
+          video.style.opacity = 1;
         }, 150);
 
-    });
+      });
 
-    card.addEventListener('mouseleave', () => {
+      card.addEventListener('mouseleave', () => {
 
         video.style.opacity = 0;
 
         setTimeout(() => {
-            video.pause();
-            video.currentTime = 0;
+          video.pause();
+          video.currentTime = 0;
         }, 200);
 
+      });
+
     });
 
-});
+    const heroBtn = document.querySelector('.hero-btn');
 
-const heroBtn = document.querySelector('.hero-btn');
-
-if (heroBtn) {
-    heroBtn.addEventListener('click', () => {
+    if (heroBtn) {
+      heroBtn.addEventListener('click', () => {
         worksOverlay.classList.add('show');
-    });
-}
+      });
+    }
 
     /* ===== 卡片的圖片切換 ===== */
     document.querySelectorAll(".image-slider-card").forEach(card => {
@@ -1032,26 +959,26 @@ if (heroBtn) {
 
     });
 
-            /* ============================= */
-            /* Hamburger Menu */
-            /* ============================= */
+    /* ============================= */
+    /* Hamburger Menu */
+    /* ============================= */
 
-            const hamburger = document.getElementById("hamburger");
-            const mobileMenu = document.getElementById("mobileMenu");
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
 
-            hamburger.addEventListener("click", () => {
+    hamburger.addEventListener("click", () => {
 
-                hamburger.classList.toggle("active");
-                mobileMenu.classList.toggle("show");
+      hamburger.classList.toggle("active");
+      mobileMenu.classList.toggle("show");
 
-            });
-            /* 點選選單自動關閉（手機體驗更好） */
-            document.querySelectorAll(".menu li").forEach(item => {
-                item.addEventListener("click", () => {
-                    hamburger.classList.remove("active");
-                    mobileMenu.classList.remove("show"); // 🔥 正確
-                });
-            });
+    });
+    /* 點選選單自動關閉（手機體驗更好） */
+    document.querySelectorAll(".menu li").forEach(item => {
+      item.addEventListener("click", () => {
+        hamburger.classList.remove("active");
+        mobileMenu.classList.remove("show"); // 🔥 正確
+      });
+    });
   </script>
 
 </body>
