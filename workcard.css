@@ -504,6 +504,9 @@
 
 /* ===== 8. 響應式手機排版修正 (當螢幕寬度 <= 768px 時觸發你要求的緊湊平面切換) ===== */
 @media (max-width: 768px) {
+    #worksOverlay {
+        touch-action: none; /* 禁止原生捲動，保持 JS 手勢運作 */
+    }
     .works-panel {
         margin: 80px auto;
         width: 92%;

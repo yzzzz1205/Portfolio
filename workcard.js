@@ -33,7 +33,8 @@ function checkLayoutMode() {
     if (isMobile) {
         cardsContainer.classList.remove('grid-mode');
         cardsContainer.classList.add('carousel-mode');
-        filterCarouselCards(); // 重載手機 Carousel 數據狀態
+        // 關鍵修改：不重置索引 (false)
+        filterCarouselCards(false);
     } else {
         cardsContainer.classList.remove('carousel-mode');
         cardsContainer.classList.add('grid-mode');
@@ -109,7 +110,8 @@ function buildMobileDots() {
 }
 
 // 手機 Carousel 篩選邏輯
-function filterCarouselCards() {
+/* 修改為接收 resetIndex 參數 */
+function filterCarouselCards(resetIndex = true) {
     allCards.forEach(card => card.classList.add('filtered-out'));
 
     if (activeFilter === 'all') {
@@ -118,7 +120,15 @@ function filterCarouselCards() {
         visibleCards = Array.from(allCards).filter(card => card.dataset.category === activeFilter);
     }
 
-    currentIdx = 0; // 當分類重切時，回到第一張卡片
+    // 只有當 resetIndex 為 true 時，才重置索引
+    if (resetIndex) {
+        currentIdx = 0; 
+    }
+    
+    // 確保 currentIdx 不會超出新的範圍
+    if (currentIdx >= visibleCards.length) currentIdx = visibleCards.length - 1;
+    if (currentIdx < 0) currentIdx = 0;
+
     buildMobileDots();
     updateCarousel();
 }
