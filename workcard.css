@@ -306,6 +306,8 @@
     width: 100%;
     height: 360px;
     /* 還原為你指定的 360px 經典高度 */
+    touch-action: pan-y;           /* 告訴瀏覽器：此區塊允許垂直捲動，水平互動請交給 JS */
+    overscroll-behavior-x: none;    /* 防止滑到盡頭時觸發瀏覽器的水平彈性回彈或頁面跳轉 */
 }
 
 /* Carousel 手機堆疊透視容器 */
