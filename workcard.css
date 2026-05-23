@@ -578,4 +578,8 @@
     .card-logo {
         opacity: 1 !important;
     }
+    /* 加入這一段隱藏分類按鈕 */
+    .category-filters {
+        display: none !important;
+    }
 }
