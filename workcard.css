@@ -14,6 +14,10 @@
         visibility 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     overflow-y: auto;
     /* 當網格卡片過多時允許順暢滾動 */
+
+    /* 加入這兩行，確保整個彈出層都不會產生水平抖動 */
+    touch-action: pan-y; 
+    overscroll-behavior: contain;
 }
 
 #worksOverlay.show {

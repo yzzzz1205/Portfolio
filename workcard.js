@@ -181,11 +181,28 @@ if (cardsContainer) {
 /* ===== 視窗 Resize 監聽（保證桌機與手機即時切換） ===== */
 window.addEventListener('resize', checkLayoutMode);
 
-/* ===== 點擊跳出 overlay (ONLY open when clicked) ===== */
+/* ===== 點擊跳出 overlay (修改開啟函式) ===== */
 const openOverlay = () => {
     worksOverlay.classList.add('show');
-    checkLayoutMode(); // 打開時進行初始 Stagger 渲染
+    document.body.style.overflow = 'hidden'; // 鎖定 body 滾動
+    checkLayoutMode(); 
 };
+
+/* ===== 關閉 overlay (修改關閉函式) ===== */
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        worksOverlay.classList.remove('show');
+        document.body.style.overflow = ''; // 恢復 body 滾動
+    });
+}
+
+// 同步處理點擊遮罩關閉的部分
+worksOverlay.addEventListener('click', (e) => {
+    if (e.target === worksOverlay) {
+        worksOverlay.classList.remove('show');
+        document.body.style.overflow = ''; // 恢復 body 滾動
+    }
+});
 
 // 綁定各類 Works 按鈕
 if (openWorksBtn) openWorksBtn.addEventListener('click', openOverlay);
