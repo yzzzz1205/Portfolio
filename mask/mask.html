@@ -993,33 +993,34 @@
 </head>
 
 <body>
-    <div id="worksOverlay">
+ <div id="worksOverlay">
         <div class="works-panel">
             <button class="close-btn">✕</button>
 
             <h2 class="works-title">WORKS</h2>
 
-            <!-- 左右切換按鈕 -->
+            <div class="category-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="uiux">UI / UX</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+                <button class="filter-btn" data-filter="app">App Design</button>
+                <button class="filter-btn" data-filter="illustration">Illustration</button>
+            </div>
+
             <button class="nav-btn left">‹</button>
             <button class="nav-btn right">›</button>
 
             <div class="carousel">
                 <div class="cards">
-                    <!-- Web -->
-                    <div class="work-card">
 
+                    <div class="work-card" data-category="web">
                         <div class="card-media">
-
-                            <!-- logo -->
                             <img src="../card/card1.png" class="card-logo">
-
-                            <!-- hover video -->
-                            <video class="card-video" muted loop>
+                            <video class="card-video" muted loop playsinline>
                                 <source src="../card/card1.mp4" type="video/mp4">
                             </video>
-
                         </div>
-
+                        <span class="project-tag">WEB DEVELOPMENT</span>
                         <h3>海好有你</h3>
                         <div class="tools">
                             <div class="tool">
@@ -1027,32 +1028,18 @@
                                 <span>Visual Studio Code</span>
                             </div>
                         </div>
-                        <p>
-                            SDGs14 海洋保育互動網站，
-                            透過資訊與互動設計讓使用者理解海洋污染議題，
-                            並鼓勵參與環境行動。
-                        </p>
-
-                        <a href="../ocean/ocean.html">
-                            <button>View Project</button>
-                        </a>
-
+                        <p>SDGs14 海洋保育互動網站，透過資訊與互動設計讓使用者理解海洋污染議題，並鼓勵參與環境行動。</p>
+                        <a href="../ocean/ocean.html"><button>View Project</button></a>
                     </div>
-                    <!-- Web -->
-                    <div class="work-card">
 
+                    <div class="work-card" data-category="web">
                         <div class="card-media">
-
-                            <!-- logo -->
                             <img src="../card/card-image.png" class="card-logo">
-
-                            <!-- hover video -->
-                            <video class="card-video" muted loop>
+                            <video class="card-video" muted loop playsinline>
                                 <source src="../card/card-image.mp4" type="video/mp4">
                             </video>
-
                         </div>
-
+                        <span class="project-tag">WEB DEVELOPMENT</span>
                         <h3>修起來</h3>
                         <div class="tools">
                             <div class="tool">
@@ -1060,32 +1047,18 @@
                                 <span>Visual Studio Code</span>
                             </div>
                         </div>
-                        <p>
-                            線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，
-                            讓使用者透過直覺操作快速完成個人化影像創作。
-                        </p>
-
-                        <a href="../image-editing/image.html">
-                            <button>View Project</button>
-                        </a>
-
+                        <p>線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，讓使用者透過直覺操作快速完成個人化影像創作。</p>
+                        <a href="../image-editing/image.html"><button>View Project</button></a>
                     </div>
 
-                    <!-- App -->
-                    <div class="work-card">
-
+                    <div class="work-card" data-category="app">
                         <div class="card-media">
-
-                            <!-- logo -->
                             <img src="../card/card2.png" class="card-logo">
-
-                            <!-- hover video -->
-                            <video class="card-video" muted loop>
+                            <video class="card-video" muted loop playsinline>
                                 <source src="../card/card2.mp4" type="video/mp4">
                             </video>
-
                         </div>
-
+                        <span class="project-tag">APP DESIGN</span>
                         <h3>咖啡廳點餐 App</h3>
                         <div class="tools">
                             <div class="tool">
@@ -1093,32 +1066,18 @@
                                 <span>Android Studio</span>
                             </div>
                         </div>
-                        <p>
-                            以 Android Studio 開發的行動點餐應用程式，
-                            提供咖啡與甜點搜尋、加入購物車與結帳流程。
-                        </p>
-
-                        <a href="../coffee/coffee.html">
-                            <button>View Project</button>
-                        </a>
-
+                        <p>以 Android Studio 開發的行動點餐應用程式，提供咖啡與甜點搜尋、加入購物車與結帳流程。</p>
+                        <a href="../coffee/coffee.html"><button>View Project</button></a>
                     </div>
 
-                    <!-- Figma -->
-                    <div class="work-card">
-
+                    <div class="work-card" data-category="uiux">
                         <div class="card-media">
-
-                            <!-- logo -->
                             <img src="../card/card3.png" class="card-logo">
-
-                            <!-- hover video -->
-                            <video class="card-video" muted loop>
+                            <video class="card-video" muted loop playsinline>
                                 <source src="../card/card3.mp4" type="video/mp4">
                             </video>
-
                         </div>
-
+                        <span class="project-tag">UI / UX DESIGN</span>
                         <h3>Invisible Mask</h3>
                         <div class="tools">
                             <div class="tool">
@@ -1126,32 +1085,18 @@
                                 <span>Figma</span>
                             </div>
                         </div>
-                        <p>
-                            是一款以 Figma 設計的美妝 App，
-                            結合 AI 臉部分析與 AR 試妝，
-                            打造快速且個人化的妝容體驗。
-                        </p>
-
-                        <a href="./mask.html">
-                            <button>View Project</button>
-                        </a>
-
+                        <p>是一款以 Figma 設計的美妝 App，結合 AI 臉部分析與 AR 試妝，打造快速且個人化的妝容體驗。</p>
+                        <a href="./mask.html"><button>View Project</button></a>
                     </div>
-                    <!-- Figma -->
-                    <div class="work-card">
 
+                    <div class="work-card" data-category="uiux">
                         <div class="card-media">
-
-                            <!-- logo -->
                             <img src="../card/card_familymart.png" class="card-logo">
-
-                            <!-- hover video -->
-                            <video class="card-video" muted loop>
+                            <video class="card-video" muted loop playsinline>
                                 <source src="../card/card_familymart.mp4" type="video/mp4">
                             </video>
-
                         </div>
-
+                        <span class="project-tag">UI / UX DESIGN</span>
                         <h3>FamilyMart App Redesign</h3>
                         <div class="tools">
                             <div class="tool">
@@ -1159,19 +1104,11 @@
                                 <span>Figma</span>
                             </div>
                         </div>
-                        <p>
-                            針對全家 App 進行 UI/UX 改版，
-                            聚焦高頻使用情境，優化操作流程與資訊架構，
-                            提升結帳效率與使用體驗。
-                        </p>
-
-                        <a href="../familymart/family.html">
-                            <button>View Project</button>
-                        </a>
-
+                        <p>針對全家 App 進行 UI/UX 改版，聚焦高頻使用情境，優化操作流程與資訊架構，提升結帳效率與使用體驗。</p>
+                        <a href="../familymart/family.html"><button>View Project</button></a>
                     </div>
-                    <!-- Unity -->
-                    <div class="work-card image-slider-card">
+
+                    <div class="work-card image-slider-card" data-category="illustration">
                         <div class="card-media">
                             <div class="slider">
                                 <div class="track">
@@ -1184,26 +1121,25 @@
                                 </div>
                             </div>
                         </div>
+                        <span class="project-tag">ILLUSTRATION & GAME</span>
                         <h3>小熊歷險記</h3>
                         <div class="tools">
                             <div class="tool">
                                 <img src="../icon/procreate.JPG" alt="">
                                 <span>Procreate</span>
                             </div>
-
                             <div class="tool">
                                 <img src="../icon/ppt.JPG" alt="">
                                 <span>PowerPoint</span>
                             </div>
                         </div>
                         <p>童話風卡牌互動遊戲，透過插畫敘事與四季場景變化，呈現角色的成長歷程與情感體驗。</p>
-                        <a href="../draw/draw.html">
-                            <button>View Project</button>
-                        </a>
+                        <a href="../draw/draw.html"><button>View Project</button></a>
                     </div>
+
                 </div>
             </div>
-            <!-- ✅ 放這裡！！！ -->
+
             <div class="carousel-dots"></div>
         </div>
     </div>

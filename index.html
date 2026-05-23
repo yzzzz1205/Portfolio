@@ -253,6 +253,40 @@
     }
 
     /* ===== 游標 ===== */
+    /* 容器層 */
+    .spotlight-title {
+      position: relative;
+      display: inline-block;
+      /* 讓容器緊貼文字 */
+      cursor: none;
+      /* 隱藏預設鼠標，讓自訂 Cursor 統一 */
+    }
+
+    /* 上層紫色文字 */
+    .spotlight-title .highlight {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: #8F86C9;
+      /* 紫色 */
+
+      /* 預設隱藏（半徑為 0） */
+      clip-path: circle(0px at var(--x, 50%) var(--y, 50%));
+
+      /* 平滑過渡 */
+      transition: clip-path 0.1s ease-out;
+      pointer-events: none;
+      /* 確保滑鼠事件穿透到下層 */
+
+      /* 複製原本的特效樣式 (如 glow/shadow) */
+      text-shadow: 0 0 20px rgba(140, 130, 210, 0.4);
+    }
+
+    /* 當滑鼠移入時，將遮罩半徑擴大 (例如 80px) */
+    .spotlight-title:hover .highlight {
+      clip-path: circle(80px at var(--x, 50%) var(--y, 50%));
+    }
+
     #cursor {
       position: fixed;
       width: 60px;
@@ -379,27 +413,28 @@
 
       <h2 class="works-title">WORKS</h2>
 
-      <!-- 左右切換按鈕 -->
+      <div class="category-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="uiux">UI / UX</button>
+        <button class="filter-btn" data-filter="web">Web Development</button>
+        <button class="filter-btn" data-filter="app">App Design</button>
+        <button class="filter-btn" data-filter="illustration">Illustration</button>
+      </div>
+
       <button class="nav-btn left">‹</button>
       <button class="nav-btn right">›</button>
 
       <div class="carousel">
         <div class="cards">
-          <!-- Web -->
-          <div class="work-card">
 
+          <div class="work-card" data-category="web">
             <div class="card-media">
-
-              <!-- logo -->
               <img src="./card/card1.png" class="card-logo">
-
-              <!-- hover video -->
-              <video class="card-video" muted loop>
+              <video class="card-video" muted loop playsinline>
                 <source src="./card/card1.mp4" type="video/mp4">
               </video>
-
             </div>
-
+            <span class="project-tag">WEB DEVELOPMENT</span>
             <h3>海好有你</h3>
             <div class="tools">
               <div class="tool">
@@ -407,32 +442,18 @@
                 <span>Visual Studio Code</span>
               </div>
             </div>
-            <p>
-              SDGs14 海洋保育互動網站，
-              透過資訊與互動設計讓使用者理解海洋污染議題，
-              並鼓勵參與環境行動。
-            </p>
-
-            <a href="./ocean/ocean.html">
-              <button>View Project</button>
-            </a>
-
+            <p>SDGs14 海洋保育互動網站，透過資訊與互動設計讓使用者理解海洋污染議題，並鼓勵參與環境行動。</p>
+            <a href="./ocean/ocean.html"><button>View Project</button></a>
           </div>
-          <!-- Web -->
-          <div class="work-card">
 
+          <div class="work-card" data-category="web">
             <div class="card-media">
-
-              <!-- logo -->
               <img src="./card/card-image.png" class="card-logo">
-
-              <!-- hover video -->
-              <video class="card-video" muted loop>
+              <video class="card-video" muted loop playsinline>
                 <source src="./card/card-image.mp4" type="video/mp4">
               </video>
-
             </div>
-
+            <span class="project-tag">WEB DEVELOPMENT</span>
             <h3>修起來</h3>
             <div class="tools">
               <div class="tool">
@@ -440,32 +461,18 @@
                 <span>Visual Studio Code</span>
               </div>
             </div>
-            <p>
-              線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，
-              讓使用者透過直覺操作快速完成個人化影像創作。
-            </p>
-
-            <a href="./image-editing/image.html">
-              <button>View Project</button>
-            </a>
-
+            <p>線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，讓使用者透過直覺操作快速完成個人化影像創作。</p>
+            <a href="./image-editing/image.html"><button>View Project</button></a>
           </div>
 
-          <!-- App -->
-          <div class="work-card">
-
+          <div class="work-card" data-category="app">
             <div class="card-media">
-
-              <!-- logo -->
               <img src="./card/card2.png" class="card-logo">
-
-              <!-- hover video -->
-              <video class="card-video" muted loop>
+              <video class="card-video" muted loop playsinline>
                 <source src="./card/card2.mp4" type="video/mp4">
               </video>
-
             </div>
-
+            <span class="project-tag">APP DESIGN</span>
             <h3>咖啡廳點餐 App</h3>
             <div class="tools">
               <div class="tool">
@@ -473,32 +480,18 @@
                 <span>Android Studio</span>
               </div>
             </div>
-            <p>
-              以 Android Studio 開發的行動點餐應用程式，
-              提供咖啡與甜點搜尋、加入購物車與結帳流程。
-            </p>
-
-            <a href="./coffee/coffee.html">
-              <button>View Project</button>
-            </a>
-
+            <p>以 Android Studio 開發的行動點餐應用程式，提供咖啡與甜點搜尋、加入購物車與結帳流程。</p>
+            <a href="./coffee/coffee.html"><button>View Project</button></a>
           </div>
 
-          <!-- Figma -->
-          <div class="work-card">
-
+          <div class="work-card" data-category="uiux">
             <div class="card-media">
-
-              <!-- logo -->
               <img src="./card/card3.png" class="card-logo">
-
-              <!-- hover video -->
-              <video class="card-video" muted loop>
+              <video class="card-video" muted loop playsinline>
                 <source src="./card/card3.mp4" type="video/mp4">
               </video>
-
             </div>
-
+            <span class="project-tag">UI / UX DESIGN</span>
             <h3>Invisible Mask</h3>
             <div class="tools">
               <div class="tool">
@@ -506,32 +499,18 @@
                 <span>Figma</span>
               </div>
             </div>
-            <p>
-              是一款以 Figma 設計的美妝 App，
-              結合 AI 臉部分析與 AR 試妝，
-              打造快速且個人化的妝容體驗。
-            </p>
-
-            <a href="./mask/mask.html">
-              <button>View Project</button>
-            </a>
-
+            <p>是一款以 Figma 設計的美妝 App，結合 AI 臉部分析與 AR 試妝，打造快速且個人化的妝容體驗。</p>
+            <a href="./mask/mask.html"><button>View Project</button></a>
           </div>
-          <!-- Figma -->
-          <div class="work-card">
 
+          <div class="work-card" data-category="uiux">
             <div class="card-media">
-
-              <!-- logo -->
               <img src="./card/card_familymart.png" class="card-logo">
-
-              <!-- hover video -->
-              <video class="card-video" muted loop>
+              <video class="card-video" muted loop playsinline>
                 <source src="./card/card_familymart.mp4" type="video/mp4">
               </video>
-
             </div>
-
+            <span class="project-tag">UI / UX DESIGN</span>
             <h3>FamilyMart App Redesign</h3>
             <div class="tools">
               <div class="tool">
@@ -539,19 +518,11 @@
                 <span>Figma</span>
               </div>
             </div>
-            <p>
-              針對全家 App 進行 UI/UX 改版，
-              聚焦高頻使用情境，優化操作流程與資訊架構，
-              提升結帳效率與使用體驗。
-            </p>
-
-            <a href="./familymart/family.html">
-              <button>View Project</button>
-            </a>
-
+            <p>針對全家 App 進行 UI/UX 改版，聚焦高頻使用情境，優化操作流程與資訊架構，提升結帳效率與使用體驗。</p>
+            <a href="./familymart/family.html"><button>View Project</button></a>
           </div>
-          <!-- Unity -->
-          <div class="work-card image-slider-card">
+
+          <div class="work-card image-slider-card" data-category="illustration">
             <div class="card-media">
               <div class="slider">
                 <div class="track">
@@ -564,26 +535,25 @@
                 </div>
               </div>
             </div>
+            <span class="project-tag">ILLUSTRATION & GAME</span>
             <h3>小熊歷險記</h3>
             <div class="tools">
               <div class="tool">
                 <img src="./icon/procreate.JPG" alt="">
                 <span>Procreate</span>
               </div>
-
               <div class="tool">
                 <img src="./icon/ppt.JPG" alt="">
                 <span>PowerPoint</span>
               </div>
             </div>
             <p>童話風卡牌互動遊戲，透過插畫敘事與四季場景變化，呈現角色的成長歷程與情感體驗。</p>
-            <a href="./draw/draw.html">
-              <button>View Project</button>
-            </a>
+            <a href="./draw/draw.html"><button>View Project</button></a>
           </div>
+
         </div>
       </div>
-      <!-- ✅ 放這裡！！！ -->
+
       <div class="carousel-dots"></div>
     </div>
   </div>
@@ -614,7 +584,10 @@
 
   <div class="hero">
     <div class="hero-text">
-      <h1 data-text="PORTFOLIO">PORTFOLIO</h1>
+      <h1 class="spotlight-title" data-text="PORTFOLIO">
+        PORTFOLIO
+        <span class="highlight">PORTFOLIO</span>
+      </h1>
       <p class="subtitle">UI/UX · Web Development · App Design · Illustration</p>
       <button class="hero-btn">View Works</button>
     </div>
@@ -623,8 +596,21 @@
   <canvas id="particles"></canvas>
   <div id="iconContainer"></div>
   <div id="cursor"></div>
-
+  <script src="./workcard.js"></script>
   <script>
+    const h1Container = document.querySelector('.spotlight-title');
+
+    h1Container.addEventListener('mousemove', (e) => {
+      const rect = h1Container.getBoundingClientRect();
+
+      // 計算滑鼠在 h1 內的相對位置
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // 更新 CSS 變數
+      h1Container.style.setProperty('--x', `${x}px`);
+      h1Container.style.setProperty('--y', `${y}px`);
+    });
     /* ===== 指標（滑鼠＋觸控） ===== */
     const pointer = { x: -999, y: -999 };
     const cursor = document.getElementById('cursor');
@@ -750,215 +736,6 @@
       requestAnimationFrame(draw);
     }
     draw();
-
-    /* ===== Works ===== */
-    const worksOverlay = document.getElementById('worksOverlay');
-
-    const worksBtn = document.querySelector('.menu li:nth-child(2)');
-    const mobileWorksBtn = document.getElementById('mobileWorksBtn');
-    const closeBtn = document.querySelector('.close-btn');
-    const isMobile = window.innerWidth <= 768;
-
-
-    /* 桌機 Works */
-    if (worksBtn) {
-      worksBtn.addEventListener('click', () => {
-        worksOverlay.classList.add('show');
-      });
-    }
-
-    /* 手機 Works */
-    if (mobileWorksBtn) {
-      mobileWorksBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        worksOverlay.classList.add('show');
-
-        // 關閉手機選單（加分體驗）
-        document.getElementById('mobileMenu').classList.remove('show');
-        document.getElementById('hamburger').classList.remove('active');
-      });
-    }
-
-    /* 關閉 overlay */
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        worksOverlay.classList.remove('show');
-      });
-    }
-    /* ===== Carousel Logic ===== */
-    const cards = document.querySelectorAll('.work-card');
-    const btnLeft = document.querySelector('.nav-btn.left');
-    const btnRight = document.querySelector('.nav-btn.right');
-
-    let current = 0;
-
-    function updateCarousel() {
-      cards.forEach((card, i) => {
-        card.classList.remove('active', 'left', 'right', 'hidden');
-
-        if (i === current) {
-          card.classList.add('active');
-        } else if (i === current - 1) {
-          card.classList.add('left');
-        } else if (i === current + 1) {
-          card.classList.add('right');
-        } else {
-          card.classList.add('hidden');
-        }
-      });
-
-      updateDots(); // ⭐ 加這行
-    }
-
-    if (btnLeft) {
-      btnLeft.addEventListener('click', () => {
-        if (current > 0) {
-          current--;
-          updateCarousel();
-        }
-      });
-    }
-
-
-    if (btnRight) {
-      btnRight.addEventListener('click', () => {
-        if (current < cards.length - 1) {
-          current++;
-          updateCarousel();
-        }
-      });
-    }
-
-    /* ===== 手機滑動切換 ===== */
-    let startX = 0;
-    let endX = 0;
-
-    const cardsContainer = document.querySelector('.cards');
-
-    if (cardsContainer) {
-
-      cardsContainer.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-      });
-
-      cardsContainer.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
-
-        const diff = endX - startX;
-
-        if (Math.abs(diff) > 50) {
-
-          if (diff > 0 && current > 0) {
-            current--;
-            updateCarousel();
-          } else if (diff < 0 && current < cards.length - 1) {
-            current++;
-            updateCarousel();
-          }
-
-        }
-      });
-
-    }
-
-    const dotsContainer = document.querySelector('.carousel-dots');
-    let dots = [];
-
-    // 建立 dots
-    if (dotsContainer) {
-
-      cards.forEach((_, i) => {
-        const dot = document.createElement('span');
-        dot.classList.add('dot');
-
-        dot.addEventListener('click', () => {
-          current = i;
-          updateCarousel();
-          updateDots();
-        });
-
-        dotsContainer.appendChild(dot);
-        dots.push(dot);
-      });
-
-    }
-
-    function updateDots() {
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === current);
-      });
-    }
-    updateCarousel();
-    /* ===== 卡片的影片播放 ===== */
-    document.querySelectorAll('.work-card').forEach(card => {
-      if (isMobile) return; // ⭐ 手機直接跳過
-      const video = card.querySelector('video');
-      if (!video) return;
-
-      card.addEventListener('mouseenter', () => {
-
-        video.style.opacity = 0;
-
-        setTimeout(() => {
-          video.currentTime = 0;
-          video.play();
-          video.style.opacity = 1;
-        }, 150);
-
-      });
-
-      card.addEventListener('mouseleave', () => {
-
-        video.style.opacity = 0;
-
-        setTimeout(() => {
-          video.pause();
-          video.currentTime = 0;
-        }, 200);
-
-      });
-
-    });
-
-    const heroBtn = document.querySelector('.hero-btn');
-
-    if (heroBtn) {
-      heroBtn.addEventListener('click', () => {
-        worksOverlay.classList.add('show');
-      });
-    }
-
-    /* ===== 卡片的圖片切換 ===== */
-    document.querySelectorAll(".image-slider-card").forEach(card => {
-
-      const track = card.querySelector(".track");
-      const slides = card.querySelectorAll(".slide");
-
-      let index = 0;
-      let interval = null;
-
-      function updateSlider() {
-        track.style.transform = `translateX(-${index * 100}%)`;
-      }
-
-      function nextSlide() {
-        index = (index + 1) % slides.length;
-        updateSlider();
-      }
-
-      card.addEventListener("mouseenter", () => {
-        interval = setInterval(nextSlide, 2000);
-      });
-
-      card.addEventListener("mouseleave", () => {
-        clearInterval(interval);
-        index = 0;
-        updateSlider();
-      });
-
-    });
-
     /* ============================= */
     /* Hamburger Menu */
     /* ============================= */

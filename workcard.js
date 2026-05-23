@@ -1,42 +1,16 @@
-/* ===== Works ===== */
+/* ===== 基礎 UI 元件宣告 ===== */
 const worksOverlay = document.getElementById('worksOverlay');
-
-const worksBtn = document.querySelector('.menu li:nth-child(2)');
-const mobileWorksBtn = document.getElementById('mobileWorksBtn');
+const openWorksBtn = document.getElementById('openWorksBtn'); // 測試啟動按鈕
+const worksBtn = document.querySelector('.menu li:nth-child(2)'); // 主頁面選單 WORKS 按鈕
+const mobileWorksBtn = document.getElementById('mobileWorksBtn'); // 手機主頁面選單 WORKS 按鈕
 const closeBtn = document.querySelector('.close-btn');
-const isMobile = window.innerWidth <= 768;
+const heroBtn = document.querySelector('.hero-btn');
 
-
-/* 桌機 Works */
-if (worksBtn) {
-    worksBtn.addEventListener('click', () => {
-        worksOverlay.classList.add('show');
-    });
-}
-
-/* 手機 Works */
-if (mobileWorksBtn) {
-    mobileWorksBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        worksOverlay.classList.add('show');
-
-        // 關閉手機選單（加分體驗）
-        document.getElementById('mobileMenu').classList.remove('show');
-        document.getElementById('hamburger').classList.remove('active');
-    });
-}
-
-/* 關閉 overlay */
-if (closeBtn) {
-    closeBtn.addEventListener('click', () => {
-        worksOverlay.classList.remove('show');
-    });
-}
-/* ===== Carousel Logic ===== */
-const cards = document.querySelectorAll('.work-card');
+const cardsContainer = document.querySelector('.cards');
+const allCards = document.querySelectorAll('.work-card');
 const btnLeft = document.querySelector('.nav-btn.left');
 const btnRight = document.querySelector('.nav-btn.right');
+const dotsContainer = document.querySelector('.carousel-dots');
 
 const pageMap = {
     "ocean.html": 0,
@@ -48,171 +22,252 @@ const pageMap = {
 };
 
 const currentPage = window.location.pathname.split("/").pop();
+let currentIdx = pageMap[currentPage] ?? 0;
+let visibleCards = Array.from(allCards); // 當前分類過濾後的可見卡片
+let activeFilter = 'all';
 
-let current = pageMap[currentPage] ?? 0;
+/* ===== RWD 雙模態排版與 Stagger 依次淡入動畫設計 ===== */
+function checkLayoutMode() {
+    const isMobile = window.innerWidth <= 768;
 
+    if (isMobile) {
+        cardsContainer.classList.remove('grid-mode');
+        cardsContainer.classList.add('carousel-mode');
+        filterCarouselCards(); // 重載手機 Carousel 數據狀態
+    } else {
+        cardsContainer.classList.remove('carousel-mode');
+        cardsContainer.classList.add('grid-mode');
+
+        // 桌機模式：清除手機輪播專用 class，並套用 Staggered 延遲入場動畫
+        let delay = 0;
+        allCards.forEach(card => {
+            card.classList.remove('active', 'left', 'right', 'hidden');
+
+            if (activeFilter === 'all' || card.dataset.category === activeFilter) {
+                card.classList.remove('filtered-out');
+
+                // 動態重啟 CSS 進場 fadeInUp 動畫並套用 staggered 延遲
+                card.style.animation = 'none';
+                card.offsetHeight; // 強制瀏覽器重繪
+                card.style.animation = `fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) both`;
+                card.style.animationDelay = `${delay}s`;
+                delay += 0.08; // 每個相鄰卡片依序延遲 80 毫秒淡入
+            } else {
+                card.classList.add('filtered-out');
+                card.style.animation = 'none';
+            }
+        });
+    }
+}
+
+/* ===== 手機 Carousel 輪播核心渲染 (2D 平面拉開平移) ===== */
 function updateCarousel() {
-    cards.forEach((card, i) => {
-        card.classList.remove('active', 'left', 'right', 'hidden');
+    if (!cardsContainer.classList.contains('carousel-mode')) return;
 
-        if (i === current) {
+    // 清空所有卡片定位，隱藏過濾以外的卡片，防止切換重疊
+    allCards.forEach(card => {
+        card.classList.remove('active', 'left', 'right', 'hidden');
+        card.classList.add('filtered-out');
+    });
+
+    // 指派可見卡片的空間堆疊樣式 (使用你提供的 2D 平面大平移架構)
+    visibleCards.forEach((card, i) => {
+        card.classList.remove('filtered-out');
+
+        if (i === currentIdx) {
             card.classList.add('active');
-        } else if (i === current - 1) {
+        } else if (i === currentIdx - 1) {
             card.classList.add('left');
-        } else if (i === current + 1) {
+        } else if (i === currentIdx + 1) {
             card.classList.add('right');
         } else {
             card.classList.add('hidden');
         }
     });
 
-    updateDots(); // ⭐ 加這行
+    // 更新手機 dots
+    const dots = dotsContainer.querySelectorAll('.dot');
+    dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIdx);
+    });
 }
 
+// 重新構建手機點點 (Dots)
+function buildMobileDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    visibleCards.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.classList.add('dot');
+        dot.addEventListener('click', () => {
+            currentIdx = i;
+            updateCarousel();
+        });
+        dotsContainer.appendChild(dot);
+        if (i === currentIdx) dot.classList.add('active');
+    });
+}
+
+// 手機 Carousel 篩選邏輯
+function filterCarouselCards() {
+    allCards.forEach(card => card.classList.add('filtered-out'));
+
+    if (activeFilter === 'all') {
+        visibleCards = Array.from(allCards);
+    } else {
+        visibleCards = Array.from(allCards).filter(card => card.dataset.category === activeFilter);
+    }
+
+    currentIdx = 0; // 當分類重切時，回到第一張卡片
+    buildMobileDots();
+    updateCarousel();
+}
+
+/* ===== 分類篩選按鈕點擊事件監聽 ===== */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+
+        activeFilter = e.target.dataset.filter;
+
+        // 重算並優化動態
+        checkLayoutMode();
+    });
+});
+
+/* ===== 手機版 Carousel 切換與滑動手勢 ===== */
 if (btnLeft) {
     btnLeft.addEventListener('click', () => {
-        if (current > 0) {
-            current--;
+        if (currentIdx > 0) {
+            currentIdx--;
             updateCarousel();
         }
     });
 }
-
 
 if (btnRight) {
     btnRight.addEventListener('click', () => {
-        if (current < cards.length - 1) {
-            current++;
+        if (currentIdx < visibleCards.length - 1) {
+            currentIdx++;
             updateCarousel();
         }
     });
 }
 
-/* ===== 手機滑動切換 ===== */
+// 滑動手勢
 let startX = 0;
-let endX = 0;
-
-const cardsContainer = document.querySelector('.cards');
-
 if (cardsContainer) {
-
     cardsContainer.addEventListener('touchstart', (e) => {
         startX = e.touches[0].clientX;
     });
 
     cardsContainer.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
-
+        const endX = e.changedTouches[0].clientX;
         const diff = endX - startX;
 
         if (Math.abs(diff) > 50) {
-
-            if (diff > 0 && current > 0) {
-                current--;
+            if (diff > 0 && currentIdx > 0) {
+                currentIdx--;
                 updateCarousel();
-            } else if (diff < 0 && current < cards.length - 1) {
-                current++;
+            } else if (diff < 0 && currentIdx < visibleCards.length - 1) {
+                currentIdx++;
                 updateCarousel();
             }
+        }
+    });
+}
 
+/* ===== 視窗 Resize 監聽（保證桌機與手機即時切換） ===== */
+window.addEventListener('resize', checkLayoutMode);
+
+/* ===== 點擊跳出 overlay (ONLY open when clicked) ===== */
+const openOverlay = () => {
+    worksOverlay.classList.add('show');
+    checkLayoutMode(); // 打開時進行初始 Stagger 渲染
+};
+
+// 綁定各類 Works 按鈕
+if (openWorksBtn) openWorksBtn.addEventListener('click', openOverlay);
+if (worksBtn) worksBtn.addEventListener('click', openOverlay);
+if (heroBtn) heroBtn.addEventListener('click', openOverlay);
+
+if (mobileWorksBtn) {
+    mobileWorksBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openOverlay();
+
+        // 行動裝置優化：可自行加上關閉側邊菜單邏輯
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburger = document.getElementById('hamburger');
+        if (mobileMenu) mobileMenu.classList.remove('show');
+        if (hamburger) hamburger.classList.remove('active');
+    });
+}
+
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        worksOverlay.classList.remove('show');
+    });
+}
+
+// 點擊遮罩外部空白處自動關閉
+worksOverlay.addEventListener('click', (e) => {
+    if (e.target === worksOverlay) {
+        worksOverlay.classList.remove('show');
+    }
+});
+
+/* ===== 插畫卡片：滑鼠移入才自動多圖片輪播邏輯 ===== */
+document.querySelectorAll('.image-slider-card').forEach(card => {
+    const track = card.querySelector('.track');
+    const slides = card.querySelectorAll('.slide');
+    if (!track || slides.length === 0) return;
+
+    let slideIdx = 0;
+    let intervalId = null;
+
+    // 僅在桌機端滑鼠移入時觸發自動切換
+    card.addEventListener('mouseenter', () => {
+        if (window.innerWidth > 768) {
+            intervalId = setInterval(() => {
+                slideIdx = (slideIdx + 1) % slides.length;
+                track.style.transform = `translateX(-${slideIdx * 100}%)`;
+            }, 2000); // 2秒切換一次，更具動感
         }
     });
 
-}
-
-const dotsContainer = document.querySelector('.carousel-dots');
-let dots = [];
-
-// 建立 dots
-if (dotsContainer) {
-
-    cards.forEach((_, i) => {
-        const dot = document.createElement('span');
-        dot.classList.add('dot');
-
-        dot.addEventListener('click', () => {
-            current = i;
-            updateCarousel();
-            updateDots();
-        });
-
-        dotsContainer.appendChild(dot);
-        dots.push(dot);
-    });
-
-}
-
-function updateDots() {
-    dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === current);
-    });
-}
-updateCarousel();
-/* ===== 卡片的影片播放 ===== */
-document.querySelectorAll('.work-card').forEach(card => {
-if (isMobile) return; // ⭐ 手機直接跳過
-    const video = card.querySelector('video');
-    if (!video) return;
-
-    card.addEventListener('mouseenter', () => {
-
-        video.style.opacity = 0;
-
-        setTimeout(() => {
-            video.currentTime = 0;
-            video.play();
-            video.style.opacity = 1;
-        }, 150);
-
-    });
-
+    // 滑鼠移出時，立即停止並歸零重置
     card.addEventListener('mouseleave', () => {
-
-        video.style.opacity = 0;
-
-        setTimeout(() => {
-            video.pause();
-            video.currentTime = 0;
-        }, 200);
-
+        if (window.innerWidth > 768) {
+            clearInterval(intervalId);
+            slideIdx = 0;
+            track.style.transform = `translateX(0%)`;
+        }
     });
-
 });
 
-const heroBtn = document.querySelector('.hero-btn');
+/* ===== 影片 Hover 播放與暫停控制邏輯 ===== */
+allCards.forEach(card => {
+    const video = card.querySelector('.card-video');
+    const logo = card.querySelector('.card-logo');
 
-if (heroBtn) {
-    heroBtn.addEventListener('click', () => {
-        worksOverlay.classList.add('show');
-    });
-}
+    if (video && logo) {
+        card.addEventListener('mouseenter', () => {
+            if (window.innerWidth > 768) { // 僅在桌機模式啟用
+                video.style.opacity = '1';
+                logo.style.opacity = '0';
+                video.play().catch(() => { });
+            }
+        });
 
-/* ===== 卡片的圖片切換 ===== */
-document.querySelectorAll(".image-slider-card").forEach(card => {
-
-    const track = card.querySelector(".track");
-    const slides = card.querySelectorAll(".slide");
-
-    let index = 0;
-    let interval = null;
-
-    function updateSlider() {
-        track.style.transform = `translateX(-${index * 100}%)`;
+        card.addEventListener('mouseleave', () => {
+            if (window.innerWidth > 768) {
+                video.style.opacity = '0';
+                logo.style.opacity = '1';
+                video.pause();
+                video.currentTime = 0; // 重置回影片開頭
+            }
+        });
     }
-
-    function nextSlide() {
-        index = (index + 1) % slides.length;
-        updateSlider();
-    }
-
-    card.addEventListener("mouseenter", () => {
-        interval = setInterval(nextSlide, 2000);
-    });
-
-    card.addEventListener("mouseleave", () => {
-        clearInterval(interval);
-        index = 0;
-        updateSlider();
-    });
-
 });
