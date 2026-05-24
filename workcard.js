@@ -192,10 +192,30 @@ if (cardsContainer) {
 window.addEventListener('resize', checkLayoutMode);
 
 /* ===== 點擊跳出 overlay (修改開啟函式) ===== */
+/* ===== 更新後的開啟彈出層函式 ===== */
 const openOverlay = () => {
     worksOverlay.classList.add('show');
-    document.body.style.overflow = 'hidden'; // 鎖定 body 滾動
+    document.body.style.overflow = 'hidden'; 
     checkLayoutMode(); 
+
+    // 新增：觸發卡片入場動畫
+    if (!window.matchMedia("(max-width: 768px)").matches) {
+        // 僅在桌機模式執行，因為手機模式是輪播 (carousel-mode)
+        let delay = 0;
+        // 重新選取當前可見的卡片，避免選到被篩選掉的
+        const activeCards = document.querySelectorAll('.cards.grid-mode .work-card:not(.filtered-out)');
+        
+        activeCards.forEach(card => {
+            // 重置動畫
+            card.style.animation = 'none';
+            card.offsetHeight; // 強制重繪 (Reflow) 以重啟動畫
+            
+            // 套用動畫
+            card.style.animation = `fadeInUp 0.6s cubic-bezier(0.25, 1, 0.5, 1) both`;
+            card.style.animationDelay = `${delay}s`;
+            delay += 0.1; // 每個卡片間隔 0.1 秒入場
+        });
+    }
 };
 
 /* ===== 關閉 overlay (修改關閉函式) ===== */

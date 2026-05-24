@@ -16,7 +16,7 @@
     /* 當網格卡片過多時允許順暢滾動 */
 
     /* 加入這兩行，確保整個彈出層都不會產生水平抖動 */
-    touch-action: pan-y; 
+    touch-action: pan-y;
     overscroll-behavior: contain;
 }
 
@@ -310,8 +310,10 @@
     width: 100%;
     height: 360px;
     /* 還原為你指定的 360px 經典高度 */
-    touch-action: pan-y;           /* 告訴瀏覽器：此區塊允許垂直捲動，水平互動請交給 JS */
-    overscroll-behavior-x: none;    /* 防止滑到盡頭時觸發瀏覽器的水平彈性回彈或頁面跳轉 */
+    touch-action: pan-y;
+    /* 告訴瀏覽器：此區塊允許垂直捲動，水平互動請交給 JS */
+    overscroll-behavior-x: none;
+    /* 防止滑到盡頭時觸發瀏覽器的水平彈性回彈或頁面跳轉 */
 }
 
 /* Carousel 手機堆疊透視容器 */
@@ -505,8 +507,10 @@
 /* ===== 8. 響應式手機排版修正 (當螢幕寬度 <= 768px 時觸發你要求的緊湊平面切換) ===== */
 @media (max-width: 768px) {
     #worksOverlay {
-        touch-action: none; /* 禁止原生捲動，保持 JS 手勢運作 */
+        touch-action: none;
+        /* 禁止原生捲動，保持 JS 手勢運作 */
     }
+
     .works-panel {
         margin: 80px auto;
         width: 92%;
@@ -546,6 +550,13 @@
         width: 220px !important;
     }
 
+    /* 將原本的 0.5s 稍微延長，讓切換感更柔軟 */
+    .cards.carousel-mode .work-card {
+        transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 0.6s ease,
+            filter 0.6s ease !important;
+    }
+
     /* 2. 中間卡片：將 translateY 改為 -30%，使其比 -40% 的位置更往下移一點 */
     .cards.carousel-mode .work-card.active {
         transform: translate(-50%, -30%) scale(1.25) !important;
@@ -581,6 +592,7 @@
     .card-logo {
         opacity: 1 !important;
     }
+
     /* 加入這一段隱藏分類按鈕 */
     .category-filters {
         display: none !important;
