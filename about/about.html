@@ -112,67 +112,34 @@
       display: flex;
       gap: 100px;
       align-items: flex-start;
-    }
-
-    /* 左 */
-    .left img {
-      width: 320px;
-      aspect-ratio: 3/4;
-      object-fit: cover;
-      border-radius: 20px;
-
-      box-shadow:
-        0 0 30px rgba(140, 150, 255, .2),
-        0 0 80px rgba(120, 140, 255, .1);
-
-      transition: all .4s ease;
-    }
-
-    .left img:hover {
-      transform: scale(1.05) translateY(-6px);
-
-      box-shadow:
-        0 0 40px rgba(140, 150, 255, .35),
-        0 0 100px rgba(120, 140, 255, .25);
-
-      filter: brightness(1.05);
+      justify-content: center;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .photo {
       position: relative;
       display: inline-block;
-      perspective: 1000px;
-      /* 🔥 3D 必備 */
+      perspective: 1200px;
     }
 
     .photo img {
-      animation: float 6s ease-in-out infinite;
+      width: 320px;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+
+      border-radius: 20px;
+
       transform-style: preserve-3d;
-      transition: transform .3s ease, box-shadow .3s ease, filter .3s ease;
-    }
 
-    @keyframes float {
-      0% {
-        transform: translateY(0px);
-      }
-
-      50% {
-        transform: translateY(-8px);
-      }
-
-      100% {
-        transform: translateY(0px);
-      }
-    }
-
-    .photo img:hover {
-      transform: scale(1.05) translateY(-6px) rotateX(6deg) rotateY(-6deg);
+      transition:
+        transform .15s ease,
+        box-shadow .3s ease,
+        filter .3s ease;
 
       box-shadow:
-        0 20px 40px rgba(140, 150, 255, .35),
-        0 0 100px rgba(120, 140, 255, .25);
-
-      filter: brightness(1.05);
+        0 0 30px rgba(140, 150, 255, .2),
+        0 0 80px rgba(120, 140, 255, .1);
     }
 
     .photo::after {
@@ -238,6 +205,33 @@
       to {
         text-shadow: 0 0 25px rgba(140, 150, 255, .5);
       }
+    }
+
+    @keyframes jelly {
+      0% {
+        transform: scale(1, 1);
+      }
+
+      30% {
+        transform: scale(1.08, .92);
+      }
+
+      50% {
+        transform: scale(.95, 1.05);
+      }
+
+      70% {
+        transform: scale(1.02, .98);
+      }
+
+      100% {
+        transform: scale(1, 1);
+      }
+    }
+
+    .info h3:hover,
+    .skill-tags span:hover {
+      animation: jelly .7s ease;
     }
 
     /* ===== intro ===== */
@@ -766,6 +760,38 @@
     const elements = document.querySelectorAll('.fade-in');
     elements.forEach(el => observer.observe(el));
 
+    /* ============================= */
+    /* 圖片3d效果 */
+    /* ============================= */
+    const photo = document.querySelector(".photo");
+    const photoImg = photo.querySelector("img");
+
+    photo.addEventListener("mousemove", (e) => {
+
+      const rect = photo.getBoundingClientRect();
+
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateY = ((x - centerX) / centerX) * 15;
+      const rotateX = ((centerY - y) / centerY) * 15;
+
+      photoImg.style.transform = `
+        scale(1.05)
+        rotateX(${rotateX}deg)
+        rotateY(${rotateY}deg)
+    `;
+    });
+
+    photo.addEventListener("mouseleave", () => {
+
+      photoImg.style.transform =
+        "scale(1) rotateX(0deg) rotateY(0deg)";
+
+    });
     /* ============================= */
     /* Hamburger Menu */
     /* ============================= */
