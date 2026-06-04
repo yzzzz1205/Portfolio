@@ -757,11 +757,138 @@
                 display: none;
             }
         }
+
+        /* ===== 修正：讓 Live Website 按鈕回復原本的精緻樣式 ===== */
+        .demo button {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 24px;
+            border: 1px solid rgba(140, 150, 255, .4);
+            background: transparent;
+            /* 清除按鈕預設灰色背景 */
+            font-family: inherit;
+            /* 繼承字體 */
+            font-size: 15px;
+            color: #fff;
+            text-decoration: none;
+            margin: 10px;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .demo button:hover {
+            background: rgba(140, 150, 255, .25);
+            box-shadow: 0 0 15px rgba(140, 150, 255, 0.3);
+        }
+
+        /* ===== 燈箱背景遮罩（調整為動畫基礎設定） ===== */
+        .demo-modal {
+            display: flex;
+            /* 固定為 flex，改用透明度與可見度來控制隱藏，動畫才會動 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 4, 10, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+
+            /* 🎬 新增：預設為透明且隱藏 */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        /* 🎬 新增：當燈箱被加入 .open 類別時，背景優雅淡入 */
+        .demo-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* ===== 內容視窗架構（調整寬度 ＋ 縮放動畫） ===== */
+        .modal-content {
+            position: relative;
+
+            /* 📐 這裡調整寬度：從原本的 90% 縮小到 75%（可依喜好自行調整比例） */
+            width: 85%;
+            /* 📐 這裡限制最大寬度：從原本的 1200px 縮短到 950px */
+            max-width: 1200px;
+
+            height: 90vh;
+            /* 稍微降低一點高度，讓視覺比例更集中好看 */
+            background: rgba(25, 24, 40, 0.95);
+            border: 1px solid rgba(140, 150, 255, 0.3);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+
+            transform: scale(0.85) translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .demo-modal.open .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        /* 新增：上方按鈕列容器 */
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 14, 30, 0.9);
+            border-bottom: 1px solid rgba(140, 150, 255, 0.15);
+            padding: 12px 24px;
+        }
+
+        /* 按鈕共通基礎樣式 */
+        .modal-close-btn,
+        .modal-visit-btn {
+            background: rgba(255, 255, 255, 0.04);
+            color: #eae8ff;
+            border: 1px solid rgba(140, 150, 255, 0.2);
+            padding: 8px 18px;
+            font-size: 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* 新增：前往新分頁按鈕 Hover 效果 */
+        .modal-visit-btn:hover {
+            background: rgba(140, 150, 255, 0.25);
+            border-color: rgba(140, 150, 255, 0.6);
+            color: #fff;
+        }
+
+        /* 關閉按鈕 Hover 效果 */
+        .modal-close-btn:hover {
+            background: rgba(255, 100, 100, 0.2);
+            border-color: rgba(255, 100, 100, 0.4);
+            color: #ff9aa2;
+        }
+
+        /* 內嵌網頁本體 */
+        #demoFrame {
+            width: 100%;
+            height: 100%;
+            background: #05040a;
+            /* 改為深色，防載入前閃白光 */
+        }
     </style>
 </head>
 
 <body>
- <div id="worksOverlay">
+    <div id="worksOverlay">
         <div class="works-panel">
             <button class="close-btn">✕</button>
 
@@ -1219,7 +1346,6 @@
 
             </div>
             <!-- Demo -->
-
             <div class="glass section">
 
                 <h2>Project Demo</h2>
@@ -1230,85 +1356,146 @@
                 </p>
 
                 <div class="demo">
-
-                    <a href="https://yzzzz1205.github.io/image-editing/" target="_blank">
-                        Live Website
-                    </a>
-
+                    <button id="openDemoBtn" style="cursor: pointer;">Live Website</button>
                 </div>
 
             </div>
 
-        </div>
+        </div> <!-- 這裡關閉了原本的 .hero -->
+
         <!-- Footer -->
         <section class="footer">
             <p>© Yi Zhen Huang Portfolio</p>
         </section>
-        <script src="../workcard.js"></script>
-        <script>
-            /* ============================= */
-            /* video hover autoplay */
-            /* ============================= */
 
-            const videos = document.querySelectorAll("video");
+    </div> <!-- ✨【關鍵修正】在這裡補上一個 </div>，徹底把 .container 關閉！ -->
 
-            videos.forEach(video => {
+    <!-- 🚀 這樣燈箱就完全獨立在最外層了，z-index: 2000 就會成功壓過導覽列！ -->
+    <div id="demoModal" class="demo-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="https://yzzzz1205.github.io/image-editing/" target="_blank" class="modal-visit-btn">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> 前往完整網頁
+                </a>
+                <button class="modal-close-btn">✕ 關閉預覽</button>
+            </div>
+            <iframe id="demoFrame" src="" frameborder="0"></iframe>
+        </div>
+    </div>
 
-                video.addEventListener("mouseenter", () => {
-                    video.play();
-                });
+    <script src="../workcard.js"></script>
+    <script>
+        /* ============================= */
+        /* video hover autoplay */
+        /* ============================= */
 
-                video.addEventListener("mouseleave", () => {
-                    video.pause();
-                    video.currentTime = 0;
-                });
+        const videos = document.querySelectorAll("video");
+
+        videos.forEach(video => {
+
+            video.addEventListener("mouseenter", () => {
+                video.play();
+            });
+
+            video.addEventListener("mouseleave", () => {
+                video.pause();
+                video.currentTime = 0;
+            });
+
+        });
+
+        /* ============================= */
+        /* Scroll Reveal */
+        /* ============================= */
+
+        const sections = document.querySelectorAll(".section");
+
+        const observer = new IntersectionObserver(entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show");
+                }
 
             });
 
-            /* ============================= */
-            /* Scroll Reveal */
-            /* ============================= */
+        }, {
+            threshold: 0.2
+        });
 
-            const sections = document.querySelectorAll(".section");
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        /* ============================= */
+        /* Hamburger Menu */
+        /* ============================= */
 
-            const observer = new IntersectionObserver(entries => {
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
 
-                entries.forEach(entry => {
+        hamburger.addEventListener("click", () => {
 
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("show");
-                    }
+            hamburger.classList.toggle("active");
+            mobileMenu.classList.toggle("show");
 
-                });
-
-            }, {
-                threshold: 0.2
+        });
+        /* 點選選單自動關閉（手機體驗更好） */
+        document.querySelectorAll(".menu li").forEach(item => {
+            item.addEventListener("click", () => {
+                hamburger.classList.remove("active");
+                mobileMenu.classList.remove("show"); // 🔥 正確
             });
+        });
+        /* ============================= */
+        /* Project Demo Modal 控制（動畫版） */
+        /* ============================= */
 
-            sections.forEach(section => {
-                observer.observe(section);
-            });
-            /* ============================= */
-            /* Hamburger Menu */
-            /* ============================= */
+        const openDemoBtn = document.getElementById("openDemoBtn");
+        const demoModal = document.getElementById("demoModal");
+        const demoFrame = document.getElementById("demoFrame");
+        const closeDemoBtn = document.querySelector(".modal-close-btn");
 
-            const hamburger = document.getElementById("hamburger");
-            const mobileMenu = document.getElementById("mobileMenu");
+        // 開啟預覽視窗
+        openDemoBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            // 點擊時才載入網址
+            demoFrame.src = "https://yzzzz1205.github.io/image-editing/";
 
-            hamburger.addEventListener("click", () => {
+            // 🎬 改用 classList.add 觸發 CSS 淡入與放大動畫
+            demoModal.classList.add("open");
 
-                hamburger.classList.toggle("active");
-                mobileMenu.classList.toggle("show");
+            // 鎖定主頁面滾動
+            document.body.style.overflow = "hidden";
+        });
 
-            });
-            /* 點選選單自動關閉（手機體驗更好） */
-            document.querySelectorAll(".menu li").forEach(item => {
-                item.addEventListener("click", () => {
-                    hamburger.classList.remove("active");
-                    mobileMenu.classList.remove("show"); // 🔥 正確
-                });
-            });
-        </script>
+        // 封裝關閉視窗的函式
+        function closeModal() {
+            // 🎬 改用 classList.remove 觸發縮小與淡出動畫
+            demoModal.classList.remove("open");
+
+            // ⚠️ 關鍵：延遲 400 毫秒（等動畫播完）再清空 src，畫面才不會在關閉時瞬間變黑
+            setTimeout(() => {
+                // 安全檢查：確保使用者沒有在 0.4 秒內又點開它
+                if (!demoModal.classList.contains("open")) {
+                    demoFrame.src = "";
+                }
+            }, 400);
+
+            // 恢復主頁面滾動
+            document.body.style.overflow = "";
+        }
+
+        // 點擊「關閉預覽」按鈕
+        closeDemoBtn.addEventListener("click", closeModal);
+
+        // 點擊黑背景遮罩空白處也可以關閉
+        demoModal.addEventListener("click", (e) => {
+            if (e.target === demoModal) {
+                closeModal();
+            }
+        });
+    </script>
 
 </body>
 
