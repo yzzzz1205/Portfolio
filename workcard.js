@@ -18,7 +18,8 @@ const pageMap = {
     "coffee.html": 2,
     "mask.html": 3,
     "family.html": 4,
-    "draw.html": 5
+    "draw.html": 5,
+    "book.html": 6
 };
 
 const currentPage = window.location.pathname.split("/").pop();
