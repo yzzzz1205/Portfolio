@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>借過一場雨｜Web & Interactive Projection</title>
+    <title>借過一場雨 | Portfolio</title>
 
     <meta name="description" content="借過一場雨｜以雨傘作為互動媒介的網頁與互動投影作品，讓使用者透過雨傘閱讀他人的心情與故事，也能留下自己的故事。">
 
@@ -486,6 +486,21 @@
         .overview-flow-item {
             position: relative;
             padding: 30px 24px;
+            transition: background 0.3s ease;
+        }
+
+        .overview-flow-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .overview-flow-content {
+            display: block;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-origin: left center;
+        }
+
+        .overview-flow-item:hover .overview-flow-content {
+            transform: scale(1.08);
         }
 
         .overview-flow-item+.overview-flow-item {
@@ -778,6 +793,22 @@
             border-radius: 12px;
             font-size: 13px;
             color: #eae8ff;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .flow-item:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .flow-item-content {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            transform-origin: left center;
+        }
+
+        .flow-item:hover .flow-item-content {
+            transform: scale(1.08);
         }
 
         .flow-item strong {
@@ -1601,70 +1632,70 @@
         <div class="overview-flow reveal">
 
             <div class="overview-flow-item">
+                <div class="overview-flow-content">
+                    <div class="overview-flow-number">
+                        01
+                    </div>
 
-                <div class="overview-flow-number">
-                    01
+                    <div class="overview-flow-title">
+                        拿起雨傘
+                    </div>
+
+                    <div class="overview-flow-text">
+                        啟動互動裝置
+                    </div>
                 </div>
-
-                <div class="overview-flow-title">
-                    拿起雨傘
-                </div>
-
-                <div class="overview-flow-text">
-                    啟動互動裝置
-                </div>
-
             </div>
 
 
             <div class="overview-flow-item">
+                <div class="overview-flow-content">
+                    <div class="overview-flow-number">
+                        02
+                    </div>
 
-                <div class="overview-flow-number">
-                    02
+                    <div class="overview-flow-title">
+                        旋轉傘面
+                    </div>
+
+                    <div class="overview-flow-text">
+                        切換不同投影內容
+                    </div>
                 </div>
-
-                <div class="overview-flow-title">
-                    旋轉傘面
-                </div>
-
-                <div class="overview-flow-text">
-                    切換不同投影內容
-                </div>
-
             </div>
 
 
             <div class="overview-flow-item">
+                <div class="overview-flow-content">
+                    <div class="overview-flow-number">
+                        03
+                    </div>
 
-                <div class="overview-flow-number">
-                    03
+                    <div class="overview-flow-title">
+                        閱讀心情與故事
+                    </div>
+
+                    <div class="overview-flow-text">
+                        看見其他使用者留下的內容
+                    </div>
                 </div>
-
-                <div class="overview-flow-title">
-                    閱讀心情與故事
-                </div>
-
-                <div class="overview-flow-text">
-                    看見其他使用者留下的內容
-                </div>
-
             </div>
 
 
             <div class="overview-flow-item">
+                <div class="overview-flow-content">
+                    <div class="overview-flow-number">
+                        04
+                    </div>
 
-                <div class="overview-flow-number">
-                    04
+                    <div class="overview-flow-title">
+                        留下自己的故事
+                    </div>
+
+                    <div class="overview-flow-text">
+                        透過手機加入新的故事
+                    </div>
                 </div>
-
-                <div class="overview-flow-title">
-                    留下自己的故事
-                </div>
-
-                <div class="overview-flow-text">
-                    透過手機加入新的故事
-                </div>
-
             </div>
 
         </div>
@@ -1986,23 +2017,31 @@
                 <div class="process-flow">
 
                     <div class="flow-item">
-                        <strong>01</strong>
-                        閱讀其他人的故事
+                        <span class="flow-item-content">
+                            <strong>01</strong>
+                            閱讀其他人的故事
+                        </span>
                     </div>
 
                     <div class="flow-item">
-                        <strong>02</strong>
-                        輸入自己的故事
+                        <span class="flow-item-content">
+                            <strong>02</strong>
+                            輸入自己的故事
+                        </span>
                     </div>
 
                     <div class="flow-item">
-                        <strong>03</strong>
-                        儲存至 Google Sheets
+                        <span class="flow-item-content">
+                            <strong>03</strong>
+                            儲存至 Google Sheets
+                        </span>
                     </div>
 
                     <div class="flow-item">
-                        <strong>04</strong>
-                        成為作品中的故事內容
+                        <span class="flow-item-content">
+                            <strong>04</strong>
+                            成為作品中的故事內容
+                        </span>
                     </div>
 
                 </div>
