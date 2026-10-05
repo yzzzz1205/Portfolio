@@ -8,9 +8,10 @@
     <title>透明的我，也有顏色｜Picture Book</title>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Zen+Maru+Gothic:wght@500;700&family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Zen+Maru+Gothic:wght@500;700&family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;700&display=swap"
         rel="stylesheet">
-    
+
     <!-- Works Card & Mobile Menu Styles -->
     <link rel="stylesheet" href="../workcard.css">
     <link rel="stylesheet" href="../mobile-menu.css">
@@ -146,12 +147,10 @@
             height: 1px;
 
             background:
-                linear-gradient(
-                    90deg,
+                linear-gradient(90deg,
                     transparent,
                     rgba(122, 162, 227, .8),
-                    transparent
-                );
+                    transparent);
 
             opacity: 0;
 
@@ -372,36 +371,26 @@
             overflow: hidden;
 
             background:
-                radial-gradient(
-                    circle at 20% 20%,
+                radial-gradient(circle at 20% 20%,
                     rgba(255, 180, 180, 0.45),
-                    transparent 50%
-                ),
-                radial-gradient(
-                    circle at 80% 22%,
+                    transparent 50%),
+                radial-gradient(circle at 80% 22%,
                     rgba(255, 235, 150, 0.45),
-                    transparent 50%
-                ),
-                radial-gradient(
-                    circle at 25% 55%,
+                    transparent 50%),
+                radial-gradient(circle at 25% 55%,
                     rgba(160, 195, 255, 0.35),
-                    transparent 50%
-                ),
-                radial-gradient(
-                    circle at 75% 60%,
+                    transparent 50%),
+                radial-gradient(circle at 75% 60%,
                     rgba(165, 225, 180, 0.35),
-                    transparent 50%
-                ),
-                linear-gradient(
-                    to bottom,
+                    transparent 50%),
+                linear-gradient(to bottom,
                     #fbfbfe 0%,
                     #f0eff8 30%,
                     #cbd2e1 52%,
                     #64748b 70%,
                     #1e293b 84%,
                     #0f172a 93%,
-                    #05040a 100%
-                );
+                    #05040a 100%);
         }
 
         .hero-image-wrapper {
@@ -426,9 +415,7 @@
             opacity: 0;
 
             filter:
-                saturate(0.9)
-                contrast(1.02)
-                blur(0.2px);
+                saturate(0.9) contrast(1.02) blur(0.2px);
 
             border-radius: 16px;
 
@@ -471,8 +458,8 @@
             color: #1a1829;
 
             text-shadow:
-                0 4px 30px rgba(255,255,255,.9),
-                0 2px 10px rgba(0,0,0,.05);
+                0 4px 30px rgba(255, 255, 255, .9),
+                0 2px 10px rgba(0, 0, 0, .05);
         }
 
         .hero-subtitle {
@@ -650,10 +637,10 @@
             background: #111020;
 
             border:
-                1px solid rgba(255,255,255,.1);
+                1px solid rgba(255, 255, 255, .1);
 
             box-shadow:
-                0 30px 80px rgba(0,0,0,.3);
+                0 30px 80px rgba(0, 0, 0, .3);
 
             cursor: pointer;
         }
@@ -679,7 +666,7 @@
         ========================================================= */
 
         .concept-section {
-           background: transparent;
+            background: transparent;
         }
 
         .concept-intro {
@@ -725,7 +712,7 @@
             -webkit-backdrop-filter: blur(16px);
 
             border:
-                1px solid rgba(255,255,255,.12);
+                1px solid rgba(255, 255, 255, .12);
 
             overflow: hidden;
 
@@ -750,11 +737,9 @@
             border-radius: 50%;
 
             background:
-                radial-gradient(
-                    circle,
+                radial-gradient(circle,
                     rgba(180, 200, 255, 0.12),
-                    transparent 70%
-                );
+                    transparent 70%);
 
             pointer-events: none;
 
@@ -842,7 +827,7 @@
             background: rgba(255, 255, 255, 0.02);
 
             border:
-                1px solid rgba(255,255,255,.1);
+                1px solid rgba(255, 255, 255, .1);
 
             cursor: pointer;
 
@@ -880,17 +865,17 @@
             transform: translateY(-16px) translateX(-20px) scale(1.25) !important;
         }
 
-        .development-card:hover + .development-card {
+        .development-card:hover+.development-card {
             transform: translateX(30px) scale(0.94);
             opacity: 0.8;
         }
 
-        .development-card:hover + .development-card + .development-card {
+        .development-card:hover+.development-card+.development-card {
             transform: translateX(18px) scale(0.97);
             opacity: 0.9;
         }
 
-        .development-card:hover + .development-card + .development-card + .development-card {
+        .development-card:hover+.development-card+.development-card+.development-card {
             transform: translateX(8px);
         }
 
@@ -1018,12 +1003,11 @@
             opacity: 0;
 
             transform:
-                translateY(30px)
-                scale(.98);
+                translateY(30px) scale(.98);
 
             transition:
                 opacity 0.9s ease,
-                transform 1s cubic-bezier(.2,.65,.2,1);
+                transform 1s cubic-bezier(.2, .65, .2, 1);
 
             cursor: pointer;
         }
@@ -1032,8 +1016,7 @@
             opacity: 1;
 
             transform:
-                translateY(0)
-                scale(1);
+                translateY(0) scale(1);
         }
 
         .book-page-image {
@@ -1050,7 +1033,7 @@
             border-radius: 4px;
 
             box-shadow:
-                0 25px 70px rgba(0,0,0,.5);
+                0 25px 70px rgba(0, 0, 0, .5);
 
             transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
@@ -1073,7 +1056,7 @@
             letter-spacing: .25em;
 
             color:
-                rgba(255,255,255,.3);
+                rgba(255, 255, 255, .3);
         }
 
         .book-page::before {
@@ -1087,11 +1070,9 @@
             border-radius: 50%;
 
             background:
-                radial-gradient(
-                    circle,
-                    rgba(130,130,255,.04),
-                    transparent 70%
-                );
+                radial-gradient(circle,
+                    rgba(130, 130, 255, .04),
+                    transparent 70%);
 
             left: 50%;
             top: 50%;
@@ -1197,15 +1178,15 @@
             padding: 16px;
 
             background:
-                rgba(255,255,255,.03);
+                rgba(255, 255, 255, .03);
 
             border:
-                1px solid rgba(255,255,255,.12);
+                1px solid rgba(255, 255, 255, .12);
 
             border-radius: 20px;
 
             box-shadow:
-                0 30px 80px rgba(0,0,0,.6);
+                0 30px 80px rgba(0, 0, 0, .6);
 
             backdrop-filter: blur(12px);
         }
@@ -1435,7 +1416,8 @@
             }
 
             .hero {
-                min-height: 85vh; /* 增加手機版 Hero 區塊最小高度 */
+                min-height: 85vh;
+                /* 增加手機版 Hero 區塊最小高度 */
                 padding-top: 150px;
                 padding-bottom: 100px;
             }
@@ -1497,9 +1479,9 @@
                 transform: translateY(-6px) !important;
             }
 
-            .development-card:hover + .development-card,
+            .development-card:hover+.development-card,
             .development-card:has(+ .development-card:hover),
-            .development-card:hover + .development-card + .development-card,
+            .development-card:hover+.development-card+.development-card,
             .development-card:has(+ .development-card + .development-card:hover) {
                 transform: none !important;
                 opacity: 1 !important;
@@ -1577,7 +1559,6 @@
                 height: 42px;
             }
         }
-
     </style>
 </head>
 
@@ -1646,6 +1627,25 @@
                         </div>
                         <p>線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，讓使用者透過直覺操作快速完成個人化影像創作。</p>
                         <a href="../image-editing/image.html"><button>View Project</button></a>
+                    </div>
+
+                    <div class="work-card" data-category="web">
+                        <div class="card-media">
+                            <img src="../card/card-umbrella.png" class="card-logo">
+                            <video class="card-video" muted loop playsinline>
+                                <source src="../card/card-umbrella.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <span class="project-tag">WEB & INTERACTIVE</span>
+                        <h3>借過一場雨</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="VS Code">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>以雨傘作為互動媒介的網頁與互動投影作品，讓使用者透過雨傘閱讀他人的心情與故事，也能留下自己的故事。</p>
+                        <a href="../umbrella/umbrella.html"><button>View Project</button></a>
                     </div>
 
                     <div class="work-card" data-category="app">
@@ -1827,7 +1827,8 @@
 
             <a href="#heroSection" class="section-subnav-title" title="Back to top">
                 TOP
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
                     <line x1="12" y1="19" x2="12" y2="5"></line>
                     <polyline points="5 12 12 5 19 12"></polyline>
                 </svg>
@@ -1863,7 +1864,8 @@
 
             <!-- 縮小/展開按鈕 -->
             <button class="subnav-toggle-btn" id="subnavToggleBtn" title="展開/縮小選單" aria-label="Toggle Navigation">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
             </button>
@@ -1881,12 +1883,7 @@
 
         <!-- Mouse-follow cover -->
         <div class="hero-image-wrapper">
-            <img
-                src="cover.JPG"
-                class="hero-image"
-                id="heroImage"
-                alt="透明的我，也有顏色封面"
-            >
+            <img src="cover.JPG" class="hero-image" id="heroImage" alt="透明的我，也有顏色封面">
         </div>
 
         <div class="hero-content">
@@ -2024,7 +2021,8 @@
         <div class="development-grid">
 
             <!-- Page 01 -->
-            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-01.JPG" data-lightbox-title="草稿與腳本 p.1">
+            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-01.JPG"
+                data-lightbox-title="草稿與腳本 p.1">
                 <img src="script-01.JPG" class="development-image" alt="草稿與腳本 第 1 頁">
                 <div class="development-caption">
                     <span>STORY DEVELOPMENT 01</span>
@@ -2033,7 +2031,8 @@
             </div>
 
             <!-- Page 02 -->
-            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-02.JPG" data-lightbox-title="草稿與腳本 p.2">
+            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-02.JPG"
+                data-lightbox-title="草稿與腳本 p.2">
                 <img src="script-02.JPG" class="development-image" alt="草稿與腳本 第 2 頁">
                 <div class="development-caption">
                     <span>STORY DEVELOPMENT 02</span>
@@ -2042,7 +2041,8 @@
             </div>
 
             <!-- Page 03 -->
-            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-03.JPG" data-lightbox-title="草稿與腳本 p.3">
+            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-03.JPG"
+                data-lightbox-title="草稿與腳本 p.3">
                 <img src="script-03.JPG" class="development-image" alt="草稿與腳本 第 3 頁">
                 <div class="development-caption">
                     <span>STORY DEVELOPMENT 03</span>
@@ -2051,7 +2051,8 @@
             </div>
 
             <!-- Page 04 -->
-            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-04.JPG" data-lightbox-title="草稿與腳本 p.4">
+            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-04.JPG"
+                data-lightbox-title="草稿與腳本 p.4">
                 <img src="script-04.JPG" class="development-image" alt="草稿與腳本 第 4 頁">
                 <div class="development-caption">
                     <span>STORY DEVELOPMENT 04</span>
@@ -2060,7 +2061,8 @@
             </div>
 
             <!-- Page 05 -->
-            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-05.JPG" data-lightbox-title="草稿與腳本 p.5">
+            <div class="development-card reveal" data-lightbox-group="development" data-lightbox-src="script-05.JPG"
+                data-lightbox-title="草稿與腳本 p.5">
                 <img src="script-05.JPG" class="development-image" alt="草稿與腳本 第 5 頁">
                 <div class="development-caption">
                     <span>STORY DEVELOPMENT 05</span>
@@ -2094,84 +2096,96 @@
         <div class="book-pages">
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-01.JPG" data-lightbox-title="繪本跨頁 01">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-01.JPG"
+                    data-lightbox-title="繪本跨頁 01">
                     <img src="page-01.JPG" class="book-page-image" alt="繪本第 1 個跨頁">
                 </div>
                 <div class="page-number">01</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-02.JPG" data-lightbox-title="繪本跨頁 02">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-02.JPG"
+                    data-lightbox-title="繪本跨頁 02">
                     <img src="page-02.JPG" class="book-page-image" alt="繪本第 2 個跨頁">
                 </div>
                 <div class="page-number">02</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-03.JPG" data-lightbox-title="繪本跨頁 03">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-03.JPG"
+                    data-lightbox-title="繪本跨頁 03">
                     <img src="page-03.JPG" class="book-page-image" alt="繪本第 3 個跨頁">
                 </div>
                 <div class="page-number">03</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-04.JPG" data-lightbox-title="繪本跨頁 04">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-04.JPG"
+                    data-lightbox-title="繪本跨頁 04">
                     <img src="page-04.JPG" class="book-page-image" alt="繪本第 4 個跨頁">
                 </div>
                 <div class="page-number">04</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-05.JPG" data-lightbox-title="繪本跨頁 05">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-05.JPG"
+                    data-lightbox-title="繪本跨頁 05">
                     <img src="page-05.JPG" class="book-page-image" alt="繪本第 5 個跨頁">
                 </div>
                 <div class="page-number">05</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-06.JPG" data-lightbox-title="繪本跨頁 06">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-06.JPG"
+                    data-lightbox-title="繪本跨頁 06">
                     <img src="page-06.JPG" class="book-page-image" alt="繪本第 6 個跨頁">
                 </div>
                 <div class="page-number">06</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-07.JPG" data-lightbox-title="繪本跨頁 07">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-07.JPG"
+                    data-lightbox-title="繪本跨頁 07">
                     <img src="page-07.JPG" class="book-page-image" alt="繪本第 7 個跨頁">
                 </div>
                 <div class="page-number">07</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-08.JPG" data-lightbox-title="繪本跨頁 08">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-08.JPG"
+                    data-lightbox-title="繪本跨頁 08">
                     <img src="page-08.JPG" class="book-page-image" alt="繪本第 8 個跨頁">
                 </div>
                 <div class="page-number">08</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-09.JPG" data-lightbox-title="繪本跨頁 09">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-09.JPG"
+                    data-lightbox-title="繪本跨頁 09">
                     <img src="page-09.JPG" class="book-page-image" alt="繪本第 9 個跨頁">
                 </div>
                 <div class="page-number">09</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-10.JPG" data-lightbox-title="繪本跨頁 10">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-10.JPG"
+                    data-lightbox-title="繪本跨頁 10">
                     <img src="page-10.JPG" class="book-page-image" alt="繪本第 10 個跨頁">
                 </div>
                 <div class="page-number">10</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-11.JPG" data-lightbox-title="繪本跨頁 11">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-11.JPG"
+                    data-lightbox-title="繪本跨頁 11">
                     <img src="page-11.JPG" class="book-page-image" alt="繪本第 11 個跨頁">
                 </div>
                 <div class="page-number">11</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-12.JPG" data-lightbox-title="繪本跨頁 12">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-12.JPG"
+                    data-lightbox-title="繪本跨頁 12">
                     <img src="page-12.JPG" class="book-page-image" alt="繪本第 12 個跨頁">
                 </div>
                 <div class="page-number">12</div>
@@ -2179,7 +2193,8 @@
 
             <!-- PAGE 13 (觸發下雨) -->
             <div class="book-page" data-rain="true">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-13.JPG" data-lightbox-title="繪本跨頁 13">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-13.JPG"
+                    data-lightbox-title="繪本跨頁 13">
                     <img src="page-13.JPG" class="book-page-image" alt="繪本第 13 個跨頁">
                 </div>
                 <div class="page-number">13</div>
@@ -2187,21 +2202,24 @@
 
             <!-- PAGE 14 (觸發下雨) -->
             <div class="book-page" data-rain="true">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-14.JPG" data-lightbox-title="繪本跨頁 14">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-14.JPG"
+                    data-lightbox-title="繪本跨頁 14">
                     <img src="page-14.JPG" class="book-page-image" alt="繪本第 14 個跨頁">
                 </div>
                 <div class="page-number">14</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-15.JPG" data-lightbox-title="繪本跨頁 15">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-15.JPG"
+                    data-lightbox-title="繪本跨頁 15">
                     <img src="page-15.JPG" class="book-page-image" alt="繪本第 15 個跨頁">
                 </div>
                 <div class="page-number">15</div>
             </div>
 
             <div class="book-page">
-                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-16.JPG" data-lightbox-title="繪本跨頁 16">
+                <div class="book-page-inner" data-lightbox-group="book" data-lightbox-src="page-16.JPG"
+                    data-lightbox-title="繪本跨頁 16">
                     <img src="page-16.JPG" class="book-page-image" alt="繪本第 16 個跨頁">
                 </div>
                 <div class="page-number">16</div>
@@ -2285,13 +2303,8 @@
 
         <div class="book-container reveal">
             <div class="iframe-wrapper">
-                <iframe
-                    src="https://anyflip.com/kaypp/emmi/"
-                    seamless="seamless"
-                    scrolling="no"
-                    frameborder="0"
-                    allowtransparency="true"
-                    allowfullscreen="true">
+                <iframe src="https://anyflip.com/kaypp/emmi/" seamless="seamless" scrolling="no" frameborder="0"
+                    allowtransparency="true" allowfullscreen="true">
                 </iframe>
             </div>
         </div>
@@ -2315,20 +2328,23 @@
     <div class="lightbox-modal" id="lightboxModal" aria-hidden="true">
 
         <button class="lightbox-close-btn" id="lightboxCloseBtn" title="關閉 (Esc)">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18"></line>
                 <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
         </button>
 
         <button class="lightbox-nav-btn lightbox-nav-prev" id="lightboxPrevBtn" title="上一張 (←)">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="15 18 9 12 15 6"></polyline>
             </svg>
         </button>
 
         <button class="lightbox-nav-btn lightbox-nav-next" id="lightboxNextBtn" title="下一張 (→)">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
         </button>

@@ -1,0 +1,2448 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>借過一場雨｜Web & Interactive Projection</title>
+
+    <meta name="description" content="借過一場雨｜以雨傘作為互動媒介的網頁與互動投影作品，讓使用者透過雨傘閱讀他人的心情與故事，也能留下自己的故事。">
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Zen+Maru+Gothic:wght@500;700&family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+TC:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+    <!-- CSS 載入順序與結構 -->
+    <link rel="stylesheet" href="../mobile-menu.css">
+    <link rel="icon" href="../logo.PNG">
+
+    <style>
+        /* =========================================================
+           00. CUSTOM FONTS (自訂字型引進)
+        ========================================================= */
+        @font-face {
+            font-family: 'jf-jinxuan-3.0-medium';
+            src: url('../book/jf-jinxuan-3.0-medium.otf') format('opentype'),
+                url('../book/jf-jinxuan-3.0-medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* =========================================================
+           01. RESET & BASE
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background: #05040a;
+            color: #eae8ff;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        img,
+        video {
+            display: block;
+            max-width: 100%;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+
+        /* =========================================================
+           02. VARIABLES & UTILITIES
+        ========================================================= */
+
+        :root {
+            --bg: #05040a;
+            --paper: rgba(255, 255, 255, 0.03);
+            --paper-hover: rgba(255, 255, 255, 0.06);
+            --dark: #ffffff;
+            --muted: #a09cc2;
+            --line: rgba(255, 255, 255, 0.12);
+            --accent: #92a4cc;
+            --white: #ffffff;
+
+            --max-width: 1280px;
+            --side-padding: clamp(24px, 5vw, 80px);
+        }
+
+        /* 確保 Works Overlay 層級高於選單 nav (1000) 與 subnav (990) 且高度與間隔對齊 image.html */
+        #worksOverlay {
+            z-index: 10000 !important;
+            line-height: normal;
+        }
+
+        #worksOverlay * {
+            box-sizing: border-box;
+        }
+
+        /* 滾動動畫基底 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        /* =========================================================
+           03. MAIN NAVIGATION
+        ========================================================= */
+
+        .nav {
+            height: 100px;
+            padding: 0 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            line-height: normal;
+
+            background: rgba(15, 14, 30, .45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(160, 160, 255, .08);
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            letter-spacing: 3px;
+            opacity: .9;
+            line-height: normal;
+        }
+
+        .menu {
+            display: flex;
+            gap: 56px;
+            list-style: none;
+            line-height: normal;
+        }
+
+        .menu li {
+            position: relative;
+            font-size: 14px;
+            letter-spacing: 1.2px;
+            opacity: .7;
+            transition: .4s;
+            cursor: pointer;
+            line-height: normal;
+        }
+
+        .menu li a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu li::after {
+            content: '';
+            position: absolute;
+            left: -10%;
+            bottom: -8px;
+            width: 120%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(122, 162, 227, .8), transparent);
+            opacity: 0;
+            transition: .4s;
+        }
+
+        .menu li:hover {
+            opacity: 1;
+        }
+
+        .menu li:hover::after {
+            opacity: 1;
+        }
+
+
+        /* =========================================================
+           04. FLOATING SUB NAV
+        ========================================================= */
+
+        .section-subnav-wrapper {
+            position: fixed;
+            top: 110px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 990;
+            width: auto;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-subnav {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px 8px 22px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .section-subnav-title {
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            color: #ffffff;
+            font-weight: 700;
+            padding-right: 12px;
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            transition: color .3s ease, text-shadow .3s ease, border-color .3s ease;
+        }
+
+        .section-subnav-title:hover {
+            color: #ffffff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+        }
+
+        .section-subnav-links {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 700px;
+            opacity: 1;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        .section-subnav-links a {
+            font-size: 11px;
+            font-weight: 600;
+            color: #ffffff;
+            opacity: 0.75;
+            letter-spacing: 0.1em;
+            transition: all .3s ease;
+        }
+
+        .section-subnav-links a:hover {
+            opacity: 1;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+        }
+
+        .subnav-toggle-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: none;
+            outline: none;
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            margin-left: 2px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            font-family: inherit;
+        }
+
+        .subnav-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+        }
+
+        .subnav-toggle-btn svg {
+            transition: transform 0.4s ease;
+        }
+
+        .section-subnav.collapsed {
+            padding-right: 12px;
+        }
+
+        .section-subnav.collapsed .section-subnav-links {
+            max-width: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
+        }
+
+        .section-subnav.collapsed .section-subnav-title {
+            border-right: none;
+            padding-right: 4px;
+        }
+
+        .section-subnav.collapsed .subnav-toggle-btn svg {
+            transform: rotate(180deg);
+        }
+
+
+        /* =========================================================
+           05. COMMON SECTIONS & TYPOGRAPHY
+        ========================================================= */
+
+        .section {
+            width: min(var(--max-width), calc(100% - var(--side-padding) * 2));
+            margin: 0 auto;
+            padding: 140px 0;
+        }
+
+        .eyebrow {
+            margin-bottom: 14px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #8886ad;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', 'Noto Serif TC', serif;
+            font-size: clamp(34px, 5vw, 64px);
+            font-weight: 400;
+            line-height: 1.2;
+            letter-spacing: -0.01em;
+            color: #f1efff;
+        }
+
+        .section-title span {
+            color: var(--muted);
+        }
+
+        .section-description {
+            max-width: 700px;
+            margin-top: 24px;
+            color: #b5b3d6;
+            font-size: 15px;
+            line-height: 2;
+        }
+
+
+        /* =========================================================
+           06. HERO SECTION & PROJECT INFO
+        ========================================================= */
+
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            padding: 180px var(--side-padding) 100px;
+            display: flex;
+            align-items: center;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(80, 100, 160, 0.25), transparent 50%),
+                radial-gradient(circle at 80% 60%, rgba(120, 110, 180, 0.2), transparent 50%),
+                #05040a;
+        }
+
+        .hero-inner {
+            width: min(var(--max-width), 100%);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 0.85fr 1.15fr;
+            gap: clamp(50px, 8vw, 120px);
+            align-items: center;
+        }
+
+        .hero-text {
+            padding-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: 'jf-jinxuan-3.0-medium', 'Playfair Display', 'Noto Serif TC', serif;
+            font-size: clamp(54px, 8vw, 100px);
+            font-weight: 500;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+        }
+
+        .hero-title-en {
+            margin-top: 18px;
+            font-size: 14px;
+            letter-spacing: 0.16em;
+            color: var(--muted);
+        }
+
+        .hero-description {
+            max-width: 540px;
+            margin-top: 38px;
+            font-size: 16px;
+            color: #b5b3d6;
+            line-height: 1.9;
+        }
+
+        .project-info {
+            margin-top: 40px;
+            display: flex;
+            justify-content: flex-start;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .project-item {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 140px;
+            text-align: left;
+            transition: .35s;
+        }
+
+        .project-item:hover {
+            transform: translateY(-4px);
+        }
+
+        .label {
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            opacity: .5;
+            margin-bottom: 6px;
+            color: #eae8ff;
+        }
+
+        .value {
+            font-size: 15px;
+            letter-spacing: .5px;
+            text-align: left;
+            line-height: 1.5;
+            color: #eae8ff;
+        }
+
+        .hero-poster {
+            width: min(100%, 580px);
+            margin-left: auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .hero-poster img {
+            width: 100%;
+            aspect-ratio: 5 / 7;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+        }
+
+
+        /* =========================================================
+           07. PROJECT OVERVIEW
+        ========================================================= */
+
+        .overview-layout {
+            margin-top: 50px;
+            max-width: 850px;
+        }
+
+        .overview-text {
+            color: #b5b3d6;
+            font-size: 15px;
+            line-height: 2.1;
+        }
+
+        .overview-text p+p {
+            margin-top: 22px;
+        }
+
+        .overview-flow {
+            margin-top: 65px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .overview-flow-item {
+            position: relative;
+            padding: 30px 24px;
+        }
+
+        .overview-flow-item+.overview-flow-item {
+            border-left: 1px solid var(--line);
+        }
+
+        .overview-flow-number {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+        }
+
+        .overview-flow-title {
+            margin-top: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .overview-flow-text {
+            margin-top: 6px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+
+        /* =========================================================
+           08. INTERACTION CARDS
+        ========================================================= */
+
+        .interaction-intro {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 40px;
+        }
+
+        .interaction-grid {
+            margin-top: 70px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .interaction-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s ease, background 0.45s ease, box-shadow 0.45s ease;
+        }
+
+        .interaction-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.28);
+            box-shadow: 0 20px 45px rgba(120, 150, 255, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .interaction-video {
+            aspect-ratio: 3 / 2;
+            overflow: hidden;
+            background: #111020;
+        }
+
+        .interaction-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .interaction-content {
+            padding: 25px;
+        }
+
+        .interaction-title {
+            margin-top: 7px;
+            font-size: 22px;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .interaction-text {
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+
+        /* =========================================================
+           09. CONTRIBUTION
+        ========================================================= */
+
+        .contribution-section {
+            background: rgba(255, 255, 255, 0.015);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .contribution-section .section {
+            padding-top: 130px;
+            padding-bottom: 130px;
+        }
+
+        .contribution-grid {
+            margin-top: 70px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .contribution-item {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+
+        .contribution-item:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .contribution-number {
+            font-size: 11px;
+            color: var(--accent);
+            letter-spacing: 0.15em;
+        }
+
+        .contribution-title {
+            margin-top: 12px;
+            font-size: 20px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .contribution-text {
+            margin-top: 9px;
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .contribution-note {
+            margin-top: 50px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 20px;
+        }
+
+        .contribution-note-title {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: var(--accent);
+        }
+
+        .contribution-note-text {
+            margin-top: 12px;
+            max-width: 850px;
+            font-size: 14px;
+            color: #eae8ff;
+            line-height: 2;
+        }
+
+
+        /* =========================================================
+           10. WEBSITE & PHONE MOCKUPS
+        ========================================================= */
+
+        .website-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 40px;
+        }
+
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 100px;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .website-link:hover {
+            background: #ffffff;
+            color: #05040a;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
+
+        .phone-grid {
+            margin-top: 75px;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 18px;
+            align-items: start;
+        }
+
+        .phone {
+            width: 100%;
+            background: transparent;
+            border: none;
+            position: relative;
+            cursor: pointer;
+            z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), filter 0.4s ease;
+        }
+
+        .phone:nth-child(even) {
+            margin-top: 45px;
+        }
+
+        .phone:hover,
+        .phone.reveal.active:hover {
+            transform: translateY(-12px) scale(1.2) !important;
+            filter: brightness(1.1);
+            z-index: 20;
+        }
+
+        .phone img {
+            width: 100%;
+            display: block;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: box-shadow 0.4s ease;
+        }
+
+        .phone:hover img {
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(146, 164, 204, 0.3);
+        }
+
+
+        /* =========================================================
+           11. DATA FLOW & PERSONALITY SUB-SECTION
+        ========================================================= */
+
+        .website-process {
+            margin-top: 110px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .process-text h3 {
+            font-size: 30px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: #ffffff;
+        }
+
+        .process-text p {
+            margin-top: 20px;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 2;
+        }
+
+        .process-flow {
+            margin-top: 35px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .flow-item {
+            position: relative;
+            padding: 18px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border-radius: 12px;
+            font-size: 13px;
+            color: #eae8ff;
+        }
+
+        .flow-item strong {
+            margin-right: 12px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .sheet-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+        }
+
+        .sheet-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .website-personality {
+            margin-top: 110px;
+            padding-top: 80px;
+            border-top: 1px solid var(--line);
+        }
+
+        .personality-grid {
+            margin-top: 45px;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+        }
+
+        .personality-card {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            cursor: pointer;
+            z-index: 1;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.4s ease, filter 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .personality-card:hover,
+        .personality-card.reveal.active:hover {
+            transform: translateY(-12px) scale(1.2) !important;
+            border-color: rgba(255, 255, 255, 0.4);
+            filter: brightness(1.1);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(146, 164, 204, 0.3);
+            z-index: 20;
+        }
+
+        .personality-card img {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: cover;
+            display: block;
+        }
+
+
+        /* =========================================================
+           12. FINAL VIDEO
+        ========================================================= */
+
+        .final-video-wrapper {
+            margin-top: 65px;
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            background: #000;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7);
+        }
+
+        .final-video-wrapper iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .video-caption {
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+
+        /* =========================================================
+           13. REFLECTION
+        ========================================================= */
+
+        .reflection {
+            padding: 140px 0 116px;
+            margin-bottom: 0;
+            display: block;
+        }
+
+        .reflection-inner {
+            width: 100%;
+            max-width: 850px;
+        }
+
+        .reflection-text {
+            margin-top: 24px;
+            font-size: 16px;
+            line-height: 2;
+            color: #b5b3d6;
+        }
+
+        .reflection-small {
+            margin-top: 20px;
+            max-width: 850px;
+            color: #b5b3d6;
+            font-size: 15px;
+            line-height: 2;
+        }
+
+
+        /* =========================================================
+           14. FOOTER
+        ========================================================= */
+
+        .footer {
+            text-align: center;
+            background: transparent;
+            opacity: 0.5;
+            padding: 40px 0;
+            margin: 0;
+        }
+
+
+        /* =========================================================
+           15. PREVIEW MODAL (490*990 尺寸彈窗)
+        ========================================================= */
+
+        .demo-modal {
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 4, 10, 0.88);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 20000;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .demo-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 2;
+        }
+
+        .modal-close-btn,
+        .modal-visit-btn {
+            background: rgba(255, 255, 255, 0.08);
+            color: #eae8ff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 8px 20px;
+            font-size: 13px;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+
+        .modal-visit-btn:hover {
+            background: rgba(146, 164, 204, 0.3);
+            border-color: rgba(146, 164, 204, 0.6);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(146, 164, 204, 0.3);
+        }
+
+        .modal-close-btn:hover {
+            background: rgba(255, 100, 100, 0.25);
+            border-color: rgba(255, 100, 100, 0.5);
+            color: #ff9aa2;
+        }
+
+        .modal-phone-screen {
+            position: relative;
+            width: min(490px, 90vw);
+            height: min(990px, 80vh);
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(146, 164, 204, 0.2);
+            overflow: hidden;
+
+            transform: scale(0.85) translateY(20px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .demo-modal.open .modal-phone-screen {
+            transform: scale(1) translateY(0);
+        }
+
+        #demoFrame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #05040a;
+            border-radius: 12px;
+        }
+
+
+        /* =========================================================
+           16. PARTICLE CANVAS STYLE
+        ========================================================= */
+
+        .particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+            border-radius: inherit;
+        }
+
+
+        /* =========================================================
+           17. RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1000px) {
+
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-poster {
+                margin: 0 auto;
+                width: min(100%, 550px);
+            }
+
+            .overview-flow {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .overview-flow-item:nth-child(3) {
+                border-left: none;
+                border-top: 1px solid var(--line);
+            }
+
+            .overview-flow-item:nth-child(4) {
+                border-top: 1px solid var(--line);
+            }
+
+            .interaction-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contribution-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .phone-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .phone:nth-child(even) {
+                margin-top: 0;
+            }
+
+            .website-process {
+                grid-template-columns: 1fr;
+                gap: 50px;
+            }
+
+            .personality-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .nav {
+                height: 70px;
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+
+            .menu {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .section-subnav-wrapper {
+                top: 82px;
+                width: auto;
+            }
+
+            .section-subnav {
+                padding: 6px 14px;
+            }
+
+            .section-subnav-title {
+                font-size: 11px;
+                padding-right: 0;
+                border-right: none;
+            }
+
+            .section-subnav-links,
+            .subnav-toggle-btn {
+                display: none !important;
+            }
+        }
+
+
+        @media (max-width: 650px) {
+
+            .section {
+                width: calc(100% - 40px);
+                padding: 90px 0;
+            }
+
+            .hero {
+                padding: 140px 20px 70px;
+            }
+
+            .hero-title {
+                font-size: 54px;
+            }
+
+            .interaction-intro,
+            .website-header {
+                display: block;
+            }
+
+            .website-link {
+                margin-top: 30px;
+            }
+
+            .overview-flow {
+                grid-template-columns: 1fr;
+            }
+
+            .overview-flow-item+.overview-flow-item {
+                border-left: none;
+                border-top: 1px solid var(--line);
+            }
+
+            .contribution-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .phone-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .personality-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .video-caption {
+                display: block;
+            }
+
+            .video-caption span {
+                display: block;
+                margin-bottom: 6px;
+            }
+
+            .project-info {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+
+    <!-- 將 workcard.css 放在自訂 style 之後載入，確保樣式與 image.html 100% 一致 -->
+    <link rel="stylesheet" href="../workcard.css">
+</head>
+
+<body>
+
+    <!-- =======================================================
+     WORKS OVERLAY MODAL
+======================================================= -->
+    <div id="worksOverlay">
+        <div class="works-panel">
+            <button class="close-btn">✕</button>
+
+            <h2 class="works-title">WORKS</h2>
+
+            <div class="category-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="uiux">UI / UX</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+                <button class="filter-btn" data-filter="app">App Design</button>
+                <button class="filter-btn" data-filter="illustration">Illustration</button>
+            </div>
+
+            <button class="nav-btn left">‹</button>
+            <button class="nav-btn right">›</button>
+
+            <div class="carousel">
+                <div class="cards">
+
+                    <div class="work-card" data-category="web">
+                        <div class="card-media">
+                            <img src="../card/card1.png" class="card-logo">
+                            <video class="card-video" muted loop playsinline>
+                                <source src="../card/card1.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <span class="project-tag">WEB DEVELOPMENT</span>
+                        <h3>海好有你</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>SDGs14 海洋保育互動網站，透過資訊與互動設計讓使用者理解海洋污染議題，並鼓勵參與環境行動。</p>
+                        <a href="../ocean/ocean.html"><button>View Project</button></a>
+                    </div>
+
+                    <div class="work-card" data-category="web">
+                        <div class="card-media">
+                            <img src="../card/card-image.png" class="card-logo">
+                            <video class="card-video" muted loop playsinline>
+                                <source src="../card/card-image.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <span class="project-tag">WEB DEVELOPMENT</span>
+                        <h3>修起來</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>線上圖片編輯網站，整合濾鏡、貼紙、拼圖與塗鴉等功能，讓使用者透過直覺操作快速完成個人化影像創作。</p>
+                        <a href="../image-editing/image.html"><button>View Project</button></a>
+                    </div>
+
+                    <div class="work-card" data-category="web">
+                        <div class="card-media">
+                            <img src="../card/card-umbrella.png" class="card-logo">
+                            <video class="card-video" muted loop playsinline>
+                                <source src="../card/card-umbrella.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <span class="project-tag">WEB & INTERACTIVE</span>
+                        <h3>借過一場雨</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/vs.JPG" alt="VS Code">
+                                <span>Visual Studio Code</span>
+                            </div>
+                        </div>
+                        <p>以雨傘作為互動媒介的網頁與互動投影作品，讓使用者透過雨傘閱讀他人的心情與故事，也能留下自己的故事。</p>
+                        <a href="./umbrella.html"><button>View Project</button></a>
+                    </div>
+
+                    <div class="work-card" data-category="app">
+                        <div class="card-media">
+                            <img src="../card/card2.png" class="card-logo">
+                            <video class="card-video" muted loop playsinline>
+                                <source src="../card/card2.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <span class="project-tag">APP DESIGN</span>
+                        <h3>咖啡廳點餐 App</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/androidstudio.JPG" alt="">
+                                <span>Android Studio</span>
+                            </div>
+                        </div>
+                        <p>以 Android Studio 開發的行動點餐應用程式，提供咖啡與甜點搜尋、加入購物車與結帳流程。</p>
+                        <a href="../coffee/coffee.html"><button>View Project</button></a>
+                    </div>
+
+                    <div class="work-card" data-category="uiux">
+                        <div class="card-media">
+                            <img src="../card/card3.png" class="card-logo">
+                            <video class="card-video" muted loop playsinline>
+                                <source src="../card/card3.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <span class="project-tag">UI / UX DESIGN</span>
+                        <h3>Invisible Mask</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/figma.PNG" alt="">
+                                <span>Figma</span>
+                            </div>
+                        </div>
+                        <p>是一款以 Figma 設計的美妝 App，結合 AI 臉部分析與 AR 試妝，打造快速且個人化的妝容體驗。</p>
+                        <a href="../mask/mask.html"><button>View Project</button></a>
+                    </div>
+
+                    <div class="work-card" data-category="uiux">
+                        <div class="card-media">
+                            <img src="../card/card_familymart.png" class="card-logo">
+                            <video class="card-video" muted loop playsinline>
+                                <source src="../card/card_familymart.mp4" type="video/mp4">
+                            </video>
+                        </div>
+                        <span class="project-tag">UI / UX DESIGN</span>
+                        <h3>FamilyMart App Redesign</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/figma.PNG" alt="">
+                                <span>Figma</span>
+                            </div>
+                        </div>
+                        <p>針對全家 App 進行 UI/UX 改版，聚焦高頻使用情境，優化操作流程與資訊架構，提升結帳效率與使用體驗。</p>
+                        <a href="../familymart/family.html"><button>View Project</button></a>
+                    </div>
+
+                    <div class="work-card image-slider-card" data-category="illustration">
+                        <div class="card-media">
+                            <div class="slider">
+                                <div class="track">
+                                    <img src="../card/card4.PNG" class="slide active">
+                                    <img src="../draw/spring-bg.PNG" class="slide">
+                                    <img src="../draw/summer-bg.PNG" class="slide">
+                                    <img src="../draw/autumn-bg.PNG" class="slide">
+                                    <img src="../draw/winter-bg.PNG" class="slide">
+                                    <img src="../draw/space-bg.PNG" class="slide">
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-tag">ILLUSTRATION</span>
+                        <h3>小熊歷險記</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/procreate.JPG" alt="">
+                                <span>Procreate</span>
+                            </div>
+                            <div class="tool">
+                                <img src="../icon/ppt.JPG" alt="">
+                                <span>PowerPoint</span>
+                            </div>
+                        </div>
+                        <p>童話風卡牌互動遊戲，透過插畫敘事與四季場景變化，呈現角色的成長歷程與情感體驗。</p>
+                        <a href="../draw/draw.html"><button>View Project</button></a>
+                    </div>
+
+                    <div class="work-card image-slider-card" data-category="illustration">
+                        <div class="card-media">
+                            <div class="slider">
+                                <div class="track">
+                                    <img src="../card/card_book.JPG" class="slide active">
+                                    <img src="../book/page-01.JPG" class="slide">
+                                    <img src="../book/page-02.JPG" class="slide">
+                                    <img src="../book/page-05.JPG" class="slide">
+                                    <img src="../book/page-13.JPG" class="slide">
+                                </div>
+                            </div>
+                        </div>
+                        <span class="project-tag">ILLUSTRATION</span>
+                        <h3>透明的我，也有顏色</h3>
+                        <div class="tools">
+                            <div class="tool">
+                                <img src="../icon/procreate.JPG" alt="">
+                                <span>Procreate</span>
+                            </div>
+                            <div class="tool">
+                                <img src="../icon/id.jpg" alt="">
+                                <span>Adobe InDesign</span>
+                            </div>
+                        </div>
+                        <p>以「顏色」作為個性與自我認同象徵的繪本，講述主角小透明從羨羨他人到尋找到自我顏色的故事。</p>
+                        <a href="../book/book.html"><button>View Project</button></a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="carousel-dots"></div>
+        </div>
+    </div>
+
+
+    <!-- =======================================================
+     MAIN NAVIGATION
+======================================================= -->
+
+    <nav class="nav">
+
+        <div class="logo">Yi Zhen Huang</div>
+
+        <ul class="menu">
+
+            <li>
+                <a href="../index.html">
+                    Home
+                </a>
+            </li>
+
+            <li>
+                Works
+            </li>
+
+            <li>
+                <a href="../about/about.html">
+                    About
+                </a>
+            </li>
+
+        </ul>
+
+        <!-- 漢堡按鈕 (手機版) -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+    </nav>
+
+    <!-- 手機版選單 -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="../index.html">Home</a>
+        <a href="#" id="mobileWorksBtn">Works</a>
+        <a href="../about/about.html">About</a>
+    </div>
+
+
+    <!-- =======================================================
+     FLOATING SUB NAV
+======================================================= -->
+
+    <div class="section-subnav-wrapper">
+
+        <div class="section-subnav" id="sectionSubnav">
+
+            <a href="#heroSection" class="section-subnav-title" title="Back to top">
+                TOP
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round" style="margin-left: 4px;">
+                    <line x1="12" y1="19" x2="12" y2="5"></line>
+                    <polyline points="5 12 12 5 19 12"></polyline>
+                </svg>
+            </a>
+
+            <div class="section-subnav-links">
+
+                <a href="#overview">
+                    OVERVIEW
+                </a>
+
+                <a href="#interaction">
+                    INTERACTION
+                </a>
+
+                <a href="#contribution">
+                    CONTRIBUTION
+                </a>
+
+                <a href="#website">
+                    WEB
+                </a>
+
+                <a href="#finalVideo">
+                    VIDEO
+                </a>
+
+                <a href="#reflection">
+                    REFLECTION
+                </a>
+
+            </div>
+
+            <button class="subnav-toggle-btn" id="subnavToggleBtn" title="展開/縮小選單" aria-label="Toggle Navigation">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+     HERO SECTION
+========================================================= -->
+
+    <header class="hero" id="heroSection">
+
+        <div class="hero-inner">
+
+            <div class="hero-text reveal">
+
+                <div class="eyebrow">
+                    Interactive Installation
+                </div>
+
+                <h1 class="hero-title">
+                    借過<br>
+                    一場雨
+                </h1>
+
+                <div class="hero-title-en">
+                    A Journey Beneath the Rain
+                </div>
+
+                <p class="hero-description">
+                    一把雨傘，成為人與人之間交流的媒介。
+                    使用者可以透過旋轉傘面探索不同的心情與故事，
+                    也能透過手機留下自己的雨天故事。
+                </p>
+
+                <div class="project-info">
+
+                    <div class="project-item">
+                        <span class="label">Project Type</span>
+                        <span class="value">Web & Interactive Projection</span>
+                    </div>
+
+                    <div class="project-item">
+                        <span class="label">Tools</span>
+                        <span class="value">Visual Studio Code<br>Arduino</span>
+                    </div>
+
+                    <div class="project-item">
+                        <span class="label">Team / Role</span>
+                        <span class="value">
+                            5 People Team<br>
+                            Story Input Website / Interaction Adjustment
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="hero-poster reveal">
+
+                <img src="poster.jpg" alt="借過一場雨展覽海報">
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+     PROJECT OVERVIEW
+========================================================= -->
+
+    <section class="section" id="overview">
+
+        <div class="eyebrow reveal">
+            01 / Project Overview
+        </div>
+
+        <h2 class="section-title reveal">
+            一把傘，<br>
+            <span>讓陌生的人交換一段心情。</span>
+        </h2>
+
+
+        <div class="overview-layout">
+
+            <div class="overview-text reveal">
+
+                <p>
+                    《借過一場雨》是一件以雨傘為互動媒介的網頁與互動投影作品。
+                    雨傘不只是遮雨的工具，也可以成為人與人分享故事的媒介。
+                    我們希望讓使用者在一個像雨天一樣的情境裡，
+                    看見其他人留下的心情與故事，也能留下屬於自己的文字。
+                </p>
+
+                <p>
+                    使用者拿起雨傘後，可以透過旋轉傘面切換三種不同的投影內容。
+                    其中「留下一段故事」會連結到故事輸入網頁，
+                    使用者可以閱讀其他人曾經留下的內容，
+                    也可以輸入自己的故事，讓下一位使用者看見。
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="overview-flow reveal">
+
+            <div class="overview-flow-item">
+
+                <div class="overview-flow-number">
+                    01
+                </div>
+
+                <div class="overview-flow-title">
+                    拿起雨傘
+                </div>
+
+                <div class="overview-flow-text">
+                    啟動互動裝置
+                </div>
+
+            </div>
+
+
+            <div class="overview-flow-item">
+
+                <div class="overview-flow-number">
+                    02
+                </div>
+
+                <div class="overview-flow-title">
+                    旋轉傘面
+                </div>
+
+                <div class="overview-flow-text">
+                    切換不同投影內容
+                </div>
+
+            </div>
+
+
+            <div class="overview-flow-item">
+
+                <div class="overview-flow-number">
+                    03
+                </div>
+
+                <div class="overview-flow-title">
+                    閱讀心情與故事
+                </div>
+
+                <div class="overview-flow-text">
+                    看見其他使用者留下的內容
+                </div>
+
+            </div>
+
+
+            <div class="overview-flow-item">
+
+                <div class="overview-flow-number">
+                    04
+                </div>
+
+                <div class="overview-flow-title">
+                    留下自己的故事
+                </div>
+
+                <div class="overview-flow-text">
+                    透過手機加入新的故事
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+     THREE INTERACTIONS
+========================================================= -->
+
+    <section class="section" id="interaction">
+
+        <div class="interaction-intro">
+
+            <div>
+
+                <div class="eyebrow reveal">
+                    02 / Interactive Projection
+                </div>
+
+                <h2 class="section-title reveal">
+                    三種雨天體驗
+                </h2>
+
+            </div>
+
+            <p class="section-description reveal">
+                透過旋轉傘面，使用者可以在三種不同的投影內容之間切換。
+                每個畫面都代表不同的觀看與參與方式。
+            </p>
+
+        </div>
+
+
+        <div class="interaction-grid">
+
+            <article class="interaction-card reveal">
+
+                <div class="interaction-video">
+
+                    <video src="projection-01.mp4" muted loop playsinline preload="metadata"></video>
+
+                </div>
+
+                <div class="interaction-content">
+
+                    <h3 class="interaction-title">
+                        雨滴漣漪故事
+                    </h3>
+
+                    <p class="interaction-text">
+                        以雨滴與漣漪作為視覺元素，
+                        呈現作品中的故事內容，
+                        讓使用者在雨天般的畫面中閱讀他人留下的文字。
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="interaction-card reveal">
+
+                <div class="interaction-video">
+
+                    <video src="projection-02.mp4" muted loop playsinline preload="metadata"></video>
+
+                </div>
+
+                <div class="interaction-content">
+
+                    <h3 class="interaction-title">
+                        心情泡泡
+                    </h3>
+
+                    <p class="interaction-text">
+                        透過泡泡與不同情緒的視覺呈現，
+                        讓使用者探索作品中的雨天心情。
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="interaction-card reveal">
+
+                <div class="interaction-video">
+
+                    <video src="projection-03.mp4" muted loop playsinline preload="metadata"></video>
+
+                </div>
+
+                <div class="interaction-content">
+
+                    <h3 class="interaction-title">
+                        留下一個故事
+                    </h3>
+
+                    <p class="interaction-text">
+                        使用者可以透過手機進入故事輸入網頁，
+                        閱讀其他人留下的故事，
+                        也能寫下自己的故事。
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+     MY CONTRIBUTION
+========================================================= -->
+
+    <div class="contribution-section" id="contribution">
+
+        <section class="section">
+
+            <div class="eyebrow reveal">
+                03 / My Contribution
+            </div>
+
+            <h2 class="section-title reveal">
+                My Contribution
+            </h2>
+
+            <p class="section-description reveal">
+                我主要負責故事輸入網站與資料流程，
+                同時參與最後階段的互動測試與投影調整。
+            </p>
+
+
+            <div class="contribution-grid">
+
+                <div class="contribution-item reveal">
+
+                    <div class="contribution-number">
+                        01 / WEB
+                    </div>
+
+                    <h3 class="contribution-title">
+                        故事輸入網站
+                    </h3>
+
+                    <p class="contribution-text">
+                        製作故事輸入網站，並以手機操作情境為主要使用方式，
+                        讓使用者可以閱讀與留下故事。
+                    </p>
+
+                </div>
+
+
+                <div class="contribution-item reveal">
+
+                    <div class="contribution-number">
+                        02 / DATA
+                    </div>
+
+                    <h3 class="contribution-title">
+                        Google Sheets
+                    </h3>
+
+                    <p class="contribution-text">
+                        建立故事資料儲存流程，
+                        將使用者輸入的內容整理並儲存至 Google Sheets。
+                    </p>
+
+                </div>
+
+
+                <div class="contribution-item reveal">
+
+                    <div class="contribution-number">
+                        03 / EXTRA
+                    </div>
+
+                    <h3 class="contribution-title">
+                        雨天人格測驗
+                    </h3>
+
+                    <p class="contribution-text">
+                        在故事輸入網站中加入雨天人格測驗，
+                        作為主要故事互動之外的延伸內容。
+                    </p>
+
+                </div>
+
+
+                <div class="contribution-item reveal">
+
+                    <div class="contribution-number">
+                        04 / INTERACTION
+                    </div>
+
+                    <h3 class="contribution-title">
+                        互動調整
+                    </h3>
+
+                    <p class="contribution-text">
+                        參與最後階段的旋轉偵測測試，
+                        調整判斷數值並增加投影場景切換動畫。
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="contribution-note reveal">
+
+                <div class="contribution-note-title">
+                    INTERACTION TESTING
+                </div>
+
+                <p class="contribution-note-text">
+                    最後測試階段發現原本的旋轉偵測較不穩定，
+                    因此我提出增加第三個偵測點，並協助調整旋轉判斷數值。
+                    同時也調整投影場景切換動畫，讓旋轉後的畫面轉換更自然。
+                </p>
+
+            </div>
+
+        </section>
+
+    </div>
+
+
+    <!-- =========================================================
+     STORY INPUT WEBSITE
+========================================================= -->
+
+    <section class="section" id="website">
+
+        <div class="website-header">
+
+            <div>
+
+                <div class="eyebrow reveal">
+                    04 / Story Input Website
+                </div>
+
+                <h2 class="section-title reveal">
+                    讓故事被留下，<br>
+                    <span>也讓故事被看見。</span>
+                </h2>
+
+                <p class="section-description reveal">
+                    故事輸入網頁是作品中連結使用者的重要部分。
+                    使用者可以使用手機查看其他人留下的故事，
+                    也可以輸入自己的故事，讓內容持續累積。
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <button class="website-link reveal" id="openDemoBtn">
+                    OPEN LIVE WEBSITE
+                    <span>↗</span>
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="phone-grid">
+
+            <div class="phone reveal">
+                <img src="web-01.png" alt="故事輸入網站畫面 01">
+            </div>
+
+            <div class="phone reveal">
+                <img src="web-02.png" alt="故事輸入網站畫面 02">
+            </div>
+
+            <div class="phone reveal">
+                <img src="web-03.png" alt="故事輸入網站畫面 03">
+            </div>
+
+            <div class="phone reveal">
+                <img src="web-04.png" alt="故事輸入網站畫面 04">
+            </div>
+
+            <div class="phone reveal">
+                <img src="web-05.png" alt="故事輸入網站畫面 05">
+            </div>
+
+            <div class="phone reveal">
+                <img src="web-06.png" alt="故事輸入網站畫面 06">
+            </div>
+
+        </div>
+
+        <div class="website-process">
+
+            <div class="process-text reveal">
+
+                <div class="eyebrow">
+                    Data Flow
+                </div>
+
+                <h3>
+                    從手機輸入<br>
+                    到故事被看見
+                </h3>
+
+                <p>
+                    為了讓使用者輸入的故事可以被保存，
+                    我使用 Google Sheets 作為故事資料的儲存位置，
+                    建立從使用者輸入到作品內容呈現的資料流程。
+                </p>
+
+                <div class="process-flow">
+
+                    <div class="flow-item">
+                        <strong>01</strong>
+                        閱讀其他人的故事
+                    </div>
+
+                    <div class="flow-item">
+                        <strong>02</strong>
+                        輸入自己的故事
+                    </div>
+
+                    <div class="flow-item">
+                        <strong>03</strong>
+                        儲存至 Google Sheets
+                    </div>
+
+                    <div class="flow-item">
+                        <strong>04</strong>
+                        成為作品中的故事內容
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="sheet-image reveal">
+
+                <img src="google-sheet.png" alt="Google Sheets 故事資料">
+
+            </div>
+
+        </div>
+
+        <div class="website-personality">
+
+            <div class="process-text reveal">
+
+                <div class="eyebrow">
+                    Extra Interaction
+                </div>
+
+                <h3>
+                    雨天人格測驗
+                </h3>
+
+                <p>
+                    除了故事交流之外，我也在故事輸入網站中加入雨天人格測驗，
+                    讓使用者可以用另一種方式認識自己的雨天心情，
+                    五張小卡作為測驗結果的視覺延伸。
+                </p>
+
+            </div>
+
+            <div class="personality-grid">
+
+                <div class="personality-card reveal">
+                    <img src="personality-01.JPG" alt="雨天人格小卡 01">
+                </div>
+
+                <div class="personality-card reveal">
+                    <img src="personality-02.JPG" alt="雨天人格小卡 02">
+                </div>
+
+                <div class="personality-card reveal">
+                    <img src="personality-03.JPG" alt="雨天人格小卡 03">
+                </div>
+
+                <div class="personality-card reveal">
+                    <img src="personality-04.JPG" alt="雨天人格小卡 04">
+                </div>
+
+                <div class="personality-card reveal">
+                    <img src="personality-05.JPG" alt="雨天人格小卡 05">
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+     FINAL INTERACTION VIDEO
+========================================================= -->
+
+    <section class="section" id="finalVideo">
+
+        <div class="eyebrow reveal">
+            05 / Final Interaction
+        </div>
+
+        <h2 class="section-title reveal">
+            實際操作
+        </h2>
+
+        <p class="section-description reveal">
+            實際操作時，使用者拿起雨傘並旋轉傘面，
+            透過旋轉切換不同的投影內容。
+        </p>
+
+        <div class="final-video-wrapper reveal">
+
+            <iframe src="https://www.youtube.com/embed/Gkf7t_7-jJs" title="借過一場雨｜實際互動展示"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+
+        </div>
+
+        <div class="video-caption reveal">
+
+            <span>
+                Interactive Umbrella Installation
+            </span>
+
+            <span>
+                Projection × Rotation Detection
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+     REFLECTION
+========================================================= -->
+
+    <section class="section reflection" id="reflection">
+
+        <div class="reflection-inner">
+
+            <div class="eyebrow reveal">
+                06 / Reflection
+            </div>
+
+            <h2 class="section-title reveal">
+                從網頁到實體互動，<br>
+                <span>使用情境會改變作品的體驗。</span>
+            </h2>
+
+            <p class="reflection-text reveal">
+                這次製作讓我第一次把網頁、資料儲存與實體投影互動串在同一個作品裡。
+                我原本比較熟悉的是螢幕上的網頁與介面，
+                但實際測試後才發現，互動作品的體驗還會受到投影位置、
+                傘面方向、使用者站位與操作方式影響。
+            </p>
+
+            <p class="reflection-small reveal">
+                在最後的測試與調整中，我也學習到除了確認功能能不能運作，
+                還需要實際觀察使用者怎麼操作，並從操作過程找出需要改善的地方。
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+     FOOTER
+========================================================= -->
+
+    <section class="footer">
+        <p>© Yi Zhen Huang Portfolio</p>
+    </section>
+
+
+    <!-- =========================================================
+     MOBILE PHONE PREVIEW MODAL (490*990 尺寸內嵌預覽視窗)
+========================================================= -->
+
+    <div id="demoModal" class="demo-modal">
+        <div class="modal-header">
+            <a href="https://yzzzz1205.github.io/umbrella/" target="_blank" rel="noopener noreferrer"
+                class="modal-visit-btn">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i> 前往完整網頁
+            </a>
+            <button class="modal-close-btn">✕ 關閉預覽</button>
+        </div>
+
+        <div class="modal-phone-screen">
+            <iframe id="demoFrame" src="" frameborder="0"></iframe>
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+    <script src="../workcard.js"></script>
+
+    <script>
+
+        /* =========================================================
+           01. SUB NAV COLLAPSE TOGGLE
+        ========================================================= */
+
+        const subnavToggleBtn = document.getElementById("subnavToggleBtn");
+        const sectionSubnav = document.getElementById("sectionSubnav");
+
+        if (subnavToggleBtn && sectionSubnav) {
+            subnavToggleBtn.addEventListener("click", () => {
+                sectionSubnav.classList.toggle("collapsed");
+            });
+        }
+
+
+        /* =========================================================
+           02. SCROLL REVEAL
+        ========================================================= */
+
+        const revealElements = document.querySelectorAll(".reveal");
+
+        const revealObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.12 }
+        );
+
+        revealElements.forEach((element) => {
+            revealObserver.observe(element);
+        });
+
+
+        /* =========================================================
+           03. AUTO PLAY SHORT PROJECTION VIDEOS
+        ========================================================= */
+
+        const shortVideos = document.querySelectorAll(
+            ".interaction-video video"
+        );
+
+        const videoObserver = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        video.play().catch(() => { });
+                    } else {
+                        video.pause();
+                    }
+                });
+            },
+            { threshold: 0.35 }
+        );
+
+        shortVideos.forEach((video) => {
+            videoObserver.observe(video);
+        });
+
+
+        /* =========================================================
+           04. SUB NAV ACTIVE LINK FEEL
+        ========================================================= */
+
+        const subNavLinks = document.querySelectorAll(".section-subnav-links a");
+
+        subNavLinks.forEach(link => {
+            link.addEventListener("click", () => {
+                subNavLinks.forEach(item => {
+                    item.style.opacity = ".75";
+                });
+                link.style.opacity = "1";
+            });
+        });
+
+
+        /* =========================================================
+           05. HAMBURGER MENU
+        ========================================================= */
+
+        const hamburger = document.getElementById("hamburger");
+        const mobileMenu = document.getElementById("mobileMenu");
+
+        if (hamburger && mobileMenu) {
+            hamburger.addEventListener("click", () => {
+                hamburger.classList.toggle("active");
+                mobileMenu.classList.toggle("show");
+            });
+
+            mobileMenu.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", () => {
+                    hamburger.classList.remove("active");
+                    mobileMenu.classList.remove("show");
+                });
+            });
+        }
+
+
+        /* =========================================================
+           06. PROJECT DEMO MODAL
+        ========================================================= */
+
+        const openDemoBtn = document.getElementById("openDemoBtn");
+        const demoModal = document.getElementById("demoModal");
+        const demoFrame = document.getElementById("demoFrame");
+        const closeDemoBtn = document.querySelector(".modal-close-btn");
+
+        if (openDemoBtn && demoModal && demoFrame && closeDemoBtn) {
+
+            openDemoBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                demoFrame.src = "https://yzzzz1205.github.io/umbrella/";
+                demoModal.classList.add("open");
+                document.body.style.overflow = "hidden";
+            });
+
+            function closeModal() {
+                demoModal.classList.remove("open");
+                setTimeout(() => {
+                    if (!demoModal.classList.contains("open")) {
+                        demoFrame.src = "";
+                    }
+                }, 400);
+                document.body.style.overflow = "";
+            }
+
+            closeDemoBtn.addEventListener("click", closeModal);
+
+            demoModal.addEventListener("click", (e) => {
+                if (e.target === demoModal) {
+                    closeModal();
+                }
+            });
+        }
+
+
+        /* =========================================================
+           07. GLOWING PARTICLE EFFECT ON HOVER
+        ========================================================= */
+
+        function initGlowingParticles() {
+            const targets = document.querySelectorAll('.hero-poster, .sheet-image');
+
+            targets.forEach(target => {
+                const canvas = document.createElement('canvas');
+                canvas.className = 'particle-canvas';
+                target.style.position = 'relative';
+                target.appendChild(canvas);
+
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                let animationFrameId = null;
+                let isHovered = false;
+
+                function resizeCanvas() {
+                    canvas.width = target.clientWidth;
+                    canvas.height = target.clientHeight;
+                }
+
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+
+                class Particle {
+                    constructor(x, y) {
+                        this.x = x;
+                        this.y = y;
+                        this.size = Math.random() * 4.5 + 1.5;
+                        this.speedX = (Math.random() - 0.5) * 2.2;
+                        this.speedY = (Math.random() - 0.5) * 2.2 - 0.6;
+                        this.alpha = 1;
+                        this.decay = Math.random() * 0.025 + 0.015;
+
+                        const colorPalette = [
+                            'rgba(255, 255, 255, ',
+                            'rgba(180, 220, 255, ',
+                            'rgba(255, 235, 180, ',
+                            'rgba(170, 180, 240, '
+                        ];
+                        this.colorPrefix = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                    }
+
+                    update() {
+                        this.x += this.speedX;
+                        this.y += this.speedY;
+                        this.alpha -= this.decay;
+                        if (this.size > 0.3) this.size -= 0.04;
+                    }
+
+                    draw() {
+                        ctx.save();
+                        ctx.globalCompositeOperation = 'lighter';
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, Math.max(0, this.size), 0, Math.PI * 2);
+
+                        ctx.shadowBlur = 12;
+                        ctx.shadowColor = this.colorPrefix + '1)';
+                        ctx.fillStyle = this.colorPrefix + Math.max(0, this.alpha) + ')';
+
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                }
+
+                function addParticles(x, y, count = 4) {
+                    for (let i = 0; i < count; i++) {
+                        particles.push(new Particle(x, y));
+                    }
+                }
+
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    for (let i = particles.length - 1; i >= 0; i--) {
+                        const p = particles[i];
+                        p.update();
+                        p.draw();
+
+                        if (p.alpha <= 0 || p.size <= 0) {
+                            particles.splice(i, 1);
+                        }
+                    }
+
+                    if (particles.length > 0 || isHovered) {
+                        animationFrameId = requestAnimationFrame(animate);
+                    } else {
+                        cancelAnimationFrame(animationFrameId);
+                        animationFrameId = null;
+                    }
+                }
+
+                target.addEventListener('mouseenter', () => {
+                    isHovered = true;
+                    resizeCanvas();
+                    if (!animationFrameId) {
+                        animate();
+                    }
+                });
+
+                target.addEventListener('mousemove', (e) => {
+                    const rect = target.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    addParticles(x, y, 3);
+
+                    if (!animationFrameId) {
+                        animate();
+                    }
+                });
+
+                target.addEventListener('mouseleave', () => {
+                    isHovered = false;
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initGlowingParticles);
+        initGlowingParticles();
+
+    </script>
+
+</body>
+
+</html>

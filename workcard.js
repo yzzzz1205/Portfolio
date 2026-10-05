@@ -15,11 +15,12 @@ const dotsContainer = document.querySelector('.carousel-dots');
 const pageMap = {
     "ocean.html": 0,
     "image.html": 1,
-    "coffee.html": 2,
-    "mask.html": 3,
-    "family.html": 4,
-    "draw.html": 5,
-    "book.html": 6
+    "umbrella.html": 2, 
+    "coffee.html": 3,   
+    "mask.html": 4,   
+    "family.html": 5,  
+    "draw.html": 6,    
+    "book.html": 7     
 };
 
 const currentPage = window.location.pathname.split("/").pop();
